@@ -1,5 +1,3 @@
-# scrapers/senai.py
-from datetime import datetime
 from typing import Dict, List
 from urllib.parse import urlencode
 
@@ -8,7 +6,7 @@ from scrapers.base import BaseScraper
 
 class SenaiScraper(BaseScraper):
 
-    def __init__(self, entidade: str = "SENAI", regional: str = "SENAI-DN"):
+    def __init__(self, entidade: str = "SENAI", regional: str = "SENAI-DN", ano: int = 2026):
         super().__init__(
             name="SENAI",
             base_url="https://sorsdn.sistemaindustria.com.br",
@@ -16,70 +14,70 @@ class SenaiScraper(BaseScraper):
         self.entidade = entidade
         self.regional = regional
         self.base_transparencia_web = "https://sistematransparenciaweb.com.br"
+        self.ano = ano
 
     def extract_links(self) -> List[Dict[str, str]]:
         """Mapeia todos os endpoints REST do SENAI (Sistema Indústria +
 
         Transparência Web).
         """
-        ano_atual = datetime.now().year
         extracted_data = []
 
         # =========================================================
-        # 1. ENDPOINTS DO SISTEMA INDÚSTRIA (sorsdn.sistemaindustria.com.br)
+        # 1. ENDPOINTS DO SISTEMA INDÚSTRIA (sorsdn.sisah stemaindustria.com.br)
         # =========================================================
         sistemaindustria_endpoints = [
             {
-                "title": f"Execução Orçamentária ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Execução Orçamentária ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/Get",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Saldo Exercício Anterior ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Saldo Exercício Anterior ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetSaldoExercicioAnterior",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Previsão Orçamentária ({self.entidade} - {ano_atual})",
+                "title": f"Previsão Orçamentária ({self.entidade} - {self.ano})",
                 "path": "/api/Transparencia/GetPrevisaoOrcamentaria",
                 "params": {
                     "entidade": self.entidade,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Rateio de Despesas ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Rateio de Despesas ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetRateio",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Despesas por Licitação ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Despesas por Licitação ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetLicitacao",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Bens Imóveis ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Bens Imóveis ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetBensImoveis",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
         ]
@@ -104,12 +102,12 @@ class SenaiScraper(BaseScraper):
         dirigentes_url = (
             f"{self.base_transparencia_web}/api-relacaodirigentes-gestao"
             f"/publico/relacao-dirigente-empregado/entidades/{self.entidade}"
-            f"/departamentos/{self.regional}/relacao-dirigente-empregado?ano={ano_atual}"
+            f"/departamentos/{self.regional}/relacao-dirigente-empregado?ano={self.ano}"
         )
         extracted_data.append(
             {
                 "source": self.name,
-                "title": f"Relação de Dirigentes e Gestão ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Relação de Dirigentes e Gestão ({self.entidade} - {self.regional} - {self.ano})",
                 "context": "API REST Transparência Web",
                 "download_url": dirigentes_url,
                 "file_type": "json",
@@ -120,12 +118,12 @@ class SenaiScraper(BaseScraper):
         conselho_url = (
             f"{self.base_transparencia_web}/api-composicao-conselho"
             f"/publico/composicao-conselho/entidades/{self.entidade}"
-            f"/departamentos/{self.regional}/composicao-conselho?ano={ano_atual}"
+            f"/departamentos/{self.regional}/composicao-conselho?ano={self.ano}"
         )
         extracted_data.append(
             {
                 "source": self.name,
-                "title": f"Composição do Conselho ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Composição do Conselho ({self.entidade} - {self.regional} - {self.ano})",
                 "context": "API REST Transparência Web",
                 "download_url": conselho_url,
                 "file_type": "json",
@@ -134,7 +132,7 @@ class SenaiScraper(BaseScraper):
 
         # C) Comissão de Contas e Orçamentos
         comissao_params = {
-            "ano": ano_atual,
+            "ano": self.ano,
             "entidade": self.entidade,
             "departamento": self.regional,
         }
@@ -145,7 +143,7 @@ class SenaiScraper(BaseScraper):
         extracted_data.append(
             {
                 "source": self.name,
-                "title": f"Comissão de Contas e Orçamentos ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Comissão de Contas e Orçamentos ({self.entidade} - {self.regional} - {self.ano})",
                 "context": "API REST Transparência Web",
                 "download_url": comissao_url,
                 "file_type": "json",
