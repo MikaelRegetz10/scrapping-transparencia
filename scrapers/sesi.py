@@ -1,0 +1,100 @@
+# scrapers/sesi.py
+from datetime import datetime
+from typing import Dict, List
+from urllib.parse import urlencode
+
+from scrapers.base import BaseScraper
+
+
+class SesiScraper(BaseScraper):
+
+    def __init__(self, entidade: str = "SESI", regional: str = "DN"):
+        super().__init__(
+            name="SESI",
+            base_url="https://sorsdn.sistemaindustria.com.br",
+        )
+        self.entidade = entidade
+        self.regional = regional
+
+    def extract_links(self) -> List[Dict[str, str]]:
+        """Mapeia os endpoints REST da API do SESI (Sistema Indústria) conforme a
+
+        documentação Swagger.
+        """
+        ano_atual = datetime.now().year
+
+        # Endpoints capturados das documentações do Swagger
+        endpoints = [
+            {
+                "title": f"Execução Orçamentária ({self.entidade} - {self.regional} - {ano_atual})",
+                "path": "/api/Transparencia/Get",
+                "params": {
+                    "entidade": self.entidade,
+                    "regional": self.regional,
+                    "ano": ano_atual,
+                },
+            },
+            {
+                "title": f"Saldo Exercício Anterior ({self.entidade} - {self.regional} - {ano_atual})",
+                "path": "/api/Transparencia/GetSaldoExercicioAnterior",
+                "params": {
+                    "entidade": self.entidade,
+                    "regional": self.regional,
+                    "ano": ano_atual,
+                },
+            },
+            {
+                "title": f"Previsão Orçamentária ({self.entidade} - {ano_atual})",
+                "path": "/api/Transparencia/GetPrevisaoOrcamentaria",
+                "params": {
+                    "entidade": self.entidade,
+                    "ano": ano_atual,
+                },
+            },
+            {
+                "title": f"Rateio de Despesas ({self.entidade} - {self.regional} - {ano_atual})",
+                "path": "/api/Transparencia/GetRateio",
+                "params": {
+                    "entidade": self.entidade,
+                    "regional": self.regional,
+                    "ano": ano_atual,
+                },
+            },
+            {
+                "title": f"Despesas por Licitação ({self.entidade} - {self.regional} - {ano_atual})",
+                "path": "/api/Transparencia/GetLicitacao",
+                "params": {
+                    "entidade": self.entidade,
+                    "regional": self.regional,
+                    "ano": ano_atual,
+                },
+            },
+            {
+                "title": f"Bens Imóveis ({self.entidade} - {self.regional} - {ano_atual})",
+                "path": "/api/Transparencia/GetBensImoveis",
+                "params": {
+                    "entidade": self.entidade,
+                    "regional": self.regional,
+                    "ano": ano_atual,
+                },
+            },
+        ]
+
+        extracted_data = []
+
+        for ep in endpoints:
+            base_endpoint_url = f"{self.base_url}{ep['path']}"
+            query_string = urlencode(ep["params"])
+            full_url = f"{base_endpoint_url}?{query_string}"
+
+            extracted_data.append(
+                {
+                    "source": self.name,
+                    "title": ep["title"],
+                    "context": "API REST Sistema Indústria",
+                    "download_url": full_url,
+                    "file_type": "json",
+                }
+            )
+
+        return extracted_data
