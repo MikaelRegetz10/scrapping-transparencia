@@ -7,8 +7,9 @@ from scrapers.sesi import SesiScraper
 
 def main():
     # Lista de scrapers a serem executados
+    # Disponíveis: ABDIScraper(), SesiScraper(), SenaiScraper()
     scrapers_to_run = [
-        SenaiScraper()
+        ABDIScraper()
     ]
 
     all_dfs = []

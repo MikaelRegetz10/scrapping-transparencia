@@ -12,6 +12,11 @@ from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
 
 
+# Formatos que o core/profiler.py sabe perfilar. Os demais (pdf, zip, doc...)
+# são auditados só quanto à disponibilidade, sem baixar o corpo do arquivo.
+PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json"}
+
+
 def sanitize_sheet_name(title: str, index: int) -> str:
     """Higieniza o título para criar abas válidas no Excel."""
     clean_title = re.sub(r"[\\/*?:\[\]]", "", title)
@@ -57,7 +62,13 @@ def run_scraper_pipeline(
         erros_str = ""
         avisos_str = ""
 
-        if is_active:
+        if is_active and file_type not in PROFILABLE_TYPES:
+            erros_str = (
+                f"Formato '{file_type}' fora do escopo do profiler: "
+                "link auditado apenas quanto à disponibilidade."
+            )
+            print(f"      ⏭️  Formato '{file_type}' não perfilável (download ignorado).")
+        elif is_active:
             try:
                 # 2. Download do Arquivo em Memória
                 res = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
@@ -105,10 +116,13 @@ def run_scraper_pipeline(
                 "id": idx,
                 "fonte": item["source"],
                 "titulo": title,
+                "contexto": item.get("context", ""),
                 "tipo_arquivo": file_type,
                 "url_download": url,
                 "status_http": status_code,
                 "ativo": is_active,
+                "content_type": status_info.get("content_type") or "",
+                "tamanho_kb": status_info.get("content_length_kb"),
                 "estruturado": "SIM" if is_structured else "NÃO",
                 "erros_qualidade": erros_str,
                 "avisos_qualidade": avisos_str,
