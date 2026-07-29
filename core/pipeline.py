@@ -1,3 +1,4 @@
+# core/pipeline.py
 from datetime import datetime
 import os
 import re
@@ -20,86 +21,126 @@ def sanitize_sheet_name(title: str, index: int) -> str:
 def run_scraper_pipeline(
     scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
-    logger.info(f"🚀 Iniciando Auditoria: {scraper.name} (Exercício: {config.ano})")
+    logger.info(f"🚀 Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})")
 
     raw_items = scraper.extract_links()
     total = len(raw_items)
-    logger.info(f"🔗 [{scraper.name}] Total de links/endpoints: {total}")
+    logger.info(f"🔗 [{scraper.name}] Total de links extraídos de todas as rotas: {total}")
 
-    summary_records = []
+    summary_tables = []
+    summary_pdfs = []
     structured_samples = {}
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    for idx, item in enumerate(raw_items, 1):
+    table_idx = 1
+    pdf_idx = 1
+
+    for item in raw_items:
         url = item["download_url"]
         title = item["title"]
         file_type = item["file_type"]
+        section = item.get("section", "Geral")
 
         if config.log_detalhado:
-            logger.debug(f"[{idx}/{total}] Processando: {title}")
+            logger.debug(f"[{section}] Verificando: {title[:40]} ({file_type.upper()})")
 
+        # Check Conectividade
         status_info = check_url_status(url)
         is_active = status_info["is_active"]
         status_code = status_info["status_code"] or "ERRO"
+        size_kb = status_info["content_length_kb"]
 
-        is_structured = False
-        erros_str = ""
-        avisos_str = ""
+        # ==========================================
+        # 1. TRATAMENTO PARA DOCUMENTOS PDF
+        # ==========================================
+        if file_type == "pdf":
+            summary_pdfs.append({
+                "id": pdf_idx,
+                "fonte": item["source"],
+                "secao_rota": section,
+                "titulo": title,
+                "tipo_arquivo": "PDF",
+                "url_download": url,
+                "status_http": status_code,
+                "ativo": "SIM" if is_active else "NÃO",
+                "tamanho_kb": size_kb,
+                "verificado_em": timestamp,
+            })
+            pdf_idx += 1
 
-        if is_active:
-            try:
-                res = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
-                profiling = analyze_dataset_quality(res.content, file_type)
-                is_structured = profiling["is_structured"]
-
-                erros_str = " | ".join(profiling["errors"]) if profiling["errors"] else "Nenhum"
-                avisos_str = " | ".join(profiling["warnings"]) if profiling["warnings"] else "Nenhum"
-
-                if is_structured:
-                    sheet_name = sanitize_sheet_name(title, idx)
-                    structured_samples[sheet_name] = profiling["df_valid"].head(20)
-                    if config.log_detalhado:
-                        logger.debug(f"   ✅ APROVADO: Adicionado na aba '{sheet_name}'")
-                else:
-                    if config.log_detalhado:
-                        logger.debug(f"   ❌ REJEITADO: {erros_str}")
-
-            except Exception as e:
-                erros_str = f"Falha de processamento: {e}"
-                logger.error(f"   ❌ Erro ao baixar {url}: {e}")
+        # ==========================================
+        # 2. TRATAMENTO PARA TABELAS (CSV, XLSX, JSON)
+        # ==========================================
         else:
-            erros_str = f"Link inativo (HTTP {status_code})"
-            if config.log_detalhado:
-                logger.debug(f"   ❌ INATIVO (HTTP {status_code})")
+            is_structured = False
+            erros_str = ""
+            avisos_str = ""
 
-        summary_records.append({
-            "id": idx,
-            "fonte": item["source"],
-            "titulo": title,
-            "tipo_arquivo": file_type,
-            "url_download": url,
-            "status_http": status_code,
-            "ativo": is_active,
-            "estruturado": "SIM" if is_structured else "NÃO",
-            "erros_qualidade": erros_str,
-            "avisos_qualidade": avisos_str,
-            "verificado_em": timestamp,
-        })
+            if is_active:
+                try:
+                    res = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
+                    profiling = analyze_dataset_quality(res.content, file_type)
+                    is_structured = profiling["is_structured"]
+
+                    erros_str = " | ".join(profiling["errors"]) if profiling["errors"] else "Nenhum"
+                    avisos_str = " | ".join(profiling["warnings"]) if profiling["warnings"] else "Nenhum"
+
+                    if is_structured:
+                        sheet_name = sanitize_sheet_name(title, table_idx)
+                        structured_samples[sheet_name] = profiling["df_valid"].head(20)
+                except Exception as e:
+                    erros_str = f"Falha de processamento: {e}"
+            else:
+                erros_str = f"Link inativo (HTTP {status_code})"
+
+            summary_tables.append({
+                "id": table_idx,
+                "fonte": item["source"],
+                "secao_rota": section,
+                "titulo": title,
+                "tipo_arquivo": file_type,
+                "url_download": url,
+                "status_http": status_code,
+                "ativo": is_active,
+                "estruturado": "SIM" if is_structured else "NÃO",
+                "erros_qualidade": erros_str,
+                "avisos_qualidade": avisos_str,
+                "verificado_em": timestamp,
+            })
+            table_idx += 1
 
         if config.delay_entre_requisicoes > 0:
             time.sleep(config.delay_entre_requisicoes)
 
-    # Gravação do arquivo Excel final
+    # ==========================================
+    # EXPORTAÇÃO PARA O EXCEL COM 2 ABAS DE RESUMO
+    # ==========================================
     os.makedirs(config.output_dir, exist_ok=True)
-    excel_path = os.path.join(config.output_dir, f"{scraper.name.lower()}_relatorio_qualidade.xlsx")
+    excel_path = os.path.join(
+        config.output_dir, f"{scraper.name.lower()}_relatorio_qualidade.xlsx"
+    )
 
-    df_summary = pd.DataFrame(summary_records)
+    df_summary_tables = pd.DataFrame(summary_tables)
+    df_summary_pdfs = pd.DataFrame(summary_pdfs)
+
     with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
-        df_summary.to_excel(writer, sheet_name="Resumo_Geral", index=False)
+        # Aba 1: Resumo de Planilhas e APIs Tabulares
+        if not df_summary_tables.empty:
+            df_summary_tables.to_excel(writer, sheet_name="Resumo_Geral", index=False)
+        else:
+            pd.DataFrame([{"Aviso": "Nenhuma tabela encontrada"}]).to_excel(writer, sheet_name="Resumo_Geral", index=False)
+
+        # Aba 2: Resumo exclusivo de PDFs e Documentos
+        if not df_summary_pdfs.empty:
+            df_summary_pdfs.to_excel(writer, sheet_name="Resumo_PDFs", index=False)
+        else:
+            pd.DataFrame([{"Aviso": "Nenhum PDF encontrado"}]).to_excel(writer, sheet_name="Resumo_PDFs", index=False)
+
+        # Demais Abas: Amostras das planilhas/APIs aprovadas
         for sheet_name, df_data in structured_samples.items():
             df_data.to_excel(writer, sheet_name=sheet_name, index=False)
 
     logger.info(
-        f"✅ [{scraper.name}] Finalizado! Aprovadas: {len(structured_samples)}/{total}. Relatório: {excel_path}\n"
+        f"✅ [{scraper.name}] Concluído! Tabelas: {len(summary_tables)} | PDFs: {len(summary_pdfs)}. Relatório: {excel_path}\n"
     )
-    return df_summary
+    return df_summary_tables
