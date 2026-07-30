@@ -16,6 +16,11 @@ from scrapers.base import BaseScraper
 # são auditados só quanto à disponibilidade, sem baixar o corpo do arquivo.
 PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json"}
 
+# Raiz do projeto: as saídas vão sempre para o mesmo lugar, não importa de que
+# diretório a IDE (PyCharm, VS Code, terminal) dispare o script.
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_OUTPUT_DIR = os.path.join(PROJECT_ROOT, "outputs")
+
 
 def sanitize_sheet_name(title: str, index: int) -> str:
     """Higieniza o título para criar abas válidas no Excel."""
@@ -27,7 +32,7 @@ def sanitize_sheet_name(title: str, index: int) -> str:
 def run_scraper_pipeline(
     scraper: BaseScraper,
     delay: float = 0.2,
-    output_dir: str = "outputs",
+    output_dir: str = DEFAULT_OUTPUT_DIR,
     rows_per_sample: int = 20,
 ) -> pd.DataFrame:
     """Executa o scraping, faz o Data Profiling e armazena apenas dados
