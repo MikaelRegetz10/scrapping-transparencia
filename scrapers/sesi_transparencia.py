@@ -95,6 +95,10 @@ class SesiTransparenciaScraper(BaseScraper):
         super().__init__(
             name="SESI_Transparencia",
             base_url=urljoin(BASE_SITE, "/sesi/canais/transparencia/"),
+            routes={
+                "Licitações / Processos de Seleção": urljoin(BASE_SITE, PATH_LICITACOES),
+                "Informações de Empregados e Dirigentes": urljoin(BASE_SITE, PATH_EMPREGADOS),
+            },
         )
         self.licitacoes = licitacoes
         self.empregados = empregados
@@ -186,6 +190,8 @@ class SesiTransparenciaScraper(BaseScraper):
 
             novos = [r for r in encontrados if r["download_url"] not in vistos]
             vistos.update(r["download_url"] for r in novos)
+            for registro in novos:
+                registro["section"] = rotulo
             registros.extend(novos)
             print(f"      📑 {rotulo}: {len(novos)} link(s).")
 

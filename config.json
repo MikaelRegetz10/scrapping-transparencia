@@ -1,0 +1,8 @@
+{
+  "ano": 2026,
+  "salvar_log": true,
+  "log_detalhado": true,
+  "delay_entre_requisicoes": 0.2,
+  "output_dir": "outputs",
+  "logs_dir": "logs"
+}

@@ -1,28 +1,35 @@
+# scrapers/base.py
 from abc import ABC, abstractmethod
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 class BaseScraper(ABC):
-    """Classe base abstrata para todos os scrapers de transparência."""
+    """Classe base abstrata com suporte a múltiplas rotas por scraper."""
 
-    def __init__(self, name: str, base_url: str):
+    def __init__(
+        self,
+        name: str,
+        base_url: Optional[str] = None,
+        routes: Optional[Dict[str, str]] = None,
+    ):
         self.name = name
-        self.base_url = base_url
+        self.base_url = base_url or ""
+        # Dicionário no formato: {"Nome da Seção": "https://url..."}
+        self.routes = routes or (
+            {"Principal": base_url} if base_url else {}
+        )
 
     @abstractmethod
     def extract_links(self) -> List[Dict[str, str]]:
-        """Extrai os links da página de transparência.
+        """Deve retornar a lista de links extraídos de todas as rotas ativas.
 
-        Deve retornar uma lista de dicionários no formato:
-        [
-            {
-                "source": "Nome do Portal",
-                "title": "Título/Descrição do link",
-                "context": "Texto contextual ao redor",
-                "download_url": "https://...",
-                "file_type": "pdf | csv | xlsx | link/página"
-            },
-            ...
-        ]
+        Retorno padrão de cada item:
+        {
+            "source": "ABDI",
+            "section": "Aquisição de Bens e Serviços",
+            "title": "Dispensa de Licitação nº 027/2026",
+            "download_url": "https://...",
+            "file_type": "pdf | csv | xlsx | json"
+        }
         """
         pass

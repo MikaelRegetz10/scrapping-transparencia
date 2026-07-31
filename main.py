@@ -1,6 +1,6 @@
 import sys
 
-import pandas as pd
+from core.config import Config, setup_logger
 from core.pipeline import run_scraper_pipeline
 from scrapers.abdi import ABDIScraper
 from scrapers.senai import SenaiScraper
@@ -23,26 +23,18 @@ def configurar_saida_utf8() -> None:
 def main():
     configurar_saida_utf8()
 
-    # Lista de scrapers a serem executados
+    config = Config()
+    logger = setup_logger(config)
+
+    # Escolha aqui quais portais varrer.
     # Disponíveis: ABDIScraper(), SesiScraper(), SenaiScraper(),
     #              SesiTransparenciaScraper()
-    scrapers_to_run = [
+    scrapers = [
         SesiTransparenciaScraper()
     ]
 
-    all_dfs = []
-
-    for scraper in scrapers_to_run:
-        df_result = run_scraper_pipeline(scraper)
-        all_dfs.append(df_result)
-
-    # Consolida tudo num DataFrame único final com todos os portais
-    if all_dfs:
-        df_consolidado = pd.concat(all_dfs, ignore_index=True)
-        print("\n=== RESUMO GERAL ===")
-        print(f"Total de links verificados: {len(df_consolidado)}")
-        print(df_consolidado["ativo"].value_counts(dropna=False))
-
+    for scraper in scrapers:
+        run_scraper_pipeline(scraper, config, logger)
 
 
 if __name__ == "__main__":

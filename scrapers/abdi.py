@@ -84,6 +84,11 @@ class ABDIScraper(BaseScraper):
         super().__init__(
             name="ABDI",
             base_url=urljoin(BASE_SITE, "/transparencia/"),
+            routes={
+                "Dados Abertos": urljoin(BASE_SITE, PATH_DADOS_ABERTOS),
+                "Aquisição de Bens e Serviços": urljoin(BASE_SITE, PATH_AQUISICOES),
+                "Processo Seletivo": urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO),
+            },
         )
         self.dados_abertos = dados_abertos
         self.aquisicoes = aquisicoes
@@ -159,6 +164,8 @@ class ABDIScraper(BaseScraper):
 
             novos = [r for r in encontrados if r["download_url"] not in vistos]
             vistos.update(r["download_url"] for r in novos)
+            for registro in novos:
+                registro["section"] = rotulo
             registros.extend(novos)
             print(f"      📑 {rotulo}: {len(novos)} link(s) de download.")
 

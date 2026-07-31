@@ -8,74 +8,73 @@ from scrapers.base import BaseScraper
 
 class SesiScraper(BaseScraper):
 
-    def __init__(self, entidade: str = "SESI", regional: str = "DN"):
+    def __init__(self, entidade: str = "SESI", regional: str = "DN", ano: int = 2026):
         super().__init__(
             name="SESI",
             base_url="https://sorsdn.sistemaindustria.com.br",
         )
         self.entidade = entidade
         self.regional = regional
+        self.ano = ano
 
     def extract_links(self) -> List[Dict[str, str]]:
         """Mapeia os endpoints REST da API do SESI (Sistema Indústria) conforme a
 
         documentação Swagger.
         """
-        ano_atual = datetime.now().year
-
         # Endpoints capturados das documentações do Swagger
         endpoints = [
             {
-                "title": f"Execução Orçamentária ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Execução Orçamentária ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/Get",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Saldo Exercício Anterior ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Saldo Exercício Anterior ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetSaldoExercicioAnterior",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Previsão Orçamentária ({self.entidade} - {ano_atual})",
+                "title": f"Previsão Orçamentária ({self.entidade} - {self.ano})",
                 "path": "/api/Transparencia/GetPrevisaoOrcamentaria",
                 "params": {
                     "entidade": self.entidade,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Rateio de Despesas ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Rateio de Despesas ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetRateio",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Despesas por Licitação ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Despesas por Licitação ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetLicitacao",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
             {
-                "title": f"Bens Imóveis ({self.entidade} - {self.regional} - {ano_atual})",
+                "title": f"Bens Imóveis ({self.entidade} - {self.regional} - {self.ano})",
                 "path": "/api/Transparencia/GetBensImoveis",
                 "params": {
                     "entidade": self.entidade,
                     "regional": self.regional,
-                    "ano": ano_atual,
+                    "ano": self.ano,
                 },
             },
         ]

@@ -206,6 +206,7 @@ tempCodeRunnerFile.py
 
 # Saídas geradas pelo pipeline: são artefato de execução, não código-fonte.
 outputs/
+logs/
 
 # Ruff stuff:
 .ruff_cache/
