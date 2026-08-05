@@ -2,6 +2,7 @@ from core.config import Config, setup_logger
 from core.pipeline import run_scraper_pipeline
 from scrapers.abdi import ABDIScraper
 from scrapers.senai import SenaiScraper
+from scrapers.senar import SenarScraper
 from scrapers.sesi import SesiScraper
 
 
@@ -11,7 +12,7 @@ def main():
     logger = setup_logger(config)
 
     scrapers = [
-        ABDIScraper()
+        SenarScraper(config.ano)
     ]
 
     for scraper in scrapers:
