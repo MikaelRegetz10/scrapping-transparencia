@@ -1,32 +1,47 @@
-# core/profiler.py
 import ast
 import io
 import json
 import re
-from typing import Any, Dict
+from typing import Any, List, Optional, Dict
 import openpyxl
 import pandas as pd
 
 
-def flatten_nested_json_to_df(json_data: Any) -> pd.DataFrame:
-    """Desempacota automaticamente qualquer estrutura JSON multinível (listas
+COLUNAS_IGNORAR_PADRAO = [
+    "pagina_total",
+    "pagina_atual",
+    "pagina_anterior",
+    "pagina_proxima",
+    "registro_total",
+    "registro_atual",
+    "mensagens",
+    "mensagens.page_size",
+]
 
-    dentro de listas) expandindo em linhas e colunas sem precisar de nomes
-    fixos de chaves.
-    """
-    # 1. Parse inicial
-    if isinstance(json_data, str):
-        try:
-            json_data = json.loads(json_data)
-        except Exception:
+
+def flatten_nested_json_to_df(
+    json_data: Any,
+    max_depth: int = 5,
+    drop_cols: Optional[List[str]] = COLUNAS_IGNORAR_PADRAO,
+) -> pd.DataFrame:
+    """Desempacota estruturas JSON e remove automaticamente colunas indesejadas."""
+
+    def _parse_if_string(val):
+        if isinstance(val, str) and (val.startswith("[") or val.startswith("{")):
             try:
-                json_data = ast.literal_eval(json_data)
+                return json.loads(val)
             except Exception:
-                pass
+                try:
+                    return ast.literal_eval(val)
+                except Exception:
+                    pass
+        return val
 
-    if isinstance(json_data, list):
-        df = pd.json_normalize(json_data)
-    elif isinstance(json_data, dict):
+    # 1. Parse e normalização inicial
+    if isinstance(json_data, str):
+        json_data = _parse_if_string(json_data)
+
+    if isinstance(json_data, (list, dict)):
         df = pd.json_normalize(json_data)
     else:
         return pd.DataFrame()
@@ -34,62 +49,51 @@ def flatten_nested_json_to_df(json_data: Any) -> pd.DataFrame:
     if df.empty:
         return df
 
-    # 2. Loop iterativo para explodir e expandir sub-listas e dicionários aninhados
-    max_depth = 5  # Suporta até 5 níveis de aninhamento
+    # 2. Descompactação de dicionários e listas aninhadas
     for _ in range(max_depth):
         complex_col_found = False
 
         for col in list(df.columns):
+            if df[col].dtype == "object":
+                df[col] = df[col].apply(_parse_if_string)
+
             non_null = df[col].dropna()
             if non_null.empty:
                 continue
 
-            # Converte textos que são JSONs/listas em objetos reais do Python
-            def parse_val(v):
-                if isinstance(v, str) and (
-                    v.startswith("[") or v.startswith("{")
-                ):
-                    try:
-                        return json.loads(v)
-                    except Exception:
-                        try:
-                            return ast.literal_eval(v)
-                        except Exception:
-                            return v
-                return v
+            has_dict = non_null.apply(lambda x: isinstance(x, dict)).any()
+            has_list = non_null.apply(lambda x: isinstance(x, list)).any()
 
-            df[col] = df[col].apply(parse_val)
-            non_null = df[col].dropna()
-            if non_null.empty:
-                continue
-
-            sample = non_null.iloc[0]
-
-            # CASO A: A coluna contém uma Lista (ex: Areas, Licitacoes, Objetos, Composicao)
-            if isinstance(sample, list):
+            if has_list:
                 complex_col_found = True
                 df = df.explode(col).reset_index(drop=True)
+                non_null = df[col].dropna()
+                has_dict = non_null.apply(lambda x: isinstance(x, dict)).any()
 
-                exploded_non_null = df[col].dropna()
-                if not exploded_non_null.empty and isinstance(
-                    exploded_non_null.iloc[0], dict
-                ):
-                    expanded = pd.json_normalize(exploded_non_null.tolist())
-                    expanded.index = exploded_non_null.index
-                    df = df.drop(columns=[col]).join(expanded)
-
-            # CASO B: A coluna contém um Dicionário isolado
-            elif isinstance(sample, dict):
+            if has_dict:
                 complex_col_found = True
-                expanded = pd.json_normalize(non_null.tolist())
-                expanded.index = non_null.index
+                dicts_to_expand = df[col].apply(
+                    lambda x: x if isinstance(x, dict) else {}
+                )
+                expanded = pd.json_normalize(dicts_to_expand.tolist())
+                expanded.index = df.index
+                expanded.columns = [f"{col}.{subcol}" for subcol in expanded.columns]
                 df = df.drop(columns=[col]).join(expanded)
 
         if not complex_col_found:
             break
 
-    return df
+    # 3. 💡 REMOÇÃO DE COLUNAS INDESEJADAS
+    if drop_cols:
+        # Remove por nome exato ou se o nome da coluna terminar com o termo (ex: "meta.pagina_total")
+        cols_para_remover = [
+            c
+            for c in df.columns
+            if c in drop_cols or any(c.endswith(f".{dc}") for dc in drop_cols)
+        ]
+        df = df.drop(columns=cols_para_remover, errors="ignore")
 
+    return df
 
 def analyze_dataset_quality(
     file_bytes: bytes, file_type: str

@@ -21,11 +21,11 @@ def sanitize_sheet_name(title: str, index: int) -> str:
 def run_scraper_pipeline(
     scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
-    logger.info(f"🚀 Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})")
+    logger.info(f"Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})")
 
     raw_items = scraper.extract_links()
     total = len(raw_items)
-    logger.info(f"🔗 [{scraper.name}] Total de links extraídos de todas as rotas: {total}")
+    logger.info(f"[{scraper.name}] Total de links extraídos de todas as rotas: {total}")
 
     summary_tables = []
     summary_pdfs = []
