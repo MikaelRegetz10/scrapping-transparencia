@@ -4,6 +4,7 @@ from core.config import Config, setup_logger
 from core.pipeline import run_scraper_pipeline
 from scrapers.abdi import ABDIScraper
 from scrapers.senai import SenaiScraper
+from scrapers.senar import SenarScraper
 from scrapers.sesi import SesiScraper
 from scrapers.sesi_transparencia import SesiTransparenciaScraper
 
@@ -28,9 +29,9 @@ def main():
 
     # Escolha aqui quais portais varrer.
     # Disponíveis: ABDIScraper(), SesiScraper(), SenaiScraper(),
-    #              SesiTransparenciaScraper()
+    #              SesiTransparenciaScraper(), SenarScraper(config.ano)
     scrapers = [
-        SesiTransparenciaScraper()
+        SenarScraper(config.ano)
     ]
 
     for scraper in scrapers:
