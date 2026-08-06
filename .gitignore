@@ -208,6 +208,10 @@ tempCodeRunnerFile.py
 outputs/
 logs/
 
+# Dados coletados dos portais: reproduzíveis rodando a coleta de novo e grandes
+# demais para o histórico do repositório.
+data/
+
 # Ruff stuff:
 .ruff_cache/
 

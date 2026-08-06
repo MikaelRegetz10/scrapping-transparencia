@@ -3,9 +3,11 @@ import sys
 from core.config import Config, setup_logger
 from core.pipeline import run_scraper_pipeline
 from scrapers.abdi import ABDIScraper
+from scrapers.abdi_pdf import ABDIPdfScraper
 from scrapers.senai import SenaiScraper
 from scrapers.senar import SenarScraper
 from scrapers.sesi import SesiScraper
+from scrapers.sesi_pdf import SesiPdfScraper
 from scrapers.sesi_transparencia import SesiTransparenciaScraper
 
 
@@ -28,10 +30,14 @@ def main():
     logger = setup_logger(config)
 
     # Escolha aqui quais portais varrer.
-    # Disponíveis: ABDIScraper(), SesiScraper(), SenaiScraper(),
-    #              SesiTransparenciaScraper(), SenarScraper(config.ano)
+    #
+    # Coleta de PDFs via navegador headless (Playwright):
+    #     ABDIPdfScraper(), SesiPdfScraper(), SenarScraper(config.ano)
+    # Coleta estática (requests + BeautifulSoup), que também perfila datasets:
+    #     ABDIScraper(), SesiScraper(), SenaiScraper(), SesiTransparenciaScraper()
     scrapers = [
-        SenarScraper(config.ano)
+        ABDIPdfScraper(),
+        SesiPdfScraper(),
     ]
 
     for scraper in scrapers:

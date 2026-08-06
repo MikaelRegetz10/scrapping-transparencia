@@ -4,7 +4,12 @@
 # As faixas abaixo deixam o pip escolher a versao mais nova compativel com o
 # interpretador de cada pessoa: no Python 3.10 ele instala pandas 2.x, no 3.12+
 # instala pandas 3.x. Assim o mesmo arquivo serve para Windows, macOS e Linux.
+#
+# playwright exige um passo extra depois do pip install:
+#     python -m playwright install chromium
 beautifulsoup4>=4.12,<5
 openpyxl>=3.1,<4
 pandas>=2.2,<4
+playwright>=1.44,<2
+pyarrow>=15,<26
 requests>=2.31,<3
