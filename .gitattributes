@@ -1,0 +1,18 @@
+# Normaliza fim de linha no repositório (LF) e converte para o padrão do SO
+# no checkout. Sem isso, quem edita no Windows commita CRLF e o diff estoura.
+* text=auto
+
+*.py    text eol=lf
+*.txt   text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+
+# Binários: nunca converter.
+*.xlsx  binary
+*.xls   binary
+*.ods   binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.zip   binary

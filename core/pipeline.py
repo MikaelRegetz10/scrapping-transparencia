@@ -12,7 +12,16 @@ from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
 
 
+# Formatos que o core/profiler.py sabe perfilar. Os demais (zip, doc, docx...)
+# são auditados só quanto à disponibilidade, sem baixar o corpo do arquivo.
+PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json"}
+
+# Linhas de amostra guardadas por dataset aprovado no profiling.
+ROWS_PER_SAMPLE = 20
+
+
 def sanitize_sheet_name(title: str, index: int) -> str:
+    """Higieniza o título para criar abas válidas no Excel."""
     clean_title = re.sub(r"[\\/*?:\[\]]", "", title)
     short_title = clean_title[:24].strip()
     return f"{index:02d}_{short_title}" if short_title else f"Aba_{index:02d}"
@@ -21,6 +30,7 @@ def sanitize_sheet_name(title: str, index: int) -> str:
 def run_scraper_pipeline(
     scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
+    """Executa o scraping, valida os links e gera o relatório em Excel."""
     logger.info(f"Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})")
 
     raw_items = scraper.extract_links()
@@ -42,13 +52,18 @@ def run_scraper_pipeline(
         section = item.get("section", "Geral")
 
         if config.log_detalhado:
-            logger.debug(f"[{section}] Verificando: {title[:40]} ({file_type.upper()})")
+            logger.debug(
+                f"[{section}] Verificando: {title[:40]} ({file_type.upper()})"
+            )
 
         # Check Conectividade
         status_info = check_url_status(url)
         is_active = status_info["is_active"]
         status_code = status_info["status_code"] or "ERRO"
         size_kb = status_info["content_length_kb"]
+
+        if not is_active:
+            logger.warning(f"❌ [{section}] Link inativo (HTTP {status_code}): {title[:60]}")
 
         # ==========================================
         # 1. TRATAMENTO PARA DOCUMENTOS PDF
@@ -59,6 +74,7 @@ def run_scraper_pipeline(
                 "fonte": item["source"],
                 "secao_rota": section,
                 "titulo": title,
+                "contexto": item.get("context", ""),
                 "tipo_arquivo": "PDF",
                 "url_download": url,
                 "status_http": status_code,
@@ -76,7 +92,18 @@ def run_scraper_pipeline(
             erros_str = ""
             avisos_str = ""
 
-            if is_active:
+            if is_active and file_type not in PROFILABLE_TYPES:
+                # Formatos que o profiler não lê (zip, docx, ods...): auditamos
+                # só a disponibilidade em vez de baixar o arquivo à toa.
+                erros_str = (
+                    f"Formato '{file_type}' fora do escopo do profiler: "
+                    "link auditado apenas quanto à disponibilidade."
+                )
+                if config.log_detalhado:
+                    logger.debug(
+                        f"⏭️  Formato '{file_type}' não perfilável (download ignorado)."
+                    )
+            elif is_active:
                 try:
                     res = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
                     profiling = analyze_dataset_quality(res.content, file_type)
@@ -87,9 +114,18 @@ def run_scraper_pipeline(
 
                     if is_structured:
                         sheet_name = sanitize_sheet_name(title, table_idx)
-                        structured_samples[sheet_name] = profiling["df_valid"].head(20)
+                        structured_samples[sheet_name] = profiling["df_valid"].head(
+                            ROWS_PER_SAMPLE
+                        )
+                        logger.info(
+                            f"✅ [{section}] Dado estruturado. Amostra na aba '{sheet_name}'."
+                        )
+                    elif config.log_detalhado:
+                        for err in profiling["errors"]:
+                            logger.debug(f"   - {err}")
                 except Exception as e:
                     erros_str = f"Falha de processamento: {e}"
+                    logger.warning(f"❌ [{section}] Erro ao processar {title[:40]}: {e}")
             else:
                 erros_str = f"Link inativo (HTTP {status_code})"
 
@@ -98,10 +134,13 @@ def run_scraper_pipeline(
                 "fonte": item["source"],
                 "secao_rota": section,
                 "titulo": title,
+                "contexto": item.get("context", ""),
                 "tipo_arquivo": file_type,
                 "url_download": url,
                 "status_http": status_code,
                 "ativo": is_active,
+                "content_type": status_info.get("content_type") or "",
+                "tamanho_kb": size_kb,
                 "estruturado": "SIM" if is_structured else "NÃO",
                 "erros_qualidade": erros_str,
                 "avisos_qualidade": avisos_str,
@@ -128,19 +167,24 @@ def run_scraper_pipeline(
         if not df_summary_tables.empty:
             df_summary_tables.to_excel(writer, sheet_name="Resumo_Geral", index=False)
         else:
-            pd.DataFrame([{"Aviso": "Nenhuma tabela encontrada"}]).to_excel(writer, sheet_name="Resumo_Geral", index=False)
+            pd.DataFrame([{"Aviso": "Nenhuma tabela encontrada"}]).to_excel(
+                writer, sheet_name="Resumo_Geral", index=False
+            )
 
         # Aba 2: Resumo exclusivo de PDFs e Documentos
         if not df_summary_pdfs.empty:
             df_summary_pdfs.to_excel(writer, sheet_name="Resumo_PDFs", index=False)
         else:
-            pd.DataFrame([{"Aviso": "Nenhum PDF encontrado"}]).to_excel(writer, sheet_name="Resumo_PDFs", index=False)
+            pd.DataFrame([{"Aviso": "Nenhum PDF encontrado"}]).to_excel(
+                writer, sheet_name="Resumo_PDFs", index=False
+            )
 
         # Demais Abas: Amostras das planilhas/APIs aprovadas
         for sheet_name, df_data in structured_samples.items():
             df_data.to_excel(writer, sheet_name=sheet_name, index=False)
 
     logger.info(
-        f"✅ [{scraper.name}] Concluído! Tabelas: {len(summary_tables)} | PDFs: {len(summary_pdfs)}. Relatório: {excel_path}\n"
+        f"✅ [{scraper.name}] Concluído! Tabelas: {len(summary_tables)} | "
+        f"PDFs: {len(summary_pdfs)}. Relatório: {excel_path}\n"
     )
     return df_summary_tables
