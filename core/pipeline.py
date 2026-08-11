@@ -7,6 +7,7 @@ import pandas as pd
 import requests
 
 from core.config import Config
+from core.parquet_exporter import export_to_parquet  # <--- ADICIONADO
 from core.profiler import analyze_dataset_quality
 from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
@@ -21,11 +22,15 @@ def sanitize_sheet_name(title: str, index: int) -> str:
 def run_scraper_pipeline(
     scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
-    logger.info(f"Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})")
+    logger.info(
+        f"Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})"
+    )
 
     raw_items = scraper.extract_links()
     total = len(raw_items)
-    logger.info(f"[{scraper.name}] Total de links extraídos de todas as rotas: {total}")
+    logger.info(
+        f"[{scraper.name}] Total de links extraídos de todas as rotas: {total}"
+    )
 
     summary_tables = []
     summary_pdfs = []
@@ -42,7 +47,9 @@ def run_scraper_pipeline(
         section = item.get("section", "Geral")
 
         if config.log_detalhado:
-            logger.debug(f"[{section}] Verificando: {title[:40]} ({file_type.upper()})")
+            logger.debug(
+                f"[{section}] Verificando: {title[:40]} ({file_type.upper()})"
+            )
 
         # Check Conectividade
         status_info = check_url_status(url)
@@ -72,22 +79,66 @@ def run_scraper_pipeline(
         # 2. TRATAMENTO PARA TABELAS (CSV, XLSX, JSON)
         # ==========================================
         else:
+
+            if config.max_planilhas and (table_idx > config.max_planilhas):
+                logger.info(
+                    f"[Limite atingido] Interrompendo a leitura de tabelas após atingir "
+                    f"o máximo configurado ({config.max_planilhas} planilhas)."
+                )
+                break
+
             is_structured = False
             erros_str = ""
             avisos_str = ""
 
             if is_active:
                 try:
-                    res = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
+                    res = requests.get(
+                        url, headers=DEFAULT_HEADERS, timeout=25
+                    )
                     profiling = analyze_dataset_quality(res.content, file_type)
                     is_structured = profiling["is_structured"]
 
-                    erros_str = " | ".join(profiling["errors"]) if profiling["errors"] else "Nenhum"
-                    avisos_str = " | ".join(profiling["warnings"]) if profiling["warnings"] else "Nenhum"
+                    erros_str = (
+                        " | ".join(profiling["errors"])
+                        if profiling["errors"]
+                        else "Nenhum"
+                    )
+                    avisos_str = (
+                        " | ".join(profiling["warnings"])
+                        if profiling["warnings"]
+                        else "Nenhum"
+                    )
 
                     if is_structured:
+                        df_valid = profiling["df_valid"]
                         sheet_name = sanitize_sheet_name(title, table_idx)
-                        structured_samples[sheet_name] = profiling["df_valid"].head(20)
+                        structured_samples[sheet_name] = df_valid.head(20)
+
+                        # ==========================================
+                        # EXPORTAÇÃO PARQUET HIVE (TEMA / TIPO_DOC / ANO / UF)
+                        # ==========================================
+                        tema = item.get("tcu_tema") or section
+                        tipo_documento = (
+                                item.get("tcu_tipo_documento")
+                                or item.get("tipo_documento")
+                                or title
+                        )
+                        ano = item.get("tcu_ano") or config.ano
+                        uf = item.get("tcu_uf") or "DN"
+                        prefixo = f"{item.get('source', 'extracao')}_{title}"
+
+                        export_to_parquet(
+                            df=df_valid,
+                            entidade=scraper.name,
+                            base_dir=config.output_dir,
+                            tema=tema,
+                            tipo_documento=tipo_documento,
+                            ano=ano,
+                            uf=uf,
+                            prefixo_nome=prefixo
+                        )
+
                 except Exception as e:
                     erros_str = f"Falha de processamento: {e}"
             else:
@@ -126,21 +177,29 @@ def run_scraper_pipeline(
     with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
         # Aba 1: Resumo de Planilhas e APIs Tabulares
         if not df_summary_tables.empty:
-            df_summary_tables.to_excel(writer, sheet_name="Resumo_Geral", index=False)
+            df_summary_tables.to_excel(
+                writer, sheet_name="Resumo_Geral", index=False
+            )
         else:
-            pd.DataFrame([{"Aviso": "Nenhuma tabela encontrada"}]).to_excel(writer, sheet_name="Resumo_Geral", index=False)
+            pd.DataFrame([{"Aviso": "Nenhuma tabela encontrada"}]).to_excel(
+                writer, sheet_name="Resumo_Geral", index=False
+            )
 
         # Aba 2: Resumo exclusivo de PDFs e Documentos
         if not df_summary_pdfs.empty:
-            df_summary_pdfs.to_excel(writer, sheet_name="Resumo_PDFs", index=False)
+            df_summary_pdfs.to_excel(
+                writer, sheet_name="Resumo_PDFs", index=False
+            )
         else:
-            pd.DataFrame([{"Aviso": "Nenhum PDF encontrado"}]).to_excel(writer, sheet_name="Resumo_PDFs", index=False)
+            pd.DataFrame([{"Aviso": "Nenhum PDF encontrado"}]).to_excel(
+                writer, sheet_name="Resumo_PDFs", index=False
+            )
 
         # Demais Abas: Amostras das planilhas/APIs aprovadas
         for sheet_name, df_data in structured_samples.items():
             df_data.to_excel(writer, sheet_name=sheet_name, index=False)
 
     logger.info(
-        f"✅ [{scraper.name}] Concluído! Tabelas: {len(summary_tables)} | PDFs: {len(summary_pdfs)}. Relatório: {excel_path}\n"
+        f"[{scraper.name}] Concluído! Tabelas: {len(summary_tables)} | PDFs: {len(summary_pdfs)}. Relatório: {excel_path}\n"
     )
     return df_summary_tables

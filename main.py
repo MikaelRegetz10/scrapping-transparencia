@@ -3,6 +3,7 @@ from core.pipeline import run_scraper_pipeline
 from scrapers.abdi import ABDIScraper
 from scrapers.senai import SenaiScraper
 from scrapers.senar import SenarScraper
+from scrapers.sesc_api import SescApiScraper
 from scrapers.sesi import SesiScraper
 
 
@@ -12,7 +13,11 @@ def main():
     logger = setup_logger(config)
 
     scrapers = [
-        SenarScraper(config.ano)
+        ABDIScraper(),
+        SesiScraper(),
+        SenaiScraper(),
+        SenarScraper(),
+        SescApiScraper()
     ]
 
     for scraper in scrapers:
@@ -21,3 +26,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
