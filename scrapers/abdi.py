@@ -1,141 +1,354 @@
-# scrapers/abdi.py
+import json
 import os
-from typing import Dict, List
 from urllib.parse import urljoin, urlparse
-
 from bs4 import BeautifulSoup
 import requests
 
 from core.validator import DEFAULT_HEADERS
 from scrapers.base import BaseScraper
 
+BASE_SITE = "https://www.abdi.com.br"
+
+# Tipos que o core/profiler.py sabe perfilar. Os demais (pdf, zip...) são
+# apenas auditados quanto à disponibilidade pelo pipeline.
+PATH_DADOS_ABERTOS = "/transparencia/dados-abertos/"
+PATH_AQUISICOES = "/transparencia/aquisicao-de-bens-e-servicos/"
+PATH_PROCESSO_SELETIVO = "/transparencia/processo-seletivo/"
+
+
+class CloudflareChallengeError(RuntimeError):
+    """Levantada quando a ABDI devolve o desafio da Cloudflare em vez do HTML."""
+
+
+def _normaliza(elemento) -> str:
+    """Colapsa espaços/quebras de linha e remove ponto final decorativo."""
+    # get_text(" ") evita colar textos de tags irmãs ("...Projetos(Publicado em...").
+    return " ".join(elemento.get_text(" ").split()).rstrip(".")
+
+
+def _trunca(texto: str, limite: int) -> str:
+    return texto if len(texto) <= limite else texto[: limite - 1].rstrip() + "…"
+
+
+def _rotulo_licitacao(licitacao: str, documento: str) -> str:
+    """Junta licitação + documento evitando repetição e títulos quilométricos.
+
+    O nome do documento fica no fim e nunca é truncado: é ele que diferencia
+    o edital da ata e dos termos dentro de uma mesma licitação.
+    """
+    if not licitacao:
+        return _trunca(documento or "Documento", 200)
+
+    if not documento or licitacao.startswith(documento) or documento.startswith(licitacao):
+        maior = licitacao if len(licitacao) >= len(documento) else documento
+        return _trunca(maior, 200)
+
+    return f"{_trunca(licitacao, 120)} — {documento}"
+
+
+def _achata_para_form(prefixo: str, valor, destino: list) -> None:
+    """Converte dict/list aninhado no formato de form PHP (`chave[sub][]=v`).
+
+    É o formato que o admin-ajax do JetEngine espera receber no load more.
+    """
+    if isinstance(valor, dict):
+        for chave, sub in valor.items():
+            _achata_para_form(f"{prefixo}[{chave}]", sub, destino)
+    elif isinstance(valor, list):
+        for sub in valor:
+            _achata_para_form(f"{prefixo}[]", sub, destino)
+    elif valor is None:
+        destino.append((prefixo, ""))
+    elif isinstance(valor, bool):
+        destino.append((prefixo, "true" if valor else "false"))
+    else:
+        destino.append((prefixo, str(valor)))
+
 
 class ABDIScraper(BaseScraper):
+    """Scraping estático dos caminhos de transparência da ABDI.
 
-    def __init__(self):
-        routes = {
-            "Dados Abertos": "https://www.abdi.com.br/transparencia/dados-abertos/",
-            "Aquisição de Bens e Serviços": "https://www.abdi.com.br/transparencia/aquisicao-de-bens-e-servicos/",
-            "Processo Seletivo": "https://www.abdi.com.br/transparencia/processo-seletivo/",
+    Cobre três caminhos independentes:
+      * /dados-abertos/            -> botões "Dados Abertos" (CSV/XLSX)
+      * /aquisicao-de-bens-e-servicos/ -> listing grid JetEngine paginado por AJAX
+      * /processo-seletivo/        -> HTML estático com PDFs dos comunicados
+    """
+
+    def __init__(
+        self,
+        dados_abertos: bool = True,
+        aquisicoes: bool = True,
+        processo_seletivo: bool = True,
+        max_paginas: int = 200,
+    ):
+        super().__init__(
+            name="ABDI",
+            base_url=urljoin(BASE_SITE, "/transparencia/"),
+            routes={
+                "Dados Abertos": urljoin(BASE_SITE, PATH_DADOS_ABERTOS),
+                "Aquisição de Bens e Serviços": urljoin(BASE_SITE, PATH_AQUISICOES),
+                "Processo Seletivo": urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO),
+            },
+        )
+        self.dados_abertos = dados_abertos
+        self.aquisicoes = aquisicoes
+        self.processo_seletivo = processo_seletivo
+        self.max_paginas = max_paginas
+
+        self.session = requests.Session()
+        self.session.headers.update(DEFAULT_HEADERS)
+
+    # ------------------------------------------------------------------
+    # Infraestrutura HTTP
+    # ------------------------------------------------------------------
+    def _get(self, url: str) -> requests.Response:
+        response = self.session.get(url, timeout=30)
+
+        # O site fica atrás da Cloudflare: quando o desafio dispara o corpo
+        # devolvido é a página "Just a moment..." e não o HTML da seção.
+        corpo = response.text[:4000]
+        if response.status_code == 403 and (
+            "Just a moment" in corpo or "cf-chl" in corpo or "challenge-platform" in corpo
+        ):
+            raise CloudflareChallengeError(
+                f"Cloudflare bloqueou o acesso a {url} (HTTP 403 - desafio JS). "
+                "Este IP precisa ser liberado ou o scraper migrado para navegador headless."
+            )
+
+        response.raise_for_status()
+        return response
+
+    @staticmethod
+    def _tipo_arquivo(url: str) -> str:
+        """Deduz o tipo pelo caminho; links jet_download não têm extensão."""
+        if "jet_download=" in url:
+            # Verificado via Content-Disposition: o JetEngine da ABDI serve PDF.
+            return "pdf"
+
+        ext = os.path.splitext(urlparse(url).path)[1].lower().lstrip(".")
+        return ext if ext else "desconhecido"
+
+    def _registro(self, titulo: str, contexto: str, url: str) -> dict:
+        return {
+            "source": self.name,
+            "title": titulo or "Título não identificado",
+            "context": contexto,
+            "download_url": url,
+            "file_type": self._tipo_arquivo(url),
         }
-        super().__init__(name="ABDI", routes=routes)
 
-    def extract_links(self) -> List[Dict[str, str]]:
-        extracted_data = []
+    # ------------------------------------------------------------------
+    # Contrato do BaseScraper
+    # ------------------------------------------------------------------
+    def extract_links(self) -> list[dict[str, str]]:
+        secoes = [
+            (self.dados_abertos, "Dados Abertos", self._extrai_dados_abertos),
+            (self.aquisicoes, "Aquisição de Bens e Serviços", self._extrai_aquisicoes),
+            (self.processo_seletivo, "Processo Seletivo", self._extrai_processo_seletivo),
+        ]
 
-        for section_name, url in self.routes.items():
-            try:
-                response = requests.get(
-                    url, headers=DEFAULT_HEADERS, timeout=20
-                )
-                response.raise_for_status()
-                soup = BeautifulSoup(response.text, "html.parser")
+        registros: list[dict[str, str]] = []
+        falhas: list[str] = []
+        vistos: set[str] = set()
 
-                if section_name == "Dados Abertos":
-                    extracted_data.extend(
-                        self._extract_dados_abertos(soup, url, section_name)
-                    )
-                else:
-                    extracted_data.extend(
-                        self._extract_pdf_documents(soup, url, section_name)
-                    )
-
-            except Exception as e:
-                print(f"⚠️ Erro ao acessar a rota [{section_name}] ({url}): {e}")
-
-        return extracted_data
-
-    def _extract_dados_abertos(
-        self, soup: BeautifulSoup, page_url: str, section: str
-    ) -> List[Dict[str, str]]:
-        """Extrai planilhas/dados dos botões 'Dados Abertos'."""
-        items = []
-        for anchor in soup.find_all("a", href=True):
-            if anchor.get_text(strip=True).lower() == "dados abertos":
-                href = anchor["href"].strip()
-                full_url = urljoin(page_url, href)
-                title = "Dados Abertos ABDI"
-
-                for parent in anchor.parents:
-                    heading = parent.find(
-                        class_=[
-                            "elementor-heading-title",
-                            "elementor-widget-heading",
-                        ]
-                    )
-                    if heading:
-                        title = " ".join(heading.get_text().split()).rstrip(".")
-                        break
-
-                ext = (
-                    os.path.splitext(urlparse(full_url).path)[1]
-                    .lower()
-                    .replace(".", "")
-                )
-                items.append(
-                    {
-                        "source": self.name,
-                        "section": section,
-                        "title": title,
-                        "download_url": full_url,
-                        "file_type": ext if ext else "csv",
-                    }
-                )
-        return items
-
-    def _extract_pdf_documents(
-        self, soup: BeautifulSoup, page_url: str, section: str
-    ) -> List[Dict[str, str]]:
-        """Extrai links de PDFs e botões 'Visualizar' (JetDownload / Elementor)
-
-        nas seções de Licitações e Processo Seletivo.
-        """
-        items = []
-        seen_urls = set()
-
-        for anchor in soup.find_all("a", href=True):
-            href = anchor["href"].strip()
-            if not href or href.startswith("#") or href.startswith("javascript:"):
+        for habilitada, rotulo, extrator in secoes:
+            if not habilitada:
                 continue
 
-            full_url = urljoin(page_url, href)
-            href_lower = full_url.lower()
+            try:
+                encontrados = extrator()
+            except Exception as e:
+                falhas.append(f"{rotulo}: {e}")
+                print(f"      ⚠️ Falha ao varrer '{rotulo}': {e}")
+                continue
 
-            # Identifica se o link é um PDF direto ou uma URL de jet_download da ABDI
-            is_pdf = ".pdf" in href_lower or "jet_download=" in href_lower
+            novos = [r for r in encontrados if r["download_url"] not in vistos]
+            vistos.update(r["download_url"] for r in novos)
+            for registro in novos:
+                registro["section"] = rotulo
+            registros.extend(novos)
+            print(f"      📑 {rotulo}: {len(novos)} link(s) de download.")
 
-            if is_pdf and full_url not in seen_urls:
-                seen_urls.add(full_url)
+        if not registros and falhas:
+            raise RuntimeError(
+                "Nenhuma seção da ABDI pôde ser lida. Detalhes: " + " | ".join(falhas)
+            )
 
-                # Busca o contexto do título no container Elementor superior
-                title = "Documento PDF"
-                container = (
-                    anchor.find_parent("div", class_=lambda c: c and ("elementor-widget" in c or "jet-" in c or "e-con" in c))
-                    or anchor.find_parent(["li", "tr", "div", "p"])
+        return registros
+
+    # ------------------------------------------------------------------
+    # Seção 1: /transparencia/dados-abertos/
+    # ------------------------------------------------------------------
+    def _extrai_dados_abertos(self) -> list[dict[str, str]]:
+        url_secao = urljoin(BASE_SITE, PATH_DADOS_ABERTOS)
+        soup = BeautifulSoup(self._get(url_secao).text, "html.parser")
+
+        registros = []
+        for anchor in soup.find_all("a", href=True):
+            if anchor.get_text(strip=True).lower() != "dados abertos":
+                continue
+
+            full_url = urljoin(url_secao, anchor["href"].strip())
+
+            # Sobe a árvore DOM procurando o título do relatório na mesma linha.
+            titulo = ""
+            for parent in anchor.parents:
+                heading = parent.find(
+                    class_=["elementor-heading-title", "elementor-widget-heading"]
                 )
+                if heading:
+                    titulo = _normaliza(heading)
+                    break
 
-                if container:
-                    raw_text = container.get_text(separator=" ", strip=True)
-                    # Limpa palavras do botão visual da string do título
-                    clean_title = (
-                        raw_text.replace("Visualizar", "")
-                        .replace("Baixar", "")
-                        .replace("Em andamento", "")
-                        .replace("Concluído", "")
-                        .strip()
+            registros.append(self._registro(titulo, "Botão Dados Abertos", full_url))
+
+        return registros
+
+    # ------------------------------------------------------------------
+    # Seção 2: /transparencia/aquisicao-de-bens-e-servicos/
+    # ------------------------------------------------------------------
+    def _extrai_aquisicoes(self) -> list[dict[str, str]]:
+        url_secao = urljoin(BASE_SITE, PATH_AQUISICOES)
+        html_inicial = self._get(url_secao).text
+        soup = BeautifulSoup(html_inicial, "html.parser")
+
+        registros = self._parseia_itens_aquisicao(soup)
+
+        # O botão "Carregar Mais" é um POST para a própria página. Todo o payload
+        # (query + widget_settings + assinatura) vem embutido no atributo data-nav.
+        grid = soup.select_one("div.jet-listing-grid__items[data-nav]")
+        if grid is None:
+            print("      ⚠️ Grid JetEngine não encontrado: apenas a 1ª página foi lida.")
+            return registros
+
+        nav = json.loads(grid["data-nav"])
+        campos: list[tuple[str, str]] = [
+            ("action", "jet_engine_ajax"),
+            ("handler", "listing_load_more"),
+        ]
+        _achata_para_form("query", nav.get("query", {}), campos)
+        _achata_para_form("widget_settings", nav.get("widget_settings", {}), campos)
+        campos.append(("page_settings[post_id]", "false"))
+        campos.append(("listing_type", "false"))
+        campos.append(("isEditMode", "false"))
+
+        url_ajax = f"{url_secao}?nocache=1"
+        for pagina in range(2, self.max_paginas + 1):
+            payload = campos + [("page_settings[page]", str(pagina))]
+            resposta = self.session.post(
+                url_ajax,
+                data=payload,
+                headers={"X-Requested-With": "XMLHttpRequest"},
+                timeout=30,
+            )
+            resposta.raise_for_status()
+
+            trecho = resposta.json().get("data", {}).get("html", "")
+            if not trecho.strip():
+                break
+
+            novos = self._parseia_itens_aquisicao(
+                BeautifulSoup(trecho, "html.parser")
+            )
+            if not novos:
+                break
+
+            registros.extend(novos)
+        else:
+            print(
+                f"      ⚠️ Limite de {self.max_paginas} páginas atingido em Aquisições."
+            )
+
+        return registros
+
+    def _parseia_itens_aquisicao(self, soup: BeautifulSoup) -> list[dict[str, str]]:
+        """Cada item é um accordion: título da licitação + N documentos + situação."""
+        registros = []
+
+        for item in soup.select(".jet-listing-grid__item"):
+            titulo_el = item.select_one(".e-n-accordion-item-title-text")
+            licitacao = _normaliza(titulo_el) if titulo_el else ""
+
+            # Percorre o item em ordem de documento pareando cada botão de
+            # download com o último cabeçalho visto (ex: "Ata da Sessão - ...").
+            # O cabeçalho que sobra sem botão é a situação ("Em andamento").
+            do_item = []
+            rotulo_corrente = ""
+            rotulo_usado = True
+            situacao = ""
+
+            for el in item.find_all(True):
+                classes = el.get("class") or []
+
+                if "elementor-heading-title" in classes:
+                    if not rotulo_usado and rotulo_corrente:
+                        situacao = rotulo_corrente
+                    rotulo_corrente = _normaliza(el)
+                    rotulo_usado = False
+                    continue
+
+                if el.name == "a" and "jet-download" in classes and el.get("href"):
+                    rotulo_usado = True
+                    do_item.append(
+                        self._registro(
+                            _rotulo_licitacao(licitacao, rotulo_corrente),
+                            "Aquisição de Bens e Serviços",
+                            urljoin(BASE_SITE, el["href"].strip()),
+                        )
                     )
-                    clean_title = " ".join(clean_title.split())
-                    if len(clean_title) > 5:
-                        title = clean_title[:150]
 
-                items.append(
-                    {
-                        "source": self.name,
-                        "section": section,
-                        "title": title,
-                        "download_url": full_url,
-                        "file_type": "pdf",
-                    }
-                )
+            if not rotulo_usado and rotulo_corrente:
+                situacao = rotulo_corrente
 
-        return items
+            if situacao:
+                for registro in do_item:
+                    registro["context"] += f" | Situação: {situacao}"
+
+            registros.extend(do_item)
+
+        return registros
+
+    # ------------------------------------------------------------------
+    # Seção 3: /transparencia/processo-seletivo/
+    # ------------------------------------------------------------------
+    def _extrai_processo_seletivo(self) -> list[dict[str, str]]:
+        url_secao = urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO)
+        soup = BeautifulSoup(self._get(url_secao).text, "html.parser")
+
+        return self._parseia_processo_seletivo(soup)
+
+    def _parseia_processo_seletivo(self, soup: BeautifulSoup) -> list[dict[str, str]]:
+        conteudo = soup.select_one(".eael-tabs-content") or soup
+        registros = []
+
+        # Mesma lógica de ordem de documento: cabeçalho do comunicado imediatamente
+        # antes do botão "Visualizar". Cabeçalho sem botão é o cargo/processo.
+        grupo = ""
+        rotulo_corrente = ""
+        rotulo_usado = True
+
+        for el in conteudo.find_all(True):
+            classes = el.get("class") or []
+
+            if "elementor-heading-title" in classes:
+                if not rotulo_usado and rotulo_corrente:
+                    grupo = rotulo_corrente
+                rotulo_corrente = _normaliza(el)
+                rotulo_usado = False
+                continue
+
+            if el.name != "a" or not el.get("href"):
+                continue
+
+            href = urljoin(BASE_SITE, el["href"].strip())
+            texto = el.get_text(strip=True).lower()
+            if not (texto in ("visualizar", "download", "baixar") or ".pdf" in href.lower()):
+                continue
+
+            rotulo_usado = True
+            contexto = (
+                f"Processo Seletivo | {grupo}" if grupo else "Processo Seletivo"
+            )
+            registros.append(self._registro(rotulo_corrente, contexto, href))
+
+        return registros
