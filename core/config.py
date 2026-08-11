@@ -1,7 +1,9 @@
+# core/config.py
 from datetime import datetime
 import json
 import logging
 import os
+from typing import Optional
 
 
 # Raiz do projeto. Caminhos relativos do config.json são resolvidos a partir
@@ -25,6 +27,7 @@ class Config:
         self.delay_entre_requisicoes = 0.2
         self.output_dir = "outputs"
         self.logs_dir = "logs"
+        self.max_planilhas: Optional[int] = None  # 💡 Limite de tabelas para processar (None = sem limite)
         self._load_config()
 
     def _load_config(self):
@@ -41,6 +44,7 @@ class Config:
                 )
                 self.output_dir = data.get("output_dir", self.output_dir)
                 self.logs_dir = data.get("logs_dir", self.logs_dir)
+                self.max_planilhas = data.get("max_planilhas", self.max_planilhas)
 
         self.output_dir = resolve_path(self.output_dir)
         self.logs_dir = resolve_path(self.logs_dir)

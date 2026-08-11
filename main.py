@@ -6,6 +6,7 @@ from scrapers.abdi import ABDIScraper
 from scrapers.abdi_pdf import ABDIPdfScraper
 from scrapers.senai import SenaiScraper
 from scrapers.senar import SenarScraper
+from scrapers.sesc_api import SescApiScraper
 from scrapers.sesi import SesiScraper
 from scrapers.sesi_pdf import SesiPdfScraper
 from scrapers.sesi_transparencia import SesiTransparenciaScraper
@@ -36,8 +37,11 @@ def main():
     # Coleta estática (requests + BeautifulSoup), que também perfila datasets:
     #     ABDIScraper(), SesiScraper(), SenaiScraper(), SesiTransparenciaScraper()
     scrapers = [
-        ABDIPdfScraper(),
-        SesiPdfScraper(),
+        ABDIScraper(),
+        SesiScraper(),
+        SenaiScraper(),
+        SenarScraper(),
+        SescApiScraper()
     ]
 
     for scraper in scrapers:
@@ -46,3 +50,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
