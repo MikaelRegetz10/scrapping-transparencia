@@ -91,7 +91,13 @@ config.json              ano, delay, diretórios e nível de log
 Herde de `BaseScraper`, declare as `routes` (um dicionário `{"Nome da Seção":
 "https://..."}`) e implemente `extract_links()`, devolvendo uma lista de
 dicionários com `source`, `section`, `title`, `context`, `download_url` e
-`file_type`. O resto (validação, profiling, Excel) o pipeline faz.
+`file_type`, mais os opcionais `file_name` e `published_at`. O resto
+(validação, profiling, Excel) o pipeline faz.
+
+`title` é o título do documento como o portal o publica. Nas páginas em que o
+link é só um botão "Visualizar", o título está no texto ao lado dele: use
+`separa_publicacao()` para tirar o "(Publicado em ...)" que costuma vir colado
+no fim e `nome_arquivo()` para guardar o nome do PDF que será baixado.
 
 O relatório sai com duas abas de resumo: `Resumo_Geral` para planilhas e APIs
 tabulares e `Resumo_PDFs` para documentos, mais uma aba de amostra por dataset
@@ -101,3 +107,9 @@ Regra do projeto: nada de automação de navegador. Quando a página carrega
 conteúdo por JavaScript (botão "Carregar Mais", abas com filtro por ano), o
 caminho é achar no próprio HTML/JS a rota que a página consome e chamá-la
 direto — ver `scrapers/sesi_transparencia.py` como referência.
+
+Quando o navegador é inevitável, abra **uma sessão por rota**
+(`abrir_sessoes()`, em `scrapers/navegador.py`). Portal com proteção anti-bot
+marca a sessão inteira ao recusar uma requisição: na ABDI o 403 na paginação do
+grid de aquisições fazia a rota seguinte, que abre normalmente sozinha, cair na
+página de espera e ser registrada como bloqueada.

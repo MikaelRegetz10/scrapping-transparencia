@@ -27,7 +27,9 @@ from scrapers.navegador import (
     abrir_pagina,
     ancoras_da_pagina,
     eh_documento,
+    nome_arquivo,
     rotulo,
+    separa_publicacao,
     tipo_arquivo,
 )
 
@@ -121,10 +123,16 @@ class SesiPdfScraper(BaseScraper):
                     logger.error("Falha ao varrer '%s': %s", secao, e)
                     continue
 
-                novos = [r for r in encontrados if r["download_url"] not in vistos]
-                vistos.update(r["download_url"] for r in novos)
-                for registro in novos:
+                # A deduplicação precisa valer também dentro da mesma rota: a
+                # mesma página repete o link em mais de um lugar.
+                novos = []
+                for registro in encontrados:
+                    if registro["download_url"] in vistos:
+                        continue
+                    vistos.add(registro["download_url"])
                     registro.setdefault("section", secao)
+                    novos.append(registro)
+
                 registros.extend(novos)
                 logger.info("📑 %s: %d documento(s).", secao, len(novos))
 
@@ -136,12 +144,15 @@ class SesiPdfScraper(BaseScraper):
         return registros
 
     def _registro(self, titulo: str, contexto: str, url: str) -> Dict[str, str]:
+        titulo_limpo, publicado_em = separa_publicacao(titulo)
         return {
             "source": self.name,
-            "title": titulo or "Título não identificado",
+            "title": titulo_limpo or "Título não identificado",
             "context": contexto,
             "download_url": url,
+            "file_name": nome_arquivo(url),
             "file_type": tipo_arquivo(url),
+            "published_at": publicado_em,
         }
 
     def _documentos_da_pagina(self, page, contexto: str) -> List[Dict[str, str]]:
