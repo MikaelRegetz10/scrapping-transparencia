@@ -19,12 +19,13 @@ from urllib.parse import urljoin
 
 from scrapers.base import BaseScraper
 from scrapers.navegador import (
-    abrir_navegador,
     abrir_pagina,
-    ancoras_da_pagina,
+    abrir_sessoes,
     clicar_ate_esgotar,
     eh_documento,
+    nome_arquivo,
     rotulo,
+    separa_publicacao,
     tipo_arquivo,
 )
 
@@ -79,6 +80,73 @@ _JS_AQUISICOES = """
       licitacao: licitacao, documento: a.documento,
       url: a.url, situacao: situacao,
     }));
+  });
+
+  return saida;
+}
+"""
+
+
+# Lê a página de processo seletivo já renderizada. Cada documento é uma linha
+# com o título à esquerda (um h2) e o botão "Visualizar" à direita, agrupada sob
+# a vaga (um h3) e dentro da aba do ano. O texto do link é sempre "Visualizar",
+# então título, vaga e ano vêm do que está em volta.
+_JS_PROCESSO_SELETIVO = """
+() => {
+  const limpa = t => (t || '').replace(/\\s+/g, ' ').trim();
+
+  // Primeiro elemento que casa com o seletor entre os irmãos anteriores,
+  // subindo a árvore a partir do link.
+  const anterior = (a, seletor) => {
+    let el = a;
+    while (el && el !== document.body) {
+      let irmao = el.previousElementSibling;
+      while (irmao) {
+        if (irmao.matches && irmao.matches(seletor)) {
+          const t = limpa(irmao.innerText);
+          if (t) return t;
+        }
+        const dentro = irmao.querySelector && irmao.querySelector(seletor);
+        if (dentro) {
+          const t = limpa(dentro.innerText);
+          if (t) return t;
+        }
+        irmao = irmao.previousElementSibling;
+      }
+      el = el.parentElement;
+    }
+    return '';
+  };
+
+  // O painel da aba tem o id do gatilho + "-tab"; é assim que se chega ao ano.
+  const abaDe = (a) => {
+    const painel = a.closest('.eael-tab-content-item');
+    if (!painel || !painel.id) return '';
+    const gatilho = document.getElementById(painel.id.replace(/-tab$/, ''));
+    return gatilho ? limpa(gatilho.innerText) : '';
+  };
+
+  // O banner de consentimento fica fora do conteúdo da página e também linka
+  // PDF (a política de privacidade). Sem esse corte ele entra na coleta com o
+  // título de qualquer cabeçalho que estiver por perto.
+  const CONSENTIMENTO = '[class*="adopt-"], [id*="cookie" i], [class*="cookie" i]';
+
+  const saida = [];
+  document.querySelectorAll('a[href]').forEach(a => {
+    const bruto = a.getAttribute('href');
+    if (!bruto || bruto.startsWith('#') || bruto.startsWith('javascript:')
+        || bruto.startsWith('mailto:')) return;
+    if (a.closest(CONSENTIMENTO)) return;
+    let url;
+    try { url = new URL(bruto, location.href).href; } catch (e) { return; }
+
+    saida.push({
+      url: url,
+      documento: anterior(a, 'h2, .elementor-heading-title').slice(0, 300),
+      vaga: anterior(a, 'h3').slice(0, 200),
+      aba: abaDe(a).slice(0, 80),
+      texto: limpa(a.innerText).slice(0, 200),
+    });
   });
 
   return saida;
@@ -146,7 +214,7 @@ class ABDIPdfScraper(BaseScraper):
         vistos: set[str] = set()
         falhas: List[str] = []
 
-        with abrir_navegador(headless=self.headless) as page:
+        with abrir_sessoes(headless=self.headless) as nova_sessao:
             rotas = [
                 (self.aquisicoes, "Aquisição de Bens e Serviços", self._extrai_aquisicoes),
                 (self.processo_seletivo, "Processo Seletivo", self._extrai_processo_seletivo),
@@ -156,17 +224,25 @@ class ABDIPdfScraper(BaseScraper):
                 if not habilitada:
                     continue
 
+                # Sessão limpa por rota: o 403 da paginação de aquisições marca
+                # a sessão e faria a rota seguinte cair na página de espera.
                 try:
-                    encontrados = extrator(page)
+                    encontrados = extrator(nova_sessao())
                 except Exception as e:
                     falhas.append(f"{secao}: {e}")
                     logger.error("Falha ao varrer '%s': %s", secao, e)
                     continue
 
-                novos = [r for r in encontrados if r["download_url"] not in vistos]
-                vistos.update(r["download_url"] for r in novos)
-                for registro in novos:
-                    registro["section"] = secao
+                # A deduplicação precisa valer também dentro da mesma rota: a
+                # página repete o mesmo link em mais de um lugar.
+                novos = []
+                for registro in encontrados:
+                    if registro["download_url"] in vistos:
+                        continue
+                    vistos.add(registro["download_url"])
+                    registro.setdefault("section", secao)
+                    novos.append(registro)
+
                 registros.extend(novos)
                 logger.info("📑 %s: %d documento(s).", secao, len(novos))
 
@@ -178,12 +254,15 @@ class ABDIPdfScraper(BaseScraper):
         return registros
 
     def _registro(self, titulo: str, contexto: str, url: str) -> Dict[str, str]:
+        titulo_limpo, publicado_em = separa_publicacao(titulo)
         return {
             "source": self.name,
-            "title": titulo or "Título não identificado",
+            "title": titulo_limpo or "Título não identificado",
             "context": contexto,
             "download_url": url,
+            "file_name": nome_arquivo(url),
             "file_type": tipo_arquivo(url),
+            "published_at": publicado_em,
         }
 
     # ------------------------------------------------------------------
@@ -216,12 +295,22 @@ class ABDIPdfScraper(BaseScraper):
 
         if recusas:
             logger.warning(
-                "A ABDI recusou a paginação do grid (HTTP %s): apenas a 1ª página "
-                "de licitações foi lida. As demais exigem que o portal libere "
-                "requisições deste IP.",
+                "A ABDI recusou a paginação do grid (HTTP %s). O bloqueio é da "
+                "proteção do portal e vale para a sessão inteira — por isso cada "
+                "rota abre a sua.",
                 ", ".join(str(s) for s in sorted(set(recusas))),
             )
-        logger.info("Grid de aquisições com %d licitação(ões) carregada(s).", total)
+
+        lidas, publicadas = self._paginas_do_grid(page)
+        if publicadas > lidas:
+            logger.warning(
+                "Cobertura parcial das aquisições: %d de %d página(s) do grid, "
+                "%d licitação(ões) lida(s). O resto só sai se o portal liberar a "
+                "paginação para este cliente.",
+                lidas, publicadas, total,
+            )
+        else:
+            logger.info("Grid de aquisições com %d licitação(ões) carregada(s).", total)
 
         registros = []
         for anexo in page.evaluate(_JS_AQUISICOES):
@@ -242,6 +331,32 @@ class ABDIPdfScraper(BaseScraper):
 
         return registros
 
+    @staticmethod
+    def _paginas_do_grid(page) -> tuple[int, int]:
+        """(páginas lidas, páginas publicadas) segundo o próprio grid.
+
+        O JetEngine anuncia as duas em `data-page` e `data-pages`. É como saber
+        o tamanho do que ficou de fora quando a paginação é recusada — sem isso
+        a coleta parcial passa por completa.
+        """
+        dados = page.evaluate(
+            """() => {
+                const g = document.querySelector('[data-pages]');
+                return g ? {lidas: g.getAttribute('data-page'),
+                            publicadas: g.getAttribute('data-pages')} : null;
+            }"""
+        )
+        if not dados:
+            return 0, 0
+
+        def inteiro(valor) -> int:
+            try:
+                return int(valor)
+            except (TypeError, ValueError):
+                return 0
+
+        return inteiro(dados["lidas"]), inteiro(dados["publicadas"])
+
     # ------------------------------------------------------------------
     # Rota 2: Processo Seletivo
     # ------------------------------------------------------------------
@@ -251,22 +366,48 @@ class ABDIPdfScraper(BaseScraper):
         As abas por ano ("Processos Seletivos 2024", 2023...) são trocadas só no
         CSS, então basta ler a página inteira uma vez: não há requisição nova
         por trás de cada aba.
+
+        O título de cada documento é o texto que aparece ao lado do botão — o
+        link em si só diz "Visualizar". Junto dele ficam registrados a vaga que
+        encabeça o bloco e o ano da aba, que são o que distingue dois
+        comunicados de mesmo nome ("Comunicado 4 - Resultado da triagem
+        curricular" se repete em toda vaga do processo).
         """
         url = urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO)
         if not abrir_pagina(page, url):
             raise RuntimeError("o portal não liberou a página de processo seletivo")
 
         registros = []
-        for ancora in ancoras_da_pagina(page):
-            if not eh_documento(ancora["url"], self.apenas_pdf):
+        sem_titulo = 0
+
+        for anexo in page.evaluate(_JS_PROCESSO_SELETIVO):
+            if not eh_documento(anexo["url"], self.apenas_pdf):
                 continue
 
-            registros.append(
-                self._registro(
-                    rotulo(ancora, reserva="Comunicado"),
-                    "Processo Seletivo",
-                    ancora["url"],
+            titulo = anexo["documento"]
+            if not titulo:
+                # Sem o cabeçalho da linha sobra o texto do link, que costuma
+                # ser "Visualizar"; aí o nome do arquivo identifica melhor.
+                sem_titulo += 1
+                titulo = rotulo(
+                    {"texto": anexo["texto"]}, reserva=nome_arquivo(anexo["url"])
                 )
+
+            contexto = " | ".join(
+                parte
+                for parte in ("Processo Seletivo", anexo["aba"], anexo["vaga"])
+                if parte
+            )
+
+            registro = self._registro(titulo, contexto, anexo["url"])
+            if anexo["aba"]:
+                registro["section"] = f"Processo Seletivo — {anexo['aba']}"
+            registros.append(registro)
+
+        if sem_titulo:
+            logger.warning(
+                "%d documento(s) de processo seletivo sem título na página: "
+                "ficaram com o texto do próprio link.", sem_titulo,
             )
 
         return registros

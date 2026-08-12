@@ -15,9 +15,10 @@ Requer o navegador instalado uma única vez:
 from contextlib import contextmanager
 import logging
 import os
+import re
 import time
-from typing import Iterator, Optional
-from urllib.parse import urlparse
+from typing import Callable, Iterator, Optional, Tuple
+from urllib.parse import unquote, urlparse
 
 from playwright.sync_api import Page, sync_playwright
 
@@ -44,8 +45,15 @@ EXTENSOES_DOCUMENTO = {
 
 
 @contextmanager
-def abrir_navegador(headless: bool = True) -> Iterator[Page]:
-    """Sobe um Chromium headless e entrega a página pronta para navegar.
+def abrir_sessoes(headless: bool = True) -> Iterator[Callable[[], Page]]:
+    """Sobe um Chromium e entrega uma fábrica de sessões isoladas.
+
+    Cada chamada devolve uma página em contexto próprio, de cookies zerados.
+    Isso importa em portal que marca a sessão quando recusa uma requisição: na
+    ABDI, o 403 na paginação do grid faz a proteção passar a servir a página de
+    espera para *todo* o resto daquela sessão, e a rota seguinte, que sozinha
+    abre normalmente, seria registrada como bloqueada. Uma sessão por rota
+    isola o estrago.
 
     Os args `--no-sandbox` são os mesmos usados no scraper do SENAR: sem eles o
     Chromium não sobe em container nem em algumas distros Linux.
@@ -55,16 +63,26 @@ def abrir_navegador(headless: bool = True) -> Iterator[Page]:
             headless=headless,
             args=["--no-sandbox", "--disable-setuid-sandbox"],
         )
-        context = browser.new_context(
-            ignore_https_errors=True,
-            locale="pt-BR",
-            user_agent=USER_AGENT,
-        )
-        page = context.new_page()
+
+        def nova_sessao() -> Page:
+            context = browser.new_context(
+                ignore_https_errors=True,
+                locale="pt-BR",
+                user_agent=USER_AGENT,
+            )
+            return context.new_page()
+
         try:
-            yield page
+            yield nova_sessao
         finally:
             browser.close()
+
+
+@contextmanager
+def abrir_navegador(headless: bool = True) -> Iterator[Page]:
+    """Sobe um Chromium headless e entrega a página pronta para navegar."""
+    with abrir_sessoes(headless=headless) as nova_sessao:
+        yield nova_sessao()
 
 
 def esta_no_intersticial(page: Page) -> bool:
@@ -138,6 +156,41 @@ def tipo_arquivo(url: str) -> str:
 def eh_documento(url: str, apenas_pdf: bool) -> bool:
     tipo = tipo_arquivo(url)
     return tipo == "pdf" if apenas_pdf else tipo in EXTENSOES_DOCUMENTO
+
+
+def nome_arquivo(url: str) -> str:
+    """Nome do arquivo como ele sai da URL, já decodificado.
+
+    Vale como identidade do PDF quando o título da página é genérico e como
+    conferência de que o link baixado é mesmo o documento anunciado. Devolve ""
+    para URL sem arquivo no caminho — é o caso dos anexos que a ABDI serve por
+    querystring (`?jet_download=...`).
+    """
+    nome = unquote(urlparse(url).path.rsplit("/", 1)[-1]).strip()
+    return nome if "." in nome else ""
+
+
+# "(Publicado em 21/08/2024)", "(Publicado em 09/09/2024 às 9h)". Os portais
+# colam a data no fim do título; separar deixa o título limpo e a data usável.
+_RE_PUBLICACAO = re.compile(
+    r"\(\s*publicad[oa]s?(?:\s+em)?\s*:?\s*(?P<data>[^)]*?)\s*\)\s*$", re.IGNORECASE
+)
+
+
+def separa_publicacao(titulo: str) -> Tuple[str, str]:
+    """Divide o título em (título, data de publicação).
+
+    Sem a marcação de publicação devolve o título inteiro e data vazia.
+    """
+    texto = (titulo or "").strip()
+    achado = _RE_PUBLICACAO.search(texto)
+    if not achado:
+        return texto, ""
+
+    limpo = texto[: achado.start()].strip(" -–—|·•")
+    data = achado.group("data").strip()
+    # Título que era só "(Publicado em ...)" perderia a identidade se cortado.
+    return (limpo or texto), data
 
 
 # JS injetado nas páginas para ler as âncoras já com o rótulo mais próximo.
