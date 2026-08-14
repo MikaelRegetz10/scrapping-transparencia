@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": ".venv/bin/uvicorn",
+      "runtimeArgs": ["api.main_api:app", "--reload", "--port", "8000"],
+      "port": 8000
+    },
+    {
+      "name": "portal",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": ["-m", "http.server", "8001", "--directory", "portal"],
+      "port": 8001
+    }
+  ]
+}
