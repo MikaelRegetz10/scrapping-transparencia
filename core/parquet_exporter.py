@@ -37,6 +37,22 @@ def sanitize_name(text: str) -> str:
     return cleaned or "outros"
 
 
+# As categorias que o `inferir_tipo_documento` sabe nomear. Fora delas ele cai
+# no título sanitizado, que serve para dataset tabular (poucos títulos, todos
+# repetidos entre as regionais) mas não para documento avulso: cada PDF viraria
+# uma categoria só sua. Quem precisa de um vocabulário fechado confere aqui.
+TIPOS_CONHECIDOS = frozenset({
+    "acordos",
+    "contratos",
+    "convenios",
+    "demonstracoes_contabeis",
+    "execucao_orcamentaria",
+    "licitacoes",
+    "outros",
+    "pessoal",
+})
+
+
 def inferir_tipo_documento(texto: str) -> str:
     """Classifica o tipo de documento em uma categoria limpa e padronizada."""
     if not texto:

@@ -1,4 +1,5 @@
 # core/pipeline.py
+from collections import defaultdict
 from datetime import datetime
 import os
 import re
@@ -7,7 +8,13 @@ import pandas as pd
 import requests
 
 from core.config import Config
-from core.parquet_exporter import export_to_parquet  # <--- ADICIONADO
+from core.parquet_exporter import (
+    TIPOS_CONHECIDOS,
+    export_to_parquet,
+    inferir_tipo_documento,
+    remover_acentos,
+    sanitize_name,
+)
 from core.profiler import analyze_dataset_quality
 from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
@@ -28,6 +35,110 @@ def sanitize_sheet_name(title: str, index: int) -> str:
     return f"{index:02d}_{short_title}" if short_title else f"Aba_{index:02d}"
 
 
+# Tema reservado aos links de documento. A API devolve documentos e linhas de
+# planilha pelo mesmo endpoint, e ambos usam tipo_documento=contratos,
+# licitacoes etc. Sem um tema próprio o portal teria de separar os dois no
+# cliente, e aí o `total` da resposta — que é contado no banco, antes da
+# filtragem — deixaria a paginação errada. A seção de origem não se perde:
+# continua na coluna `secao_rota` de cada registro.
+TEMA_DOCUMENTOS = "documentos"
+
+# Processo seletivo é o grupo mais volumoso da ABDI e não cabe em nenhuma das
+# categorias do `inferir_tipo_documento`. Fica aqui, e não lá, porque aquela
+# função também classifica os datasets tabulares: mexer no vocabulário dela
+# reclassificaria partições que já existem.
+TIPO_PROCESSO_SELETIVO = "processos_seletivos"
+
+# Vocabulário fechado dos documentos. O portal espelha esta lista para montar
+# o filtro de tipo (ver portal/documentos.js, TIPOS_DE_DOCUMENTO).
+TIPOS_DE_DOCUMENTO = frozenset(TIPOS_CONHECIDOS | {TIPO_PROCESSO_SELETIVO})
+
+
+def tipo_do_documento(item: dict, title: str, section: str) -> str:
+    """Categoria de um documento, preferindo a seção de origem ao título.
+
+    A seção é a rota do portal em que o link foi encontrado ("Licitações",
+    "Demonstrações Contábeis") e descreve o documento melhor que o título. Um
+    comunicado de processo seletivo chamado "... - Contratos" trata da vaga na
+    área de contratos; classificá-lo pelo título o transformaria num contrato.
+
+    Sem categoria reconhecida o documento vira "outros" — nunca uma categoria
+    própria. O título de um PDF é quase único, e deixá-lo virar tipo_documento
+    criaria uma partição por arquivo e um filtro impossível de usar no portal.
+    O título continua inteiro na coluna `titulo`.
+    """
+    for texto in (item.get("tcu_tipo_documento"), section, title):
+        if not texto:
+            continue
+
+        if "seletivo" in remover_acentos(str(texto).lower()):
+            return TIPO_PROCESSO_SELETIVO
+
+        tipo = inferir_tipo_documento(texto)
+        if tipo in TIPOS_CONHECIDOS and tipo != "outros":
+            return tipo
+
+    return "outros"
+
+
+def particao_documento(
+    item: dict, title: str, section: str, config: Config
+) -> tuple:
+    """Chave Hive (tema, tipo_documento, ano, uf) de um link de documento.
+
+    Devolve os valores já sanitizados, iguais aos que o `export_to_parquet`
+    calcularia: assim dois documentos que caem na mesma pasta caem também no
+    mesmo grupo, em vez de gerarem dois arquivos que se sobrescrevem.
+    """
+    return (
+        TEMA_DOCUMENTOS,
+        tipo_do_documento(item, title, section),
+        str(item.get("tcu_ano") or config.ano),
+        sanitize_name(item.get("tcu_uf") or "DN").upper(),
+    )
+
+
+def exporta_documentos_para_parquet(
+    registros: list, particoes: list, entidade: str, config: Config, logger
+) -> int:
+    """Grava os links de PDF no Parquet Hive que a API de consulta lê.
+
+    O ramo tabular exporta Parquet dataset a dataset, mas o PDF não tem
+    conteúdo a perfilar: o dado útil é o próprio link. Sem esta gravação os
+    documentos ficariam apenas no Excel e o portal não teria o que exibir.
+
+    Os registros vão em lote, agrupados por partição, para não criar um
+    arquivo Parquet por PDF.
+    """
+    if not registros:
+        return 0
+
+    grupos = defaultdict(list)
+    for registro, chave in zip(registros, particoes):
+        grupos[chave].append(registro)
+
+    arquivos = 0
+    for (tema, tipo_documento, ano, uf), linhas in grupos.items():
+        caminho = export_to_parquet(
+            df=pd.DataFrame(linhas),
+            entidade=entidade,
+            base_dir=config.output_dir,
+            tema=tema,
+            tipo_documento=tipo_documento,
+            ano=ano,
+            uf=uf,
+            prefixo_nome=f"{entidade}_documentos",
+        )
+        if caminho:
+            arquivos += 1
+
+    logger.info(
+        f"📄 [{entidade}] {len(registros)} documento(s) exportado(s) para Parquet "
+        f"em {arquivos} partição(ões)."
+    )
+    return arquivos
+
+
 def run_scraper_pipeline(
     scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
@@ -44,6 +155,9 @@ def run_scraper_pipeline(
 
     summary_tables = []
     summary_pdfs = []
+    # Partição Hive de cada PDF, na mesma ordem de `summary_pdfs`. É calculada
+    # dentro do laço porque depende do item bruto, mas só é usada no fim.
+    particoes_pdfs = []
     structured_samples = {}
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -89,6 +203,9 @@ def run_scraper_pipeline(
                 "tamanho_kb": size_kb,
                 "verificado_em": timestamp,
             })
+            particoes_pdfs.append(
+                particao_documento(item, title, section, config)
+            )
             pdf_idx += 1
 
         # ==========================================
@@ -196,6 +313,13 @@ def run_scraper_pipeline(
 
         if config.delay_entre_requisicoes > 0:
             time.sleep(config.delay_entre_requisicoes)
+
+    # ==========================================
+    # EXPORTAÇÃO PARQUET DOS DOCUMENTOS (PDF)
+    # ==========================================
+    exporta_documentos_para_parquet(
+        summary_pdfs, particoes_pdfs, scraper.name, config, logger
+    )
 
     # ==========================================
     # EXPORTAÇÃO PARA O EXCEL COM 2 ABAS DE RESUMO
