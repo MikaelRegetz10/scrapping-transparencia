@@ -28,8 +28,14 @@ class BaseScraper(ABC):
             "source": "ABDI",
             "section": "Aquisição de Bens e Serviços",
             "title": "Dispensa de Licitação nº 027/2026",
+            "context": "Aquisição de Bens e Serviços | Situação: Concluída",
             "download_url": "https://...",
-            "file_type": "pdf | csv | xlsx | json"
+            "file_name": "dispensa-027-2026.pdf",   # opcional
+            "file_type": "pdf | csv | xlsx | json",
+            "published_at": "21/08/2024",            # opcional
         }
+
+        `title` é o título do documento como o portal o publica — o texto ao
+        lado do botão, não o rótulo do link ("Visualizar", "Download").
         """
         pass

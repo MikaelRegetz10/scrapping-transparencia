@@ -6,10 +6,21 @@ import os
 from typing import Optional
 
 
+# Raiz do projeto. Caminhos relativos do config.json são resolvidos a partir
+# daqui, e não do diretório de onde a IDE dispara o script — PyCharm, VS Code e
+# terminal usam defaults diferentes de working directory.
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def resolve_path(caminho: str) -> str:
+    """Transforma caminho relativo do config em absoluto sob a raiz do projeto."""
+    return caminho if os.path.isabs(caminho) else os.path.join(PROJECT_ROOT, caminho)
+
+
 class Config:
 
     def __init__(self, config_path: str = "config.json"):
-        self.config_path = config_path
+        self.config_path = resolve_path(config_path)
         self.ano = 2026
         self.salvar_log = True
         self.log_detalhado = True
@@ -34,6 +45,9 @@ class Config:
                 self.output_dir = data.get("output_dir", self.output_dir)
                 self.logs_dir = data.get("logs_dir", self.logs_dir)
                 self.max_planilhas = data.get("max_planilhas", self.max_planilhas)
+
+        self.output_dir = resolve_path(self.output_dir)
+        self.logs_dir = resolve_path(self.logs_dir)
 
 
 def setup_logger(config: Config) -> logging.Logger:
