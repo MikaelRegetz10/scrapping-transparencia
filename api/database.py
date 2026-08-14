@@ -1,7 +1,7 @@
 # api/database.py
 import logging
 import os
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 import duckdb
 import pandas as pd
 
@@ -12,14 +12,26 @@ def get_db_connection():
     return duckdb.connect(database=":memory:")
 
 
+def parse_multiselect(val: Optional[Union[str, List[Any]]]) -> List[str]:
+    """Converte valores únicos, listas ou strings separadas por vírgula em uma lista limpa."""
+    if not val or val == "*":
+        return []
+    if isinstance(val, list):
+        return [str(item).strip() for item in val if str(item).strip() and str(item) != "*"]
+    if isinstance(val, str):
+        return [item.strip() for item in val.split(",") if item.strip() and item.strip() != "*"]
+    return [str(val).strip()]
+
+
 def execute_parquet_query(
     base_dir: str = "outputs",
-    tema: str = "*",
-    tipo_documento: str = "*",
-    ano: str = "*",
-    uf: str = "*",
-    where_clauses: List[str] = None,
-    params: List[Any] = None,
+    tema: Optional[Union[str, List[str]]] = "*",
+    tipo_documento: Optional[Union[str, List[str]]] = "*",
+    ano: Optional[Union[str, int, List[Any]]] = "*",
+    uf: Optional[Union[str, List[str]]] = "*",
+    search: Optional[str] = None,
+    where_clauses: Optional[List[str]] = None,
+    params: Optional[List[Any]] = None,
     limit: int = 50,
     offset: int = 0,
 ) -> Tuple[List[Dict[str, Any]], int]:
@@ -41,27 +53,41 @@ def execute_parquet_query(
         logger.warning(f"Diretório não encontrado: {parquet_base}")
         return [], 0
 
-    # 💡 Usa busca recursiva universal para garantir a leitura de todos os parquets
-    parquet_glob = os.path.join(parquet_base, "**", "*.parquet").replace(
-        "\\", "/"
-    )
+    parquet_glob = os.path.join(parquet_base, "**", "*.parquet").replace("\\", "/")
 
-    # 💡 Apenas adiciona ao WHERE se o filtro for diferente do wildcard '*'
-    if tema and tema != "*":
-        where_clauses.append("LOWER(CAST(tema AS VARCHAR)) = ?")
-        params.append(tema.lower())
+    # 💡 1. SUPORTE A MÚLTIPLA SELEÇÃO (IN (?, ?))
+    temas = parse_multiselect(tema)
+    if temas:
+        placeholders = ", ".join(["?"] * len(temas))
+        where_clauses.append(f"LOWER(CAST(tema AS VARCHAR)) IN ({placeholders})")
+        params.extend([t.lower() for t in temas])
 
-    if tipo_documento and tipo_documento != "*":
-        where_clauses.append("LOWER(CAST(tipo_documento AS VARCHAR)) = ?")
-        params.append(tipo_documento.lower())
+    tipos = parse_multiselect(tipo_documento)
+    if tipos:
+        placeholders = ", ".join(["?"] * len(tipos))
+        where_clauses.append(f"LOWER(CAST(tipo_documento AS VARCHAR)) IN ({placeholders})")
+        params.extend([t.lower() for t in tipos])
 
-    if ano and str(ano) != "*":
-        where_clauses.append("CAST(ano AS VARCHAR) = ?")
-        params.append(str(ano))
+    anos = parse_multiselect(ano)
+    if anos:
+        placeholders = ", ".join(["?"] * len(anos))
+        where_clauses.append(f"CAST(ano AS VARCHAR) IN ({placeholders})")
+        params.extend([str(a) for a in anos])
 
-    if uf and uf != "*":
-        where_clauses.append("UPPER(CAST(uf AS VARCHAR)) = ?")
-        params.append(uf.upper())
+    ufs = parse_multiselect(uf)
+    if ufs:
+        placeholders = ", ".join(["?"] * len(ufs))
+        where_clauses.append(f"UPPER(CAST(uf AS VARCHAR)) IN ({placeholders})")
+        params.extend([u.upper() for u in ufs])
+
+    # 💡 2. BUSCA TEXTUAL ABRANGENTE
+    if search and search.strip():
+        term = f"%{search.strip().lower()}%"
+        # Busca em metadados padrão e converte a linha inteira para string para pesquisa ampla
+        where_clauses.append(
+            "(LOWER(CAST(tema AS VARCHAR)) LIKE ? OR LOWER(CAST(tipo_documento AS VARCHAR)) LIKE ? OR LOWER(CAST(uf AS VARCHAR)) LIKE ?)"
+        )
+        params.extend([term, term, term])
 
     where_str = ""
     if where_clauses:
@@ -88,11 +114,9 @@ def execute_parquet_query(
         """
         df = con.execute(data_query, params).df()
 
-        # Substitui NaN por None
         df = df.where(pd.notnull(df), None)
         raw_records = df.to_dict(orient="records")
 
-        # 💡 Expurgo de nulos, lixo RTF e sanitização de chaves
         cleaned_records = []
         for row in raw_records:
             record_limpo = {}

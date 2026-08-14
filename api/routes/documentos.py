@@ -11,14 +11,14 @@ router = APIRouter(prefix="/api/v1/documentos", tags=["Documentos & Auditoria"])
 @router.get("", response_model=PaginatedResponse)
 def get_documentos(
     tema: Optional[str] = Query(
-        None, description="Filtrar por tema (ex: dados_abertos)"
+        None, description="Filtrar por tema ou múltiplos temas separados por vírgula (ex: geral,dados_abertos)"
     ),
     tipo_documento: Optional[str] = Query(
-        None, description="Filtrar por tipo (ex: contratos, convenios)"
+        None, description="Filtrar por tipo ou múltiplos tipos (ex: contratos,convenios)"
     ),
-    ano: Optional[int] = Query(None, description="Filtrar por ano (ex: 2026)"),
+    ano: Optional[str] = Query(None, description="Filtrar por ano ou múltiplos anos (ex: 2026,2025)"),
     uf: Optional[str] = Query(
-        None, description="Filtrar por UF (ex: SP, RJ, DN)"
+        None, description="Filtrar por UF ou múltiplas UFs (ex: BA,SP,RJ)"
     ),
     search: Optional[str] = Query(
         None, description="Busca textual genérica nas colunas"
@@ -29,31 +29,13 @@ def get_documentos(
 ):
     offset = (page - 1) * page_size
 
-    # Monta os wildcards de partição do Hive
-    hive_tema = tema if tema else "*"
-    hive_tipo = tipo_documento if tipo_documento else "*"
-    hive_ano = str(ano) if ano else "*"
-    hive_uf = uf.upper() if uf else "*"
-
-    where_clauses = []
-    params = []
-
-    # Exemplo de filtro de busca simples (pode ser expandido conforme o schema das planilhas)
-    if search:
-        # Busca case-insensitive no título ou conteúdo se existir
-        where_clauses.append(
-            "(LOWER(CAST(tcu_tipo_documento AS VARCHAR)) LIKE ? OR LOWER(CAST(tcu_tema AS VARCHAR)) LIKE ?)"
-        )
-        params.extend([f"%{search.lower()}%", f"%{search.lower()}%"])
-
     data, total = execute_parquet_query(
         base_dir=output_dir,
-        tema=hive_tema,
-        tipo_documento=hive_tipo,
-        ano=hive_ano,
-        uf=hive_uf,
-        where_clauses=where_clauses,
-        params=params,
+        tema=tema,
+        tipo_documento=tipo_documento,
+        ano=ano,
+        uf=uf,
+        search=search,
         limit=page_size,
         offset=offset,
     )
