@@ -15,3 +15,16 @@ class FilterOptionsResponse(BaseModel):
     tipos_documento: List[str]
     anos: List[int]
     ufs: List[str]
+    entidades: List[str]
+    tipos_arquivo: List[str]
+
+
+class Contagem(BaseModel):
+    valor: str
+    total: int
+
+
+class CountsResponse(BaseModel):
+    por: str
+    total: int
+    contagens: List[Contagem]

@@ -24,6 +24,16 @@ def exportar_documentos(
     ),
     ano: Optional[str] = Query(None, description="Filtrar por ano(s)"),
     uf: Optional[str] = Query(None, description="Filtrar por UF(s)"),
+    entidade: Optional[str] = Query(None, description="Filtrar por entidade(s)"),
+    tipo_arquivo: Optional[str] = Query(
+        None, description="Filtrar por formato(s) do arquivo (ex: csv,xlsx)"
+    ),
+    ativo: Optional[str] = Query(
+        None, description="Situação do link na última verificação: SIM ou NÃO"
+    ),
+    estruturado: Optional[str] = Query(
+        None, description="Se o profiler leu o conteúdo do arquivo: SIM ou NÃO"
+    ),
     search: Optional[str] = Query(None, description="Busca textual genérica"),
     formato: str = Query(
         "csv",
@@ -39,6 +49,10 @@ def exportar_documentos(
         tipo_documento=tipo_documento,
         ano=ano,
         uf=uf,
+        entidade=entidade,
+        tipo_arquivo=tipo_arquivo,
+        ativo=ativo,
+        estruturado=estruturado,
         search=search,
         limit=100000,
         offset=0,
