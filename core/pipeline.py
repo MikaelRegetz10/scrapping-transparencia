@@ -43,6 +43,15 @@ def sanitize_sheet_name(title: str, index: int) -> str:
 # continua na coluna `secao_rota` de cada registro.
 TEMA_DOCUMENTOS = "documentos"
 
+# Tema reservado ao catálogo das planilhas. O ramo tabular já exporta o
+# conteúdo de cada dataset — cada um no seu tema ("dados_abertos",
+# "administracao_regional_…") —, mas o inventário dos arquivos em si (link,
+# tamanho, se abriu, o que o profiler reclamou) só existia no Excel de
+# qualidade. Ele mora aqui, separado do conteúdo, pela mesma razão que
+# `documentos`: o `total` da API é contado no banco, antes de o cliente
+# filtrar, e misturar catálogo com linha de dado quebraria a paginação.
+TEMA_PLANILHAS = "planilhas"
+
 # Processo seletivo é o grupo mais volumoso da ABDI e não cabe em nenhuma das
 # categorias do `inferir_tipo_documento`. Fica aqui, e não lá, porque aquela
 # função também classifica os datasets tabulares: mexer no vocabulário dela
@@ -81,60 +90,100 @@ def tipo_do_documento(item: dict, title: str, section: str) -> str:
     return "outros"
 
 
-def particao_documento(
-    item: dict, title: str, section: str, config: Config
+def particao_do_link(
+    item: dict, title: str, section: str, config: Config, tema: str
 ) -> tuple:
-    """Chave Hive (tema, tipo_documento, ano, uf) de um link de documento.
+    """Chave Hive (tema, tipo_documento, ano, uf) de um link catalogado.
 
     Devolve os valores já sanitizados, iguais aos que o `export_to_parquet`
-    calcularia: assim dois documentos que caem na mesma pasta caem também no
-    mesmo grupo, em vez de gerarem dois arquivos que se sobrescrevem.
+    calcularia: assim dois links que caem na mesma pasta caem também no mesmo
+    grupo, em vez de gerarem dois arquivos que se sobrescrevem.
+
+    Serve aos dois catálogos — o de PDF e o de planilha —, que se distinguem
+    apenas pelo `tema`. O tipo sai do mesmo vocabulário fechado nos dois
+    casos: uma planilha de contratos e um contrato em PDF são a mesma
+    categoria vista em formatos diferentes, e o portal filtra por ela igual.
     """
     return (
-        TEMA_DOCUMENTOS,
+        tema,
         tipo_do_documento(item, title, section),
         str(item.get("tcu_ano") or config.ano),
         sanitize_name(item.get("tcu_uf") or "DN").upper(),
     )
 
 
-def exporta_documentos_para_parquet(
-    registros: list, particoes: list, entidade: str, config: Config, logger
-) -> int:
-    """Grava os links de PDF no Parquet Hive que a API de consulta lê.
+def sim_ou_nao(valor) -> str:
+    """Normaliza o `ativo`, que chega bool do ramo tabular e "SIM"/"NÃO" do PDF.
 
-    O ramo tabular exporta Parquet dataset a dataset, mas o PDF não tem
-    conteúdo a perfilar: o dado útil é o próprio link. Sem esta gravação os
-    documentos ficariam apenas no Excel e o portal não teria o que exibir.
+    O Excel de qualidade preserva cada um como veio; o Parquet não pode, senão
+    o portal precisaria testar as duas formas para saber se um link caiu.
+    """
+    if isinstance(valor, str):
+        return valor
+    return "SIM" if valor else "NÃO"
+
+
+def numera_status(df: pd.DataFrame) -> pd.DataFrame:
+    """Deixa `status_http` inteiro, trocando por nulo o "ERRO" da verificação.
+
+    Quando a requisição sequer completa, o laço grava a string "ERRO" no lugar
+    do código HTTP. Numa partição em que ela apareça depois de algumas linhas
+    numéricas o pyarrow já terá inferido int64 e recusa o arquivo inteiro — a
+    partição some sem que nada além de um log denuncie. O aviso não se perde:
+    a linha continua com `ativo="NÃO"` e com o motivo em `erros_qualidade`.
+    """
+    if "status_http" in df.columns:
+        df["status_http"] = pd.to_numeric(
+            df["status_http"], errors="coerce"
+        ).astype("Int64")
+    return df
+
+
+def exporta_catalogo_para_parquet(
+    registros: list,
+    particoes: list,
+    entidade: str,
+    config: Config,
+    logger,
+    especie: str,
+) -> int:
+    """Grava um catálogo de links no Parquet Hive que a API de consulta lê.
+
+    São dois catálogos, distinguidos pela `especie` — "documentos" para os PDF,
+    "planilhas" para os arquivos tabulares. Em ambos o dado útil é o próprio
+    link, e não o conteúdo: o PDF não tem o que perfilar, e o conteúdo da
+    planilha já sai daqui por outro caminho, dataset a dataset. Sem esta
+    gravação os dois inventários ficariam só no Excel, fora do alcance do
+    portal.
 
     Os registros vão em lote, agrupados por partição, para não criar um
-    arquivo Parquet por PDF.
+    arquivo Parquet por link.
     """
     if not registros:
         return 0
 
     grupos = defaultdict(list)
     for registro, chave in zip(registros, particoes):
-        grupos[chave].append(registro)
+        grupos[chave].append({**registro, "ativo": sim_ou_nao(registro.get("ativo"))})
 
     arquivos = 0
     for (tema, tipo_documento, ano, uf), linhas in grupos.items():
         caminho = export_to_parquet(
-            df=pd.DataFrame(linhas),
+            df=numera_status(pd.DataFrame(linhas)),
             entidade=entidade,
             base_dir=config.output_dir,
             tema=tema,
             tipo_documento=tipo_documento,
             ano=ano,
             uf=uf,
-            prefixo_nome=f"{entidade}_documentos",
+            prefixo_nome=f"{entidade}_{especie}",
         )
         if caminho:
             arquivos += 1
 
     logger.info(
-        f"📄 [{entidade}] {len(registros)} documento(s) exportado(s) para Parquet "
-        f"em {arquivos} partição(ões)."
+        f"📄 [{entidade}] {len(registros)} link(s) de {especie} exportado(s) para "
+        f"Parquet em {arquivos} partição(ões)."
     )
     return arquivos
 
@@ -155,9 +204,11 @@ def run_scraper_pipeline(
 
     summary_tables = []
     summary_pdfs = []
-    # Partição Hive de cada PDF, na mesma ordem de `summary_pdfs`. É calculada
-    # dentro do laço porque depende do item bruto, mas só é usada no fim.
+    # Partição Hive de cada link, na mesma ordem do `summary_` correspondente.
+    # É calculada dentro do laço porque depende do item bruto — que não
+    # sobrevive a ele —, mas só é usada no fim.
     particoes_pdfs = []
+    particoes_tabelas = []
     structured_samples = {}
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -204,7 +255,7 @@ def run_scraper_pipeline(
                 "verificado_em": timestamp,
             })
             particoes_pdfs.append(
-                particao_documento(item, title, section, config)
+                particao_do_link(item, title, section, config, TEMA_DOCUMENTOS)
             )
             pdf_idx += 1
 
@@ -309,16 +360,22 @@ def run_scraper_pipeline(
                 "avisos_qualidade": avisos_str,
                 "verificado_em": timestamp,
             })
+            particoes_tabelas.append(
+                particao_do_link(item, title, section, config, TEMA_PLANILHAS)
+            )
             table_idx += 1
 
         if config.delay_entre_requisicoes > 0:
             time.sleep(config.delay_entre_requisicoes)
 
     # ==========================================
-    # EXPORTAÇÃO PARQUET DOS DOCUMENTOS (PDF)
+    # EXPORTAÇÃO PARQUET DOS CATÁLOGOS (PDF E PLANILHAS)
     # ==========================================
-    exporta_documentos_para_parquet(
-        summary_pdfs, particoes_pdfs, scraper.name, config, logger
+    exporta_catalogo_para_parquet(
+        summary_pdfs, particoes_pdfs, scraper.name, config, logger, "documentos"
+    )
+    exporta_catalogo_para_parquet(
+        summary_tables, particoes_tabelas, scraper.name, config, logger, "planilhas"
     )
 
     # ==========================================
