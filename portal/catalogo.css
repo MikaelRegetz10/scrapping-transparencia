@@ -1,5 +1,34 @@
-/* Estilos exclusivos da página de documentos.
-   O visual base (cores, cards, botões, paginação) vem do style.css. */
+/* Chrome comum às páginas de catálogo — documentos.html e planilhas.html.
+   As duas listam links coletados e compartilham filtros, itens e estados.
+   O visual base (cores, cards, botões, paginação) vem do style.css; o que é
+   próprio de uma página fica no CSS dela. */
+
+/* --- Navegação entre os catálogos --- */
+.catalogo-nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.catalogo-nav a {
+  padding: 0.55rem 0.15rem;
+  border-bottom: 3px solid transparent;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.catalogo-nav a:hover {
+  color: #e2e8f0;
+}
+
+.catalogo-nav a[aria-current="page"] {
+  color: #fff;
+  border-bottom-color: var(--accent);
+}
 
 /* --- Filtros --- */
 .documentos-filtros {

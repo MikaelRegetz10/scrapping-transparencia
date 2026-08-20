@@ -4,15 +4,27 @@
 // toda requisição daqui fixa tema=documentos — a partição que o pipeline
 // reserva aos links (ver core/pipeline.py, TEMA_DOCUMENTOS).
 
+import {
+  $,
+  API_BASE,
+  aoDigitar,
+  contagens,
+  escapar,
+  numero,
+  pedir,
+  preencherSelect,
+  selecionados,
+  urlSegura,
+} from "./catalogo.js";
+
 const TEMA_DOCUMENTOS = "documentos";
 const POR_PAGINA = 20;
 
-// Espelha TIPOS_DE_DOCUMENTO em core/pipeline.py: é o vocabulário fechado em
-// que todo documento cai. Precisa existir aqui porque /api/v1/filtros varre
-// todas as partições, inclusive as tabulares, e devolve centenas de tipos que
-// nunca terão um PDF. Se a lista do Python mudar, esta precisa acompanhar.
-//
-// O valor é o nome da partição, sem acento; o rótulo é o que a pessoa lê.
+// Rótulos legíveis do vocabulário fechado de tipo (TIPOS_DE_DOCUMENTO, em
+// core/pipeline.py). Quais tipos existem quem diz é a API, que já os devolve
+// contados e restritos ao tema; o que falta é o acento e a maiúscula, que o
+// nome da partição perdeu ao ser sanitizado. Um tipo fora desta lista ainda
+// aparece — o `rotulo` improvisa a partir do próprio nome.
 const TIPOS_DE_DOCUMENTO = {
   acordos: "Acordos",
   contratos: "Contratos",
@@ -25,59 +37,15 @@ const TIPOS_DE_DOCUMENTO = {
   outros: "Outros",
 };
 
-// Endereço da API. Em produção o portal costuma ser servido pela mesma origem;
-// no desenvolvimento a API sobe à parte, daí o localhost:8000 como padrão.
-// Dá para apontar para outro host sem editar o arquivo: documentos.html?api=…
-const API_BASE = (
-  new URLSearchParams(location.search).get("api") ||
-  window.PORTAL_API_BASE ||
-  "http://localhost:8000"
-).replace(/\/$/, "");
-
 const state = {
   pagina: 1,
   totalPaginas: 0,
   total: 0,
 };
 
-const $ = (id) => document.getElementById(id);
-
-// --------------------------------------------------------------------------
-// Segurança: título, contexto e nome de arquivo vêm de páginas raspadas de
-// terceiros. Nada disso entra no DOM sem passar por aqui.
-// --------------------------------------------------------------------------
-
-function escapar(valor) {
-  if (valor === null || valor === undefined) return "";
-  return String(valor)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-// Só http(s) viram link. Um `javascript:` que tivesse entrado na coleta
-// executaria no clique, e o dado de origem não é confiável.
-function urlSegura(valor) {
-  if (!valor) return null;
-  try {
-    const url = new URL(String(valor), location.href);
-    return url.protocol === "http:" || url.protocol === "https:"
-      ? url.href
-      : null;
-  } catch {
-    return null;
-  }
-}
-
 // --------------------------------------------------------------------------
 // Montagem das consultas
 // --------------------------------------------------------------------------
-
-function selecionados(id) {
-  return [...$(id).selectedOptions].map((opcao) => opcao.value);
-}
 
 /** Parâmetros dos filtros, sem paginação — servem à lista e à exportação. */
 function parametrosFiltro() {
@@ -98,23 +66,9 @@ function parametrosFiltro() {
   return params;
 }
 
-async function pedir(caminho, params) {
-  const resposta = await fetch(`${API_BASE}${caminho}?${params}`);
-  if (!resposta.ok) {
-    throw new Error(`A API respondeu ${resposta.status} em ${caminho}.`);
-  }
-  return resposta.json();
-}
-
 // --------------------------------------------------------------------------
 // Renderização
 // --------------------------------------------------------------------------
-
-function preencherSelect(id, valores) {
-  $(id).innerHTML = valores
-    .map((valor) => `<option value="${escapar(valor)}">${escapar(valor)}</option>`)
-    .join("");
-}
 
 /** Nome legível de um tipo. Os valores vêm sem acento, sanitizados do Parquet. */
 function rotulo(valor) {
@@ -179,14 +133,10 @@ function renderizarLista(documentos) {
     return;
   }
 
-  // A busca da API casa contra tema, tipo_documento e uf — não contra o título.
-  // Procurar "edital" devolve zero mesmo havendo dezenas de editais, e sem
-  // dizer isso a pessoa conclui que o acervo é que está vazio.
   const buscando = $("filtro-busca").value.trim();
   const explicacao = buscando
     ? `<p class="empty-state">Nenhum documento encontrado para <strong>${escapar(buscando)}</strong>.
-         <br>A busca da API cobre tema, tipo de documento e UF — ainda não o título.
-         Para achar um documento pelo nome, filtre pelo tipo e percorra a lista.</p>`
+         <br>A busca cobre título, nome do arquivo, seção de origem, tipo e UF.</p>`
     : `<p class="empty-state">Nenhum documento encontrado para esses filtros.</p>`;
 
   $("lista").innerHTML = explicacao;
@@ -198,7 +148,7 @@ function atualizarPaginacao() {
   if (!temPaginas) return;
 
   $("paginacao-texto").textContent =
-    `Página ${state.pagina.toLocaleString("pt-BR")} de ${state.totalPaginas.toLocaleString("pt-BR")}`;
+    `Página ${numero(state.pagina)} de ${numero(state.totalPaginas)}`;
   $("pagina-anterior").disabled = state.pagina <= 1;
   $("pagina-proxima").disabled = state.pagina >= state.totalPaginas;
 }
@@ -225,34 +175,23 @@ function mostrarErro(mensagem) {
 // Carregamento
 // --------------------------------------------------------------------------
 
-/** Quantos documentos existem num tipo. Só o `total` interessa, daí page_size=1. */
-async function contarPorTipo(tipo) {
-  const params = new URLSearchParams({
-    tema: TEMA_DOCUMENTOS,
-    tipo_documento: tipo,
-    page_size: 1,
-  });
-  const resposta = await pedir("/api/v1/documentos", params);
-  return { tipo, total: resposta.total || 0 };
-}
-
-/** Preenche o filtro de tipo só com categorias que têm documento, e com a contagem. */
+/** Preenche o filtro de tipo só com categorias que têm documento, e com a contagem.
+ *
+ * A contagem vem agrupada e já ordenada pela API; o vocabulário fechado do
+ * TIPOS_DE_DOCUMENTO não entra aqui porque um tema só tem os tipos que tem —
+ * o que a consulta devolve já é a lista certa.
+ */
 async function carregarTiposComContagem() {
-  const contagens = await Promise.all(
-    Object.keys(TIPOS_DE_DOCUMENTO).map(contarPorTipo)
-  );
-  const comDocumentos = contagens
-    .filter((item) => item.total > 0)
-    .sort((a, b) => b.total - a.total);
+  const porTipo = await contagens("tipo_documento", { tema: TEMA_DOCUMENTOS });
 
-  $("filtro-tipo").innerHTML = comDocumentos
+  $("filtro-tipo").innerHTML = [...porTipo]
     .map(
-      ({ tipo, total }) =>
-        `<option value="${escapar(tipo)}">${escapar(rotulo(tipo))} (${total.toLocaleString("pt-BR")})</option>`
+      ([tipo, total]) =>
+        `<option value="${escapar(tipo)}">${escapar(rotulo(tipo))} (${numero(total)})</option>`
     )
     .join("");
 
-  return comDocumentos.length;
+  return porTipo.size;
 }
 
 async function carregarFiltros() {
@@ -285,9 +224,9 @@ async function carregarDocumentos() {
   atualizarLinksExportacao();
 
   const plural = state.total === 1 ? "documento" : "documentos";
-  $("contador").textContent = `${state.total.toLocaleString("pt-BR")} ${plural}`;
+  $("contador").textContent = `${numero(state.total)} ${plural}`;
   $("resumo-resultados").textContent = state.total
-    ? `${state.total.toLocaleString("pt-BR")} ${plural} · clique em qualquer item para abrir o arquivo na fonte.`
+    ? `${numero(state.total)} ${plural} · clique em qualquer item para abrir o arquivo na fonte.`
     : "Ajuste os filtros para encontrar documentos.";
 }
 
@@ -304,14 +243,6 @@ async function comErro(acao) {
   } catch (erro) {
     mostrarErro(erro.message);
   }
-}
-
-function aoDigitar(callback, espera = 350) {
-  let temporizador;
-  return () => {
-    clearTimeout(temporizador);
-    temporizador = setTimeout(callback, espera);
-  };
 }
 
 async function irPara(pagina) {

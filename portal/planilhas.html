@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Documentos | Portal de Dados Abertos TCU</title>
+  <title>Planilhas e dados | Portal de Dados Abertos TCU</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=1.1">
   <link rel="stylesheet" href="catalogo.css?v=1.1">
+  <link rel="stylesheet" href="planilhas.css?v=1.0">
 </head>
 <!-- parquet-page: as regras de .filter-card, .table-heading, .empty-state e
      afins vêm escopadas nessa classe no style.css compartilhado. -->
@@ -16,19 +17,20 @@
 
 <header>
   <div class="container">
-    <h1>Documentos</h1>
+    <h1>Planilhas e dados</h1>
     <p class="subtitle">
-      Editais, contratos, convênios e demonstrações contábeis publicados pelas
-      entidades do Sistema S. Cada item leva ao arquivo no portal de origem.
+      Os arquivos tabulares publicados pelas entidades do Sistema S — CSV, Excel
+      e JSON —, com o resultado da auditoria de cada link: se respondeu, quanto
+      pesa e se o conteúdo pôde ser lido.
     </p>
     <div class="badges-wrapper">
-      <span class="badge ouro">PDF</span>
+      <span class="badge ouro">CSV</span>
       <span class="badge">Link direto à fonte</span>
       <span class="badge" id="badge-api">API</span>
     </div>
     <nav class="catalogo-nav" aria-label="Catálogos">
-      <a href="documentos.html" aria-current="page">Documentos</a>
-      <a href="planilhas.html">Planilhas e dados</a>
+      <a href="documentos.html">Documentos</a>
+      <a href="planilhas.html" aria-current="page">Planilhas e dados</a>
     </nav>
   </div>
 </header>
@@ -43,10 +45,13 @@
       <pre class="aviso-erro-comando">uvicorn api.main_api:app --reload</pre>
     </section>
 
+    <!-- Cada número é também um atalho: clicar aplica o filtro que o produziu. -->
+    <section class="planilhas-resumo" id="resumo" aria-label="Resumo do acervo"></section>
+
     <section class="card filter-card">
       <div class="filter-heading">
         <div>
-          <h2>Filtrar documentos</h2>
+          <h2>Filtrar planilhas</h2>
           <p>Combine os filtros ou busque pelo texto. Segure Ctrl para marcar vários.</p>
         </div>
         <span class="filter-chip" id="contador">—</span>
@@ -55,19 +60,35 @@
       <div class="documentos-filtros">
         <div class="filter-group filter-group-busca">
           <label for="filtro-busca">Buscar</label>
-          <input type="search" id="filtro-busca" placeholder="tema, tipo ou UF…" autocomplete="off">
+          <input type="search" id="filtro-busca" placeholder="título, arquivo, seção, tipo ou UF…" autocomplete="off">
         </div>
         <div class="filter-group">
-          <label for="filtro-tipo">Tipo de documento</label>
+          <label for="filtro-formato">Formato</label>
+          <select id="filtro-formato" multiple size="6"></select>
+        </div>
+        <div class="filter-group">
+          <label for="filtro-tipo">Tipo de dado</label>
           <select id="filtro-tipo" multiple size="6"></select>
         </div>
         <div class="filter-group">
-          <label for="filtro-uf">UF</label>
-          <select id="filtro-uf" multiple size="6"></select>
+          <label for="filtro-entidade">Entidade</label>
+          <select id="filtro-entidade" multiple size="6"></select>
         </div>
         <div class="filter-group">
-          <label for="filtro-ano">Ano</label>
-          <select id="filtro-ano" multiple size="6"></select>
+          <label for="filtro-situacao">Situação do link</label>
+          <select id="filtro-situacao" size="3">
+            <option value="">Todas</option>
+            <option value="SIM">No ar na última verificação</option>
+            <option value="NÃO">Fora do ar na última verificação</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filtro-leitura">Leitura do conteúdo</label>
+          <select id="filtro-leitura" size="3">
+            <option value="">Todas</option>
+            <option value="SIM">Conteúdo carregado no acervo</option>
+            <option value="NÃO">Conteúdo não lido</option>
+          </select>
         </div>
       </div>
 
@@ -106,10 +127,10 @@
 
 <footer>
   <div class="container">
-    <p>Portal de Dados Abertos TCU · Documentos coletados dos portais de transparência</p>
+    <p>Portal de Dados Abertos TCU · Planilhas coletadas dos portais de transparência</p>
   </div>
 </footer>
 
-<script type="module" src="documentos.js?v=1.1"></script>
+<script type="module" src="planilhas.js?v=1.0"></script>
 </body>
 </html>
