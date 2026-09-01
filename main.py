@@ -38,10 +38,10 @@ def main():
     #     ABDIScraper(), SesiScraper(), SenaiScraper(), SesiTransparenciaScraper()
     scrapers = [
         ABDIScraper(),
-        SesiScraper(),
-        SenaiScraper(),
-        SenarScraper(),
-        SescApiScraper()
+        SesiScraper(ano=config.ano),
+        SenaiScraper(ano=config.ano),
+        SenarScraper(ano=config.ano),
+        SescApiScraper(ano=config.ano),
     ]
 
     for scraper in scrapers:
