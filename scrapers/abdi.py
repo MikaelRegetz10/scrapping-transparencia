@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 import requests
@@ -80,6 +81,7 @@ class ABDIScraper(BaseScraper):
         aquisicoes: bool = True,
         processo_seletivo: bool = True,
         max_paginas: int = 200,
+        pausa_paginas: float = 2.0,
     ):
         super().__init__(
             name="ABDI",
@@ -94,6 +96,10 @@ class ABDIScraper(BaseScraper):
         self.aquisicoes = aquisicoes
         self.processo_seletivo = processo_seletivo
         self.max_paginas = max_paginas
+        # A ABDI derruba a conexão (RemoteDisconnected) quando o load more vai
+        # sem respiro: a varredura inteira morre por volta da 10ª página. Com
+        # pausa entre as páginas ela vai até o fim das ~34.
+        self.pausa_paginas = pausa_paginas
 
         self.session = requests.Session()
         self.session.headers.update(DEFAULT_HEADERS)
@@ -235,15 +241,17 @@ class ABDIScraper(BaseScraper):
         url_ajax = f"{url_secao}?nocache=1"
         for pagina in range(2, self.max_paginas + 1):
             payload = campos + [("page_settings[page]", str(pagina))]
-            resposta = self.session.post(
-                url_ajax,
-                data=payload,
-                headers={"X-Requested-With": "XMLHttpRequest"},
-                timeout=30,
-            )
-            resposta.raise_for_status()
 
-            trecho = resposta.json().get("data", {}).get("html", "")
+            trecho = self._carrega_pagina_aquisicao(url_ajax, payload, pagina)
+            if trecho is None:
+                # Página perdida de vez: devolvemos o que já foi coletado em vez
+                # de derrubar a seção inteira por causa de uma queda de conexão.
+                print(
+                    f"      ⚠️ Aquisições interrompidas na página {pagina}: "
+                    f"{len(registros)} registro(s) preservado(s)."
+                )
+                return registros
+
             if not trecho.strip():
                 break
 
@@ -260,6 +268,32 @@ class ABDIScraper(BaseScraper):
             )
 
         return registros
+
+    def _carrega_pagina_aquisicao(
+        self, url_ajax: str, payload: list, pagina: int
+    ) -> str | None:
+        """Busca uma página do load more. Devolve o HTML ou None se desistir.
+
+        Recua e tenta de novo antes de desistir: a queda costuma ser a ABDI
+        cortando o ritmo, e não a paginação tendo acabado.
+        """
+        for tentativa in range(1, 4):
+            time.sleep(self.pausa_paginas * tentativa)
+            try:
+                resposta = self.session.post(
+                    url_ajax,
+                    data=payload,
+                    headers={"X-Requested-With": "XMLHttpRequest"},
+                    timeout=30,
+                )
+                resposta.raise_for_status()
+                return resposta.json().get("data", {}).get("html", "")
+            except Exception as e:
+                print(
+                    f"      ↻ Página {pagina} falhou ({type(e).__name__}), "
+                    f"tentativa {tentativa}/3."
+                )
+        return None
 
     def _parseia_itens_aquisicao(self, soup: BeautifulSoup) -> list[dict[str, str]]:
         """Cada item é um accordion: título da licitação + N documentos + situação."""
