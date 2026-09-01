@@ -6,6 +6,7 @@ import re
 import time
 import pandas as pd
 import requests
+from openpyxl.cell.cell import ILLEGAL_CHARACTERS_RE
 
 from core.config import Config
 from core.parquet_exporter import (
@@ -26,6 +27,18 @@ PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json"}
 
 # Linhas de amostra guardadas por dataset aprovado no profiling.
 ROWS_PER_SAMPLE = 20
+
+
+def limpa_caracteres_ilegais(valor):
+    """Remove os caracteres de controle ASCII que o formato XLSX recusa.
+
+    Texto vindo dos portais traz \x00-\x08 e afins com frequência; sem esta
+    limpeza o openpyxl levanta IllegalCharacterError e o relatório inteiro
+    deixa de ser gravado por causa de uma célula.
+    """
+    if isinstance(valor, str):
+        return ILLEGAL_CHARACTERS_RE.sub("", valor)
+    return valor
 
 
 def sanitize_sheet_name(title: str, index: int) -> str:
@@ -388,6 +401,17 @@ def run_scraper_pipeline(
 
     df_summary_tables = pd.DataFrame(summary_tables)
     df_summary_pdfs = pd.DataFrame(summary_pdfs)
+
+    if not df_summary_tables.empty:
+        df_summary_tables = df_summary_tables.map(limpa_caracteres_ilegais)
+
+    if not df_summary_pdfs.empty:
+        df_summary_pdfs = df_summary_pdfs.map(limpa_caracteres_ilegais)
+
+    structured_samples = {
+        aba: df.map(limpa_caracteres_ilegais)
+        for aba, df in structured_samples.items()
+    }
 
     with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
         # Aba 1: Resumo de Planilhas e APIs Tabulares
