@@ -53,7 +53,7 @@ def run_scraper_pipeline(
 
         if config.log_detalhado:
             logger.debug(
-                f"[{section}] Verificando: {title[:40]} ({file_type.upper()})"
+                f"[{section}] Verificando: {title} ({file_type.upper()})"
             )
 
         # Check Conectividade

@@ -1,8 +1,8 @@
 # scrapers/abdi.py
 import os
-from typing import Dict, List
+import re
+from typing import Dict, List, Set
 from urllib.parse import urljoin, urlparse
-
 from bs4 import BeautifulSoup
 import requests
 
@@ -12,7 +12,7 @@ from scrapers.base import BaseScraper
 
 class ABDIScraper(BaseScraper):
 
-    def __init__(self):
+    def __init__(self, ano: int = 2026):
         routes = {
             "Dados Abertos": "https://www.abdi.com.br/transparencia/dados-abertos/",
             "Aquisição de Bens e Serviços": "https://www.abdi.com.br/transparencia/aquisicao-de-bens-e-servicos/",
@@ -25,17 +25,22 @@ class ABDIScraper(BaseScraper):
 
         for section_name, url in self.routes.items():
             try:
-                response = requests.get(
-                    url, headers=DEFAULT_HEADERS, timeout=20
-                )
-                response.raise_for_status()
-                soup = BeautifulSoup(response.text, "html.parser")
-
                 if section_name == "Dados Abertos":
+                    response = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
+                    response.raise_for_status()
+                    soup = BeautifulSoup(response.text, "html.parser")
                     extracted_data.extend(
                         self._extract_dados_abertos(soup, url, section_name)
                     )
+                elif section_name == "Aquisição de Bens e Serviços":
+                    # Extração com paginação profunda
+                    extracted_data.extend(
+                        self._extract_aquisicoes_paginadas(url, section_name)
+                    )
                 else:
+                    response = requests.get(url, headers=DEFAULT_HEADERS, timeout=25)
+                    response.raise_for_status()
+                    soup = BeautifulSoup(response.text, "html.parser")
                     extracted_data.extend(
                         self._extract_pdf_documents(soup, url, section_name)
                     )
@@ -44,6 +49,93 @@ class ABDIScraper(BaseScraper):
                 print(f"⚠️ Erro ao acessar a rota [{section_name}] ({url}): {e}")
 
         return extracted_data
+
+    def _extract_aquisicoes_paginadas(
+        self, base_url: str, section: str
+    ) -> List[Dict[str, str]]:
+        """Varre as páginas de aquisição de bens e serviços por paginação de URL."""
+        items: List[Dict[str, str]] = []
+        seen_urls: Set[str] = set()
+
+        # 1. Tenta a página inicial
+        try:
+            res = requests.get(base_url, headers=DEFAULT_HEADERS, timeout=25)
+            if res.status_code == 200:
+                soup = BeautifulSoup(res.text, "html.parser")
+                items.extend(self._extract_pdf_documents(soup, base_url, section, seen_urls))
+        except Exception as e:
+            print(f"⚠️ Erro na página inicial de aquisições: {e}")
+
+        # 2. Pagina pelas variações de parâmetros suportadas pelo JetEngine / WordPress
+        max_paginas = 25
+        paginas_vazias_consecutivas = 0
+
+        for page_num in range(2, max_paginas + 1):
+            # Formatos de paginação comuns no JetEngine/Elementor
+            url_paginada = f"{base_url}?jet_paged={page_num}"
+
+            try:
+                res = requests.get(url_paginada, headers=DEFAULT_HEADERS, timeout=20)
+                if res.status_code != 200:
+                    break
+
+                soup = BeautifulSoup(res.text, "html.parser")
+                novos_itens = self._extract_pdf_documents(soup, url_paginada, section, seen_urls)
+
+                if not novos_itens:
+                    paginas_vazias_consecutivas += 1
+                    if paginas_vazias_consecutivas >= 2:
+                        break
+                else:
+                    paginas_vazias_consecutivas = 0
+                    items.extend(novos_itens)
+
+            except Exception:
+                break
+
+        # 3. Fallback: Consulta via WP REST API se a paginação tradicional esgotar
+        if len(items) <= 15:
+            api_items = self._fetch_from_wp_api(section, seen_urls)
+            items.extend(api_items)
+
+        return items
+
+    def _fetch_from_wp_api(
+        self, section: str, seen_urls: Set[str]
+    ) -> List[Dict[str, str]]:
+        """Consulta endpoints REST do WordPress da ABDI para recuperar anexos de licitações."""
+        items: List[Dict[str, str]] = []
+        endpoints = [
+            "https://www.abdi.com.br/wp-json/wp/v2/media?per_page=100&mime_type=application/pdf",
+        ]
+
+        for ep in endpoints:
+            try:
+                res = requests.get(ep, headers=DEFAULT_HEADERS, timeout=25)
+                if res.status_code == 200:
+                    data = res.json()
+                    for entry in data:
+                        source_url = entry.get("source_url") or entry.get("guid", {}).get("rendered")
+                        if not source_url or source_url in seen_urls:
+                            continue
+
+                        title = entry.get("title", {}).get("rendered", "Documento PDF")
+                        title = BeautifulSoup(title, "html.parser").get_text(strip=True)
+
+                        seen_urls.add(source_url)
+                        items.append(
+                            {
+                                "source": self.name,
+                                "section": section,
+                                "title": title[:150] if title else "Documento PDF",
+                                "download_url": source_url,
+                                "file_type": "pdf",
+                            }
+                        )
+            except Exception:
+                continue
+
+        return items
 
     def _extract_dados_abertos(
         self, soup: BeautifulSoup, page_url: str, section: str
@@ -84,39 +176,62 @@ class ABDIScraper(BaseScraper):
         return items
 
     def _extract_pdf_documents(
-        self, soup: BeautifulSoup, page_url: str, section: str
+        self,
+        soup: BeautifulSoup,
+        page_url: str,
+        section: str,
+        seen_urls: Set[str] = None,
     ) -> List[Dict[str, str]]:
-        """Extrai links de PDFs e botões 'Visualizar' (JetDownload / Elementor)
-
-        nas seções de Licitações e Processo Seletivo.
-        """
+        """Extrai links de PDFs e botões 'Visualizar', descartando links de termos e cookies."""
         items = []
-        seen_urls = set()
+        if seen_urls is None:
+            seen_urls = set()
+
+        # Blacklist rigorosa de links utilitários que não são documentos de auditoria
+        ignorar = [
+            "cookie",
+            "politica-de-privacidade",
+            "termos-de-uso",
+            "opt-out",
+            "adopt",
+            "javascript:",
+            "#",
+            "whatsapp",
+            "facebook",
+            "instagram",
+            "linkedin",
+        ]
 
         for anchor in soup.find_all("a", href=True):
             href = anchor["href"].strip()
-            if not href or href.startswith("#") or href.startswith("javascript:"):
+            if not href or any(ig in href.lower() for ig in ignorar):
                 continue
 
             full_url = urljoin(page_url, href)
             href_lower = full_url.lower()
 
-            # Identifica se o link é um PDF direto ou uma URL de jet_download da ABDI
-            is_pdf = ".pdf" in href_lower or "jet_download=" in href_lower
+            is_pdf = ".pdf" in href_lower or "jet_download=" in href_lower or "/download/" in href_lower
 
             if is_pdf and full_url not in seen_urls:
                 seen_urls.add(full_url)
 
-                # Busca o contexto do título no container Elementor superior
                 title = "Documento PDF"
                 container = (
-                    anchor.find_parent("div", class_=lambda c: c and ("elementor-widget" in c or "jet-" in c or "e-con" in c))
+                    anchor.find_parent("div", class_=lambda c: c and ("elementor-toggle-item" in c or "jet-listing" in c or "elementor-widget" in c or "e-con" in c))
                     or anchor.find_parent(["li", "tr", "div", "p"])
                 )
 
                 if container:
-                    raw_text = container.get_text(separator=" ", strip=True)
-                    # Limpa palavras do botão visual da string do título
+                    # Busca o cabeçalho do acordeão / processo
+                    heading = container.find(
+                        ["h1", "h2", "h3", "h4", "h5", "a", "div"],
+                        class_=lambda c: c and ("title" in c or "heading" in c or "tab-title" in c),
+                    )
+                    if heading and len(heading.get_text(strip=True)) > 5:
+                        raw_text = heading.get_text(separator=" ", strip=True)
+                    else:
+                        raw_text = container.get_text(separator=" ", strip=True)
+
                     clean_title = (
                         raw_text.replace("Visualizar", "")
                         .replace("Baixar", "")
