@@ -7,6 +7,16 @@ import openpyxl
 import pandas as pd
 
 
+def is_text_column(serie: pd.Series) -> bool:
+    """Identifica colunas de texto em qualquer versão do pandas.
+
+    Até o pandas 2.x texto vira dtype 'object'; a partir do 3.0 vira o dtype
+    'str' nativo. Testar só por 'object' faria as regras de qualidade abaixo
+    silenciarem em quem estiver numa versão mais nova.
+    """
+    return serie.dtype == "object" or pd.api.types.is_string_dtype(serie)
+
+
 COLUNAS_IGNORAR_PADRAO = [
     "pagina_total",
     "pagina_atual",
@@ -250,7 +260,7 @@ def analyze_dataset_quality(
                 tem_hierarquia = False
 
                 for col in df_std.columns:
-                    if df_std[col].dtype == "object":
+                    if is_text_column(df_std[col]):
                         valores_texto = df_std[col].dropna().astype(str)
                         if valores_texto.str.contains(
                             r"(?i)\b(?:total|subtotal)\b", regex=True
@@ -269,7 +279,7 @@ def analyze_dataset_quality(
                     )
 
                 for col in df_std.columns:
-                    if df_std[col].dtype == "object":
+                    if is_text_column(df_std[col]):
                         amostra = df_std[col].dropna().astype(str)
                         contaminados = amostra[
                             amostra.str.match(
