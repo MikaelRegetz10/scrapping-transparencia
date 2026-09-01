@@ -1,3 +1,4 @@
+# core/pipeline.py
 from datetime import datetime
 import os
 import re
@@ -10,13 +11,7 @@ from core.parquet_exporter import export_to_parquet  # <--- ADICIONADO
 from core.profiler import analyze_dataset_quality
 from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
-from openpyxl.cell.cell import ILLEGAL_CHARACTERS_RE
 
-def clean_illegal_xlsx_chars(val):
-    """Remove caracteres de controle ASCII incompatíveis com o formato XLSX."""
-    if isinstance(val, str):
-        return ILLEGAL_CHARACTERS_RE.sub("", val)
-    return val
 
 # Formatos que o core/profiler.py sabe perfilar. Os demais (zip, doc, docx...)
 # são auditados só quanto à disponibilidade, sem baixar o corpo do arquivo.
@@ -62,7 +57,7 @@ def run_scraper_pipeline(
 
         if config.log_detalhado:
             logger.debug(
-                f"[{section}] Verificando: {title} ({file_type.upper()})"
+                f"[{section}] Verificando: {title[:40]} ({file_type.upper()})"
             )
 
         # Check Conectividade
@@ -205,22 +200,11 @@ def run_scraper_pipeline(
     # ==========================================
     os.makedirs(config.output_dir, exist_ok=True)
     excel_path = os.path.join(
-        config.output_dir, f"{scraper.name.lower()}_relatorio_qualidade_{ano}.xlsx"
+        config.output_dir, f"{scraper.name.lower()}_relatorio_qualidade.xlsx"
     )
 
     df_summary_tables = pd.DataFrame(summary_tables)
     df_summary_pdfs = pd.DataFrame(summary_pdfs)
-
-    if not df_summary_tables.empty:
-        df_summary_tables = df_summary_tables.map(clean_illegal_xlsx_chars)
-
-    if not df_summary_pdfs.empty:
-        df_summary_pdfs = df_summary_pdfs.map(clean_illegal_xlsx_chars)
-
-    structured_samples = {
-        sheet: df.map(clean_illegal_xlsx_chars)
-        for sheet, df in structured_samples.items()
-    }
 
     with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
         # Aba 1: Resumo de Planilhas e APIs Tabulares
@@ -242,7 +226,6 @@ def run_scraper_pipeline(
             pd.DataFrame([{"Aviso": "Nenhum PDF encontrado"}]).to_excel(
                 writer, sheet_name="Resumo_PDFs", index=False
             )
-
 
         # Demais Abas: Amostras das planilhas/APIs aprovadas
         for sheet_name, df_data in structured_samples.items():
