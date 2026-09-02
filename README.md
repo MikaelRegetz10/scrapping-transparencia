@@ -81,6 +81,9 @@ core/cleaner.py          normaliza planilhas com layout "visual"
 core/config.py           lê o config.json e monta o logger
 scrapers/base.py         contrato que todo scraper implementa
 scrapers/*.py            um módulo por portal
+api/                     API RESTful que serve os Parquet gerados
+portal/                  front-end estático que consome a API
+scripts/                 utilitários de manutenção do acervo
 outputs/                 planilhas geradas (não versionado)
 logs/                    logs de execução (não versionado)
 config.json              ano, delay, diretórios e nível de log
@@ -101,7 +104,9 @@ no fim e `nome_arquivo()` para guardar o nome do PDF que será baixado.
 
 O relatório sai com duas abas de resumo: `Resumo_Geral` para planilhas e APIs
 tabulares e `Resumo_PDFs` para documentos, mais uma aba de amostra por dataset
-aprovado no profiling.
+aprovado no profiling. As duas abas viram também catálogos no Parquet
+(`tema=documentos` e `tema=planilhas`), que é o que o portal exibe — ver
+`portal/README.md`.
 
 Regra do projeto: nada de automação de navegador. Quando a página carrega
 conteúdo por JavaScript (botão "Carregar Mais", abas com filtro por ano), o

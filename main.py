@@ -38,10 +38,12 @@ def main():
     #     ABDIScraper(), SesiScraper(), SenaiScraper(), SesiTransparenciaScraper()
     scrapers = [
         ABDIScraper(),
-        SesiScraper(ano=config.ano),
-        SenaiScraper(ano=config.ano),
-        SenarScraper(ano=config.ano),
-        SescApiScraper(ano=config.ano),
+        SesiScraper(),
+        SenaiScraper(),
+        SenarScraper(),
+        SescApiScraper(),
+        ABDIPdfScraper(),
+        SesiPdfScraper(),
     ]
 
     for scraper in scrapers:
@@ -50,4 +52,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

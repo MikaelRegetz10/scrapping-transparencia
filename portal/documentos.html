@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentos | Portal de Dados Abertos TCU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="catalogo.css?v=1.1">
+</head>
+<!-- parquet-page: as regras de .filter-card, .table-heading, .empty-state e
+     afins vêm escopadas nessa classe no style.css compartilhado. -->
+<body class="parquet-page">
+
+<header>
+  <div class="container">
+    <h1>Documentos</h1>
+    <p class="subtitle">
+      Editais, contratos, convênios e demonstrações contábeis publicados pelas
+      entidades do Sistema S. Cada item leva ao arquivo no portal de origem.
+    </p>
+    <div class="badges-wrapper">
+      <span class="badge ouro">PDF</span>
+      <span class="badge">Link direto à fonte</span>
+      <span class="badge" id="badge-api">API</span>
+    </div>
+    <nav class="catalogo-nav" aria-label="Catálogos">
+      <a href="documentos.html" aria-current="page">Documentos</a>
+      <a href="planilhas.html">Planilhas e dados</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <!-- Aviso de API fora do ar, escondido enquanto tudo funciona -->
+    <section class="card aviso-erro" id="aviso-erro" hidden>
+      <h2>Não foi possível falar com a API</h2>
+      <p id="aviso-erro-texto"></p>
+      <pre class="aviso-erro-comando">uvicorn api.main_api:app --reload</pre>
+    </section>
+
+    <section class="card filter-card">
+      <div class="filter-heading">
+        <div>
+          <h2>Filtrar documentos</h2>
+          <p>Combine os filtros ou busque pelo texto. Segure Ctrl para marcar vários.</p>
+        </div>
+        <span class="filter-chip" id="contador">—</span>
+      </div>
+
+      <div class="documentos-filtros">
+        <div class="filter-group filter-group-busca">
+          <label for="filtro-busca">Buscar</label>
+          <input type="search" id="filtro-busca" placeholder="tema, tipo ou UF…" autocomplete="off">
+        </div>
+        <div class="filter-group">
+          <label for="filtro-tipo">Tipo de documento</label>
+          <select id="filtro-tipo" multiple size="6"></select>
+        </div>
+        <div class="filter-group">
+          <label for="filtro-uf">UF</label>
+          <select id="filtro-uf" multiple size="6"></select>
+        </div>
+        <div class="filter-group">
+          <label for="filtro-ano">Ano</label>
+          <select id="filtro-ano" multiple size="6"></select>
+        </div>
+      </div>
+
+      <div class="documentos-acoes">
+        <button id="limpar" class="btn btn-secondary" type="button">Limpar filtros</button>
+        <span class="documentos-acoes-exportar">
+          <span class="exportar-rotulo">Baixar a lista filtrada:</span>
+          <a id="exportar-csv" class="btn btn-secondary" href="#">CSV</a>
+          <a id="exportar-xlsx" class="btn btn-secondary" href="#">Excel</a>
+          <a id="exportar-json" class="btn btn-secondary" href="#">JSON</a>
+        </span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="table-heading">
+        <div>
+          <h2>Resultados</h2>
+          <p id="resumo-resultados">Carregando…</p>
+        </div>
+      </div>
+
+      <div id="lista" class="documentos-lista" aria-live="polite"></div>
+
+      <div class="pagination" id="paginacao" hidden>
+        <span id="paginacao-texto"></span>
+        <div class="pagination-buttons">
+          <button class="pagination-btn" id="pagina-anterior" type="button">← Anterior</button>
+          <button class="pagination-btn" id="pagina-proxima" type="button">Próxima →</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Portal de Dados Abertos TCU · Documentos coletados dos portais de transparência</p>
+  </div>
+</footer>
+
+<script type="module" src="documentos.js?v=1.1"></script>
+</body>
+</html>

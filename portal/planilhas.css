@@ -1,0 +1,122 @@
+/* Estilos próprios da página de planilhas.
+   O chrome de catálogo (filtros, itens da lista, estados) vem do catalogo.css,
+   compartilhado com a página de documentos; o visual base, do style.css. */
+
+/* --- Cartões de resumo --- */
+.planilhas-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* São botões porque cada um aplica o filtro que gerou o número — mas devem
+   parecer cartões, não controles de formulário. */
+.planilhas-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.planilhas-cartao:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.15);
+}
+
+.planilhas-cartao:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.planilhas-cartao:active {
+  transform: scale(0.995);
+}
+
+.planilhas-cartao-numero {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+}
+
+.planilhas-cartao-rotulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.planilhas-cartao-detalhe {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* O cartão dos links quebrados é o único achado ruim do acervo: destaca-se
+   sem virar alarme, porque zero ali é o normal esperado. */
+.planilhas-cartao.alerta .planilhas-cartao-numero {
+  color: #b45309;
+}
+
+/* --- Item da lista --- */
+
+/* O ícone do catálogo de documentos é vermelho de PDF. Aqui o acervo é
+   tabular, e verde de planilha diz o formato antes da legenda. */
+.planilha-icone {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.documento-item.inativo .planilha-icone {
+  background: #f1f5f9;
+  color: var(--muted);
+}
+
+.planilha-selo {
+  border-radius: 4px;
+  padding: 0.1rem 0.45rem;
+  font-weight: 600;
+}
+
+.planilha-selo.lido {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.planilha-selo.nao-lido {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.planilha-selo.neutro {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* O que o profiler reclamou do arquivo. Pode ser longo e é secundário ao
+   título, por isso vive numa linha própria, menor. */
+.planilha-qualidade {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .planilhas-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .planilhas-cartao-numero {
+    font-size: 1.4rem;
+  }
+}
