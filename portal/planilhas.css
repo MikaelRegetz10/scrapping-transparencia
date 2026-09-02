@@ -101,6 +101,14 @@
   color: #475569;
 }
 
+/* O item cuja fonte é uma API JSON: o clique não abre a página da entidade,
+   baixa um .xlsx convertido. O selo avisa antes, porque um clique que baixa
+   arquivo e outro que troca de site não devem parecer a mesma coisa. */
+.planilha-selo.excel {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
 /* O que o profiler reclamou do arquivo. Pode ser longo e é secundário ao
    título, por isso vive numa linha própria, menor. */
 .planilha-qualidade {

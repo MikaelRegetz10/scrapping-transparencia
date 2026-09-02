@@ -47,6 +47,33 @@ const TIPOS_DE_DADO = {
 // parece falha da coleta quando é só um .zip fazendo o que .zip faz.
 const FORMATOS_TABULARES = new Set(["csv", "xlsx", "xls", "json"]);
 
+// Formatos cujo link não entrega um arquivo ao ser clicado. Um CSV o navegador
+// baixa; um endpoint JSON ele desenha na tela como página, e o dado — que é
+// tabular — chega à pessoa na forma menos legível que tem. Para esses o item
+// aponta para a conversão da API, que busca na fonte e devolve .xlsx.
+const FORMATOS_QUE_ABREM_COMO_PAGINA = new Set(["json"]);
+
+/** Se o item deve sair pela conversão da API em vez do link da fonte.
+ *
+ * Não consulta `ativo` de propósito. Ele é o retrato da última coleta, e as
+ * quatro APIs marcadas como fora do ar são justamente as que recusam o HEAD
+ * do validador respondendo GET normalmente — descartá-las deixaria o JSON cru
+ * exatamente onde o catálogo está desatualizado. Fonte mesmo fora do ar volta
+ * como 502 da conversão, e o item já avisa disso na própria lista.
+ */
+function precisaConversao(planilha, origem) {
+  if (!origem) return false;
+  return FORMATOS_QUE_ABREM_COMO_PAGINA.has(
+    String(planilha.tipo_arquivo || "").toLowerCase()
+  );
+}
+
+/** Endereço da representação em Excel daquele item do acervo. */
+function urlDaConversao(origem) {
+  const params = new URLSearchParams({ url: origem });
+  return `${API_BASE}/api/v1/documentos/planilha?${params}`;
+}
+
 // Os cartões do topo. Cada um lê um número já apurado pelas agregações que
 // montam os filtros — nenhum custa consulta própria — e é também um atalho:
 // clicar aplica exatamente os filtros que produziram aquele número.
@@ -154,12 +181,14 @@ function seloLeitura(planilha) {
 }
 
 function itemPlanilha(planilha) {
-  const href = urlSegura(planilha.url_download);
+  const origem = urlSegura(planilha.url_download);
   const titulo = escapar(
     planilha.titulo || planilha.nome_arquivo || "Arquivo sem título"
   );
   const inativo = !ehSim(planilha.ativo);
   const formato = String(planilha.tipo_arquivo || "arq").toUpperCase();
+  const converter = precisaConversao(planilha, origem);
+  const href = converter ? urlDaConversao(origem) : origem;
 
   // Cada item precisa do próprio elemento: texto solto vira um único nó e o
   // `gap` do flex não o separa do vizinho.
@@ -173,6 +202,9 @@ function itemPlanilha(planilha) {
     tags.push(`<span class="documento-tag">${escapar(planilha.entidade)}</span>`);
   }
   tags.push(seloLeitura(planilha));
+  if (converter) {
+    tags.push(`<span class="planilha-selo excel">Baixa em Excel</span>`);
+  }
 
   const peso = tamanho(planilha.tamanho_kb);
   if (peso) tags.push(`<span>${escapar(peso)}</span>`);
@@ -200,15 +232,21 @@ function itemPlanilha(planilha) {
       <span class="documento-meta">${tags.join("")}</span>
       ${qualidade}
     </span>
-    <span class="documento-seta" aria-hidden="true">↗</span>`;
+    <span class="documento-seta" aria-hidden="true">${converter ? "↓" : "↗"}</span>`;
 
   // Sem URL utilizável o item ainda aparece, mas não como link falso.
   if (!href) {
     return `<div class="documento-item inativo">${corpo}</div>`;
   }
 
+  // O link convertido responde com anexo, e não com página: abri-lo numa aba
+  // nova deixaria uma aba em branco para a pessoa fechar depois de cada
+  // download. Os demais continuam saindo para o site da entidade, onde a aba
+  // nova é o que preserva o catálogo já filtrado.
+  const alvo = converter ? "" : ` target="_blank" rel="noopener noreferrer"`;
+
   return `<a class="documento-item ${inativo ? "inativo" : ""}"
-             href="${escapar(href)}" target="_blank" rel="noopener noreferrer">
+             href="${escapar(href)}"${alvo}>
             ${corpo}
           </a>`;
 }
