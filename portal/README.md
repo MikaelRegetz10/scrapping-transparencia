@@ -77,9 +77,30 @@ Cada item traz o que a auditoria apurou sobre aquele link:
 - **Formato não tabular** — `.zip`, `.docx`, `.png`. O pipeline audita só a
   disponibilidade desses, sem baixar o corpo do arquivo.
 - **Link fora do ar** — não respondeu na última verificação.
+- **Baixa em Excel** — a fonte é um endpoint de API que responde JSON. Ver
+  abaixo.
 
 Os quatro números do topo são atalhos: clicar em um aplica exatamente o filtro
 que o produziu.
+
+## Os itens que baixam em Excel
+
+Cento e trinta e dois itens do catálogo — de SESC, SENAI e SESI — não apontam
+para um arquivo: apontam para um endpoint de API que devolve JSON. Clicar num
+deles abria o JSON cru numa aba do navegador, que é a forma menos legível
+possível de um dado que já é tabular.
+
+Esses itens saem pelo `GET /api/v1/documentos/planilha?url=…`, que busca o link
+na fonte, desempacota o JSON com o mesmo achatador do profiler e devolve um
+`.xlsx`. O item leva o selo **Baixa em Excel** e a seta `↓` no lugar da `↗`,
+porque um clique que baixa arquivo e outro que troca de site não devem parecer
+a mesma coisa.
+
+O endpoint só converte URL que já conste no acervo: a consulta ao catálogo é o
+que o impede de virar um proxy aberto para qualquer endereço, inclusive os da
+rede interna de onde a API roda. Formato que não vira planilha (`.zip`,
+`.docx`, `.png`) volta 415, e o portal continua mandando esses direto à fonte —
+CSV e Excel o navegador já baixa sozinho, e para eles nada mudou.
 
 ## Limitações conhecidas
 
