@@ -41,6 +41,58 @@ const TIPOS_DE_DADO = {
   outros: "Outros",
 };
 
+// A UF vem da partição Hive que o parquet_exporter escreve (uf=…). São as 27
+// unidades federativas mais "DN", que não é estado: é o Departamento Nacional,
+// o que a entidade publica de forma centralizada em vez de por regional. Essa
+// é a única opção que não se explica sozinha, e é a maior delas.
+const UFS = {
+  DN: "DN — Departamento Nacional",
+  AC: "AC — Acre",
+  AL: "AL — Alagoas",
+  AM: "AM — Amazonas",
+  AP: "AP — Amapá",
+  BA: "BA — Bahia",
+  CE: "CE — Ceará",
+  DF: "DF — Distrito Federal",
+  ES: "ES — Espírito Santo",
+  GO: "GO — Goiás",
+  MA: "MA — Maranhão",
+  MG: "MG — Minas Gerais",
+  MS: "MS — Mato Grosso do Sul",
+  MT: "MT — Mato Grosso",
+  PA: "PA — Pará",
+  PB: "PB — Paraíba",
+  PE: "PE — Pernambuco",
+  PI: "PI — Piauí",
+  PR: "PR — Paraná",
+  RJ: "RJ — Rio de Janeiro",
+  RN: "RN — Rio Grande do Norte",
+  RO: "RO — Rondônia",
+  RR: "RR — Roraima",
+  RS: "RS — Rio Grande do Sul",
+  SC: "SC — Santa Catarina",
+  SE: "SE — Sergipe",
+  SP: "SP — São Paulo",
+  TO: "TO — Tocantins",
+};
+
+/** As UFs em ordem alfabética, com o DN à frente.
+ *
+ * Os demais filtros saem da API na ordem de quem tem mais arquivos, que é útil
+ * quando as opções são meia dúzia. Vinte e oito não: quem abre este filtro
+ * procura um estado que já sabe qual é, e procura pela sigla. O DN fica fora da
+ * ordem de propósito — não é estado, e é o maior grupo do acervo.
+ */
+function ufsOrdenadas(contagem) {
+  return new Map(
+    [...contagem].sort(([a], [b]) => {
+      if (a === "DN") return -1;
+      if (b === "DN") return 1;
+      return a.localeCompare(b, "pt-BR");
+    })
+  );
+}
+
 // Formatos que o core/profiler.py sabe abrir (PROFILABLE_TYPES, em
 // core/pipeline.py). Os demais entram no catálogo auditados só quanto à
 // disponibilidade — e o item precisa dizer isso, senão "conteúdo não lido"
@@ -127,6 +179,9 @@ function parametrosFiltro() {
 
   const entidades = selecionados("filtro-entidade");
   if (entidades.length) params.set("entidade", entidades.join(","));
+
+  const ufs = selecionados("filtro-uf");
+  if (ufs.length) params.set("uf", ufs.join(","));
 
   const situacao = $("filtro-situacao").value;
   if (situacao) params.set("ativo", situacao);
@@ -344,15 +399,16 @@ function preencherFiltro(id, contagem, rotularOpcao) {
     .join("");
 }
 
-/** Monta filtros e cartões a partir de cinco agregações do acervo. */
+/** Monta filtros e cartões a partir de seis agregações do acervo. */
 async function carregarFiltrosEResumo() {
   const doTema = { tema: TEMA_PLANILHAS };
 
-  const [porFormato, porEntidade, porTipo, porLeitura, porSituacao] =
+  const [porFormato, porEntidade, porTipo, porUf, porLeitura, porSituacao] =
     await Promise.all([
       contagens("tipo_arquivo", doTema),
       contagens("entidade", doTema),
       contagens("tipo_documento", doTema),
+      contagens("uf", doTema),
       contagens("estruturado", doTema),
       contagens("ativo", doTema),
     ]);
@@ -360,6 +416,7 @@ async function carregarFiltrosEResumo() {
   preencherFiltro("filtro-formato", porFormato, (f) => f.toUpperCase());
   preencherFiltro("filtro-entidade", porEntidade, (e) => e);
   preencherFiltro("filtro-tipo", porTipo, rotulo);
+  preencherFiltro("filtro-uf", ufsOrdenadas(porUf), (u) => UFS[u] || u);
 
   // O total sai da soma por situação porque `ativo` é a única coluna que todo
   // registro de catálogo tem — o pipeline a escreve para os dois catálogos,
@@ -416,7 +473,7 @@ async function aplicarFiltros() {
 
 function limparFiltros() {
   $("filtro-busca").value = "";
-  ["filtro-formato", "filtro-tipo", "filtro-entidade"].forEach((id) => {
+  ["filtro-formato", "filtro-tipo", "filtro-entidade", "filtro-uf"].forEach((id) => {
     [...$(id).options].forEach((opcao) => (opcao.selected = false));
   });
   $("filtro-situacao").value = "";
@@ -459,7 +516,8 @@ async function irPara(pagina) {
 }
 
 async function main() {
-  ["filtro-formato", "filtro-tipo", "filtro-entidade", "filtro-situacao", "filtro-leitura"]
+  ["filtro-formato", "filtro-tipo", "filtro-entidade", "filtro-uf",
+   "filtro-situacao", "filtro-leitura"]
     .forEach((id) => $(id).addEventListener("change", aplicarFiltros));
   $("filtro-busca").addEventListener("input", aoDigitar(aplicarFiltros));
 

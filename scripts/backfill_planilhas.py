@@ -12,10 +12,15 @@ mantém o catálogo em dia, e rodar de novo apenas reescreve os mesmos arquivos.
 
     .venv/bin/python -m scripts.backfill_planilhas
 
-Duas colunas saem diferentes do que sairia numa coleta de verdade: `ano` e
-`uf`. O Excel não guarda o `tcu_ano`/`tcu_uf` do item bruto, então tudo cai no
-exercício do config.json e em DN — os mesmos padrões que o pipeline usa quando
-o scraper não informa nada. Uma coleta nova corrige ambos.
+Uma coluna sai diferente do que sairia numa coleta de verdade: `ano`. O Excel
+não guarda o `tcu_ano` do item bruto, então tudo cai no exercício do
+config.json — o mesmo padrão que o pipeline usa quando o scraper não informa
+nada. Uma coleta nova corrige.
+
+A `uf` também não sobrevive ao Excel, mas essa o `particao_do_link` recupera:
+ela está escrita na seção e no título de cada link ("Administração Regional do
+Acre", "SESC AC"), e é de lá que ele a lê quando o `tcu_uf` falta. Só fica em
+DN o que é mesmo do Departamento Nacional.
 """
 
 import glob

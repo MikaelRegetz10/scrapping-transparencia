@@ -155,10 +155,17 @@ clica em "Ver dados" na página de planilhas.
 
 ## Limitações conhecidas
 
-- **UF e ano são pouco úteis por enquanto.** Os scrapers não extraem essas
-  informações do arquivo, então tudo cai em `DN` e no exercício corrente. Nos
-  registros trazidos pelo backfill isso é certo: o Excel de qualidade não
-  guarda o `tcu_uf`/`tcu_ano` do item bruto. Uma coleta nova corrige.
+- **O ano é pouco útil por enquanto.** Os scrapers nem sempre extraem o
+  exercício do arquivo, e nos registros trazidos pelo backfill ele não tem como
+  vir: o Excel de qualidade não guarda o `tcu_ano` do item bruto, então tudo cai
+  no exercício corrente. Uma coleta nova corrige.
+- **A UF vale nos dois catálogos, mas só o de planilhas tem estado de verdade
+  hoje.** Ela sai do `tcu_uf` do scraper e, na falta dele, do texto do link
+  ("Administração Regional do Acre", "SESC AC") — ver `uf_do_texto`, em
+  `core/parquet_exporter.py`. No `tema=planilhas` isso dá 27 estados mais o
+  `DN`; no `tema=documentos` dá `DN` em tudo, e está certo: os PDF catalogados
+  são os da ABDI e do SESI nacional. O filtro do `documentos.html` só ganha
+  opções quando entrar no acervo um portal regional que publique PDF.
 - **`tamanho_kb` depende do servidor de origem.** Quando o portal não manda
   `Content-Length`, o campo fica vazio e o item sai sem o peso.
 - **O "Ver dados" procura pelo título, não por uma chave.** O pipeline grava o

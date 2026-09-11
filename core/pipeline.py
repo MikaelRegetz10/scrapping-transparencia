@@ -15,6 +15,7 @@ from core.parquet_exporter import (
     inferir_tipo_documento,
     remover_acentos,
     sanitize_name,
+    uf_do_texto,
 )
 from core.profiler import analyze_dataset_quality
 from core.validator import DEFAULT_HEADERS, check_url_status
@@ -116,12 +117,21 @@ def particao_do_link(
     apenas pelo `tema`. O tipo sai do mesmo vocabulário fechado nos dois
     casos: uma planilha de contratos e um contrato em PDF são a mesma
     categoria vista em formatos diferentes, e o portal filtra por ela igual.
+
+    A UF preferida é a que o scraper informa. Quando ele não informa, ela sai
+    do texto — que é onde a entidade a escreve de todo jeito ("Administração
+    Regional do Acre"). Sem essa segunda tentativa o catálogo inteiro cai em
+    DN, e um filtro de UF que só oferece "DN" não filtra nada: foi o que
+    aconteceu com o `tema=planilhas` reconstruído a partir dos Excel, que não
+    guardam o `tcu_uf`.
     """
+    uf = item.get("tcu_uf") or uf_do_texto(section, title) or "DN"
+
     return (
         tema,
         tipo_do_documento(item, title, section),
         str(item.get("tcu_ano") or config.ano),
-        sanitize_name(item.get("tcu_uf") or "DN").upper(),
+        sanitize_name(uf).upper(),
     )
 
 
@@ -342,7 +352,14 @@ def run_scraper_pipeline(
                                 or title
                             ),
                             ano=item.get("tcu_ano") or config.ano,
-                            uf=item.get("tcu_uf") or "DN",
+                            # Mesma regra do catálogo: o conteúdo de uma
+                            # planilha regional não pode cair numa UF diferente
+                            # da do link que o trouxe.
+                            uf=(
+                                item.get("tcu_uf")
+                                or uf_do_texto(section, title)
+                                or "DN"
+                            ),
                             prefixo_nome=f"{item.get('source', 'extracao')}_{title}",
                         )
                     elif config.log_detalhado:

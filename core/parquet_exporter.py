@@ -53,6 +53,110 @@ TIPOS_CONHECIDOS = frozenset({
 })
 
 
+# As 27 unidades federativas pelo nome, para o caminho inverso: do texto de uma
+# regional para a sigla. Sem acento e em minúsculas porque é assim que chegam ao
+# `_uf_no_texto`, já passados pelo `remover_acentos`.
+UFS_POR_NOME = {
+    "acre": "AC",
+    "alagoas": "AL",
+    "amapa": "AP",
+    "amazonas": "AM",
+    "bahia": "BA",
+    "ceara": "CE",
+    "distrito federal": "DF",
+    "espirito santo": "ES",
+    "goias": "GO",
+    "maranhao": "MA",
+    "mato grosso": "MT",
+    "mato grosso do sul": "MS",
+    "minas gerais": "MG",
+    "para": "PA",
+    "paraiba": "PB",
+    "parana": "PR",
+    "pernambuco": "PE",
+    "piaui": "PI",
+    "rio de janeiro": "RJ",
+    "rio grande do norte": "RN",
+    "rio grande do sul": "RS",
+    "rondonia": "RO",
+    "roraima": "RR",
+    "santa catarina": "SC",
+    "sao paulo": "SP",
+    "sergipe": "SE",
+    "tocantins": "TO",
+}
+
+SIGLAS_DE_UF = frozenset(UFS_POR_NOME.values())
+
+# Os nomes do maior para o menor, porque uns começam dentro dos outros: "Mato
+# Grosso do Sul" começa exatamente como "Mato Grosso". Procurar o mais longo
+# primeiro é o que impede que a regional do MS seja catalogada como MT.
+NOMES_DE_UF_POR_TAMANHO = sorted(UFS_POR_NOME, key=len, reverse=True)
+
+# O nome do estado precedido de preposição: é como toda regional se apresenta
+# ("Administração Regional do Acre", "Regional de Alagoas"). A exigência existe
+# por causa dos nomes que também são palavra comum — sem ela, "planilha para
+# contratos" viraria uma regional do Pará.
+PREPOSICAO = r"(?:de|do|da|das|dos)\s+"
+
+# A sigla, mas só onde ela é mesmo uma sigla de estado: entre parênteses
+# ("Administração Regional do Pará (PA)") ou colada ao nome da entidade
+# ("SESC AC - Plano de Contas", "SESI-SP").
+#
+# Duas letras maiúsculas soltas não bastam, e o acervo diz por quê: o catálogo
+# do SESI tem 161 editais cujo título começa em "PE 01/2021" — pregão
+# eletrônico, não Pernambuco. Sigla sem contexto cataloga esses 161 no estado
+# errado, o que é pior do que deixá-los em DN.
+SIGLA_COM_CONTEXTO = re.compile(
+    r"\(([A-Z]{2})\)"
+    r"|(?:SESC|SESI|SENAI|SENAR|SEST|SENAT|ABDI|REGIONAL)[\s\-–—]+([A-Z]{2})(?![A-Za-z])"
+)
+
+
+def uf_do_texto(*textos: Optional[str]) -> Optional[str]:
+    """A sigla da UF que o texto nomeia, ou None se ele não nomear nenhuma.
+
+    Existe porque a UF nem sempre vem do scraper. O SENAR e o SESC a informam
+    (`tcu_uf`), mas quem cataloga a partir do Excel de qualidade não tem esse
+    campo — e o Excel foi a origem de todo o `tema=planilhas` que está em disco
+    (ver scripts/backfill_planilhas.py). O que sobra é o que a entidade
+    escreveu: a seção diz "Administração Regional do Acre", o título diz
+    "SESC AC".
+
+    Os textos são consultados na ordem recebida, e o primeiro que nomear uma UF
+    decide. Nada nomeando nenhuma devolve None — o chamador é quem sabe se o
+    caso é "Departamento Nacional" ou dado faltando.
+    """
+    for texto in textos:
+        if not texto:
+            continue
+
+        sigla = _uf_no_texto(str(texto))
+        if sigla:
+            return sigla
+
+    return None
+
+
+def _uf_no_texto(texto: str) -> Optional[str]:
+    """A primeira UF nomeada num texto, por nome de estado ou por sigla."""
+    normalizado = remover_acentos(texto).lower()
+
+    for nome in NOMES_DE_UF_POR_TAMANHO:
+        if re.search(rf"\b{PREPOSICAO}{re.escape(nome)}\b", normalizado):
+            return UFS_POR_NOME[nome]
+
+    # Percorre todas as ocorrências, e não só a primeira: "Execução
+    # Orçamentária (SENAI - SENAI-DN)" casa com o padrão duas vezes, e a
+    # primeira entrega "DN", que não é estado nenhum.
+    for parenteses, apos_entidade in SIGLA_COM_CONTEXTO.findall(texto):
+        candidata = parenteses or apos_entidade
+        if candidata in SIGLAS_DE_UF:
+            return candidata
+
+    return None
+
+
 def inferir_tipo_documento(texto: str) -> str:
     """Classifica o tipo de documento em uma categoria limpa e padronizada."""
     if not texto:
