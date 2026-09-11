@@ -105,8 +105,9 @@ no fim e `nome_arquivo()` para guardar o nome do PDF que será baixado.
 O relatório sai com duas abas de resumo: `Resumo_Geral` para planilhas e APIs
 tabulares e `Resumo_PDFs` para documentos, mais uma aba de amostra por dataset
 aprovado no profiling. As duas abas viram também catálogos no Parquet
-(`tema=documentos` e `tema=planilhas`), que é o que o portal exibe — ver
-`portal/README.md`.
+(`tema=documentos` e `tema=planilhas`), que é o que o portal exibe. O conteúdo
+de cada dataset aprovado vai para o tema próprio dele, e o portal o abre em
+grade no visualizador — ver `portal/README.md`.
 
 Regra do projeto: nada de automação de navegador. Quando a página carrega
 conteúdo por JavaScript (botão "Carregar Mais", abas com filtro por ano), o

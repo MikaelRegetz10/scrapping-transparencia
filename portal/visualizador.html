@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador de dados | Portal de Dados Abertos TCU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="catalogo.css?v=1.1">
+  <link rel="stylesheet" href="visualizador.css?v=1.0">
+</head>
+<!-- parquet-page: as regras de .filter-card, .table-heading, .empty-state e
+     afins vêm escopadas nessa classe no style.css compartilhado. -->
+<body class="parquet-page">
+
+<header>
+  <div class="container">
+    <h1>Visualizador de dados</h1>
+    <p class="subtitle">
+      O conteúdo das planilhas coletadas, aberto em grade como numa planilha —
+      direto do acervo em Parquet, sem baixar nada e sem voltar à fonte.
+    </p>
+    <div class="badges-wrapper">
+      <span class="badge ouro">Parquet</span>
+      <span class="badge">Sem download</span>
+      <span class="badge" id="badge-api">API</span>
+    </div>
+    <nav class="catalogo-nav" aria-label="Catálogos">
+      <a href="documentos.html">Documentos</a>
+      <a href="planilhas.html">Planilhas e dados</a>
+      <a href="visualizador.html" aria-current="page">Visualizador</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <!-- Aviso de API fora do ar, escondido enquanto tudo funciona -->
+    <section class="card aviso-erro" id="aviso-erro" hidden>
+      <h2>Não foi possível falar com a API</h2>
+      <p id="aviso-erro-texto"></p>
+      <pre class="aviso-erro-comando">uvicorn api.main_api:app --reload</pre>
+    </section>
+
+    <!-- O seletor fica aberto enquanto nenhum conjunto foi escolhido e se
+         fecha sozinho quando um é: a partir daí a tela é sobre os dados, e o
+         seletor vira uma linha de "trocar de conjunto". -->
+    <details class="card seletor-card" id="seletor" open>
+      <summary class="seletor-resumo">
+        <span class="seletor-titulo">Escolher conjunto de dados</span>
+        <span class="seletor-atual" id="seletor-atual">Nenhum conjunto aberto</span>
+      </summary>
+
+      <div class="seletor-corpo">
+        <div class="documentos-filtros">
+          <div class="filter-group filter-group-busca">
+            <label for="filtro-busca">Buscar conjunto</label>
+            <input type="search" id="filtro-busca"
+                   placeholder="contratos, licitações, corpo técnico, Bahia…"
+                   autocomplete="off">
+          </div>
+          <div class="filter-group">
+            <label for="filtro-entidade">Entidade</label>
+            <select id="filtro-entidade">
+              <option value="">Todas</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filtro-ano">Exercício</label>
+            <select id="filtro-ano">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filtro-ordem">Ordenar por</label>
+            <select id="filtro-ordem">
+              <option value="nome">Nome do conjunto</option>
+              <option value="linhas">Mais linhas primeiro</option>
+              <option value="entidade">Entidade</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="conjuntos-cabecalho">
+          <p id="conjuntos-resumo">Carregando conjuntos…</p>
+          <span class="filter-chip" id="conjuntos-contador">—</span>
+        </div>
+
+        <div id="conjuntos-lista" class="conjuntos-lista" aria-live="polite"></div>
+
+        <div class="pagination" id="conjuntos-paginacao" hidden>
+          <span id="conjuntos-paginacao-texto"></span>
+          <div class="pagination-buttons">
+            <button class="pagination-btn" id="conjuntos-anterior" type="button">← Anterior</button>
+            <button class="pagination-btn" id="conjuntos-proxima" type="button">Próxima →</button>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Tudo daqui para baixo só existe depois que um conjunto é aberto. -->
+    <section class="card grade-card" id="grade-card" hidden>
+      <div class="table-heading">
+        <div>
+          <h2 id="grade-titulo">—</h2>
+          <p id="grade-meta"></p>
+        </div>
+      </div>
+
+      <div class="grade-acoes">
+        <div class="filter-group grade-busca">
+          <label for="grade-filtro">Filtrar linhas</label>
+          <input type="search" id="grade-filtro"
+                 placeholder="mostrar só as linhas que contêm…" autocomplete="off">
+        </div>
+        <div class="filter-group grade-tamanho">
+          <label for="grade-por-pagina">Linhas por página</label>
+          <select id="grade-por-pagina">
+            <option value="50">50</option>
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+          </select>
+        </div>
+        <span class="documentos-acoes-exportar">
+          <span class="exportar-rotulo">Baixar como:</span>
+          <a id="exportar-csv" class="btn btn-secondary" href="#">CSV</a>
+          <a id="exportar-xlsx" class="btn btn-secondary" href="#">Excel</a>
+          <a id="exportar-json" class="btn btn-secondary" href="#">JSON</a>
+        </span>
+      </div>
+
+      <!-- A barra da célula é o que salva a grade de truncar dado: a coluna
+           tem largura, o texto de dentro não tem teto. -->
+      <div class="celula-barra">
+        <span class="celula-endereco" id="celula-endereco">—</span>
+        <span class="celula-valor" id="celula-valor">Clique numa célula para ver o valor inteiro.</span>
+        <button class="celula-copiar" id="celula-copiar" type="button" disabled>Copiar</button>
+      </div>
+
+      <div class="grade-envelope" id="grade-envelope" tabindex="0"
+           role="region" aria-label="Células do conjunto">
+        <table class="grade" id="grade"></table>
+      </div>
+
+      <div class="pagination" id="grade-paginacao" hidden>
+        <span id="grade-paginacao-texto"></span>
+        <div class="pagination-buttons">
+          <button class="pagination-btn" id="grade-anterior" type="button">← Anterior</button>
+          <button class="pagination-btn" id="grade-proxima" type="button">Próxima →</button>
+        </div>
+      </div>
+    </section>
+
+    <details class="card dicionario-card" id="dicionario-card" hidden>
+      <summary class="seletor-resumo">
+        <span class="seletor-titulo">Documentação do conjunto</span>
+        <span class="seletor-atual">Tipo, preenchimento e variedade de cada coluna</span>
+      </summary>
+      <div class="seletor-corpo">
+        <p class="dicionario-nota">
+          As entidades não publicam dicionário de dados junto com os arquivos.
+          O que está aqui foi medido no próprio conjunto: nada disto é
+          descrição oficial da coluna.
+        </p>
+        <div id="dicionario-conteudo"></div>
+      </div>
+    </details>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Portal de Dados Abertos TCU · Conteúdo tabular coletado dos portais de transparência</p>
+  </div>
+</footer>
+
+<script type="module" src="visualizador.js?v=1.0"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 # main_api.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import documentos, estatisticas, exportar, filtros
+from api.routes import conjuntos, documentos, estatisticas, exportar, filtros
 
 app = FastAPI(
     title="API RESTful - Scrapping Transparência",
@@ -23,6 +23,7 @@ app.include_router(filtros.router)
 app.include_router(documentos.router)
 app.include_router(estatisticas.router)
 app.include_router(exportar.router)
+app.include_router(conjuntos.router)
 
 
 @app.get("/", tags=["Healthcheck"])
