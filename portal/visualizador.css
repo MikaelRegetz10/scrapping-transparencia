@@ -1,0 +1,564 @@
+/* Estilos próprios do visualizador de dados.
+   O visual base vem do style.css e o chrome de catálogo — navegação, grupos de
+   filtro, paginação, estados de erro — do catalogo.css. O que existe só aqui é
+   a grade: a parte da tela que precisa parecer uma planilha e não uma tabela
+   de página. */
+
+/* --------------------------------------------------------------------------
+   Seletor de conjunto
+
+   É um <details> porque tem dois estados e nenhum estado intermediário: ou a
+   pessoa está procurando um conjunto, ou está olhando um. Fechar o seletor ao
+   abrir o conjunto devolve a tela inteira para os dados.
+   -------------------------------------------------------------------------- */
+.seletor-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.seletor-resumo::-webkit-details-marker {
+  display: none;
+}
+
+/* O triângulo é desenhado à mão para girar com a abertura — o marcador nativo
+   não é estilizável nos dois navegadores. */
+.seletor-resumo::before {
+  content: "▸";
+  color: var(--muted);
+  font-size: 0.9rem;
+  transition: transform 0.15s;
+}
+
+details[open] > .seletor-resumo::before {
+  transform: rotate(90deg);
+}
+
+.seletor-titulo {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.seletor-atual {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seletor-corpo {
+  margin-top: 1.5rem;
+}
+
+.conjuntos-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* --- Lista de conjuntos --- */
+.conjuntos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+/* Cada conjunto é um botão: abrir um não navega para lugar nenhum, troca o
+   conteúdo da grade logo abaixo. */
+.conjunto-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.conjunto-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.15);
+}
+
+.conjunto-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.conjunto-item.aberto {
+  border-color: var(--accent);
+  background: #f0f9ff;
+}
+
+.conjunto-corpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.conjunto-nome {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  line-height: 1.35;
+  margin-bottom: 0.25rem;
+}
+
+.conjunto-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.conjunto-tag {
+  background: #f1f5f9;
+  border-radius: 4px;
+  padding: 0.1rem 0.45rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* O tamanho é o que decide se vale a pena abrir; fica fora do texto corrido,
+   alinhado à direita, para poder ser comparado de relance na lista. */
+.conjunto-tamanho {
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.conjunto-tamanho strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Barra de ações da grade
+   -------------------------------------------------------------------------- */
+.grade-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.grade-busca {
+  flex: 1;
+  min-width: 240px;
+}
+
+.grade-tamanho {
+  width: 150px;
+}
+
+.grade-acoes .documentos-acoes-exportar {
+  margin-left: auto;
+  padding-bottom: 0.15rem;
+}
+
+.grade-acoes .btn {
+  width: auto;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   Barra da célula selecionada
+
+   A grade trunca: coluna tem largura e o texto de dentro não tem teto — um
+   objeto de contrato ocupa três linhas de parágrafo. Sem um lugar que mostre o
+   valor inteiro, a célula longa vira dado ilegível.
+   -------------------------------------------------------------------------- */
+.celula-barra {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #f8fafc;
+  margin-bottom: 0.75rem;
+}
+
+.celula-endereco {
+  flex-shrink: 0;
+  min-width: 3.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: #e0f2fe;
+  color: var(--accent-hover);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.celula-valor {
+  flex: 1;
+  min-width: 0;
+  max-height: 4.5em;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.celula-valor.vazio {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.celula-copiar {
+  flex-shrink: 0;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.celula-copiar:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.celula-copiar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   A grade
+
+   Rola nos dois eixos dentro do próprio quadro: cabeçalho preso no topo,
+   numeração das linhas presa à esquerda. É o que faz uma tabela de 27 colunas
+   continuar legível na coluna 20.
+   -------------------------------------------------------------------------- */
+.grade-envelope {
+  position: relative;
+  max-height: 65vh;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+
+.grade-envelope:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* `separate` e não `collapse`: com bordas colapsadas as células grudadas
+   perdem a borda ao rolar sob o cabeçalho. */
+.grade {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  width: max-content;
+  min-width: 100%;
+  font-size: 0.82rem;
+}
+
+.grade th,
+.grade td {
+  border-right: 1px solid #eef2f7;
+  border-bottom: 1px solid #eef2f7;
+  padding: 0.35rem 0.6rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Linha das letras: o endereço da célula, como em qualquer planilha. Existe
+   para a barra de célula poder dizer "C7" e a pessoa achar o C. */
+.grade-letras th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  height: 24px;
+  padding: 0 0.6rem;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.grade-nomes th {
+  position: sticky;
+  top: 24px;
+  z-index: 3;
+  padding: 0;
+  background: #f8fafc;
+  border-bottom: 2px solid var(--border);
+  vertical-align: bottom;
+}
+
+/* O nome da coluna é o botão de ordenar: alvo grande, sem controle extra
+   disputando espaço no cabeçalho. */
+.grade-ordenar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: left;
+  cursor: pointer;
+}
+
+.grade-ordenar:hover {
+  color: var(--accent-hover);
+}
+
+.grade-ordenar-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grade-seta {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+/* Alça de redimensionamento, encostada na divisa com a coluna seguinte. Fica
+   dentro da célula porque o cabeçalho corta o que transborda. */
+.grade-alca {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 7px;
+  z-index: 4;
+  cursor: col-resize;
+}
+
+.grade-alca:hover,
+.grade-redimensionando .grade-alca {
+  background: var(--accent);
+  opacity: 0.35;
+}
+
+/* Enquanto arrasta, nada de seleção de texto acidental pela tabela toda. */
+.grade-redimensionando {
+  user-select: none;
+  cursor: col-resize;
+}
+
+/* Numeração das linhas, presa à esquerda. */
+.grade-numero {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 56px;
+  background: #f8fafc;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* O canto está preso nos dois eixos ao mesmo tempo e precisa passar por cima
+   dos dois. Os seletores são compostos de propósito: `.grade-letras th` tem
+   especificidade maior que `.grade-canto` sozinho e ganharia o z-index,
+   deixando as letras deslizarem por cima do canto ao rolar para o lado. */
+.grade-canto {
+  position: sticky;
+  left: 0;
+  width: 56px;
+  background: #e2e8f0;
+}
+
+.grade-letras .grade-canto,
+.grade-nomes .grade-canto {
+  z-index: 6;
+}
+
+.grade-nomes .grade-canto {
+  background: #f8fafc;
+  border-bottom: 2px solid var(--border);
+}
+
+.grade tbody td {
+  color: var(--text);
+  background: #fff;
+}
+
+.grade tbody tr:nth-child(even) td {
+  background: #fcfdfe;
+}
+
+.grade tbody tr:hover td {
+  background: #f0f9ff;
+}
+
+/* Coluna declarada numérica no Parquet. As demais ficam à esquerda mesmo
+   quando parecem número: "1422892,8" é texto no arquivo de origem, e
+   alinhá-lo à direita fingiria uma tipagem que o dado não tem. */
+.grade td.numerica {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.grade td.nulo {
+  background-image: repeating-linear-gradient(
+    45deg, transparent, transparent 4px, #f8fafc 4px, #f8fafc 8px
+  );
+}
+
+/* Célula selecionada, e os cabeçalhos que dizem onde ela está. */
+.grade td.selecionada {
+  background: #e0f2fe !important;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.grade th.ativa {
+  background: #bae6fd;
+  color: var(--accent-hover);
+}
+
+.grade-vazia {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   Dicionário de dados
+   -------------------------------------------------------------------------- */
+.dicionario-nota {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.dicionario-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.dicionario-tabela th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dicionario-tabela td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.dicionario-tabela td.numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dicionario-coluna {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.dicionario-tipo {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* Uma coluna vazia pela metade é o achado mais comum destes arquivos; a barra
+   mostra isso sem obrigar a comparar dois números. */
+.dicionario-barra {
+  display: block;
+  width: 100%;
+  min-width: 80px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.dicionario-barra span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--success);
+}
+
+.dicionario-barra.parcial span {
+  background: #f59e0b;
+}
+
+@media (max-width: 720px) {
+  .grade-acoes .documentos-acoes-exportar {
+    margin-left: 0;
+  }
+
+  .grade-busca,
+  .grade-tamanho {
+    width: 100%;
+    flex: none;
+  }
+
+  .conjunto-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .conjunto-tamanho {
+    text-align: left;
+  }
+
+  .conjunto-tamanho strong {
+    display: inline;
+  }
+}

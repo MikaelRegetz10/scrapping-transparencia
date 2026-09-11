@@ -68,6 +68,47 @@
 
 /* --- Item da lista --- */
 
+/* O item é um link para a fonte e não pode conter outro link dentro — daí a
+   linha: o item ocupa o espaço todo e o atalho para os dados fica ao lado,
+   fora dele. */
+.planilha-linha {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.planilha-linha .documento-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.planilha-ver-dados {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.planilha-ver-dados:hover {
+  border-color: #047857;
+  background: #d1fae5;
+}
+
+.planilha-ver-dados:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+
 /* O ícone do catálogo de documentos é vermelho de PDF. Aqui o acervo é
    tabular, e verde de planilha diz o formato antes da legenda. */
 .planilha-icone {
@@ -126,5 +167,15 @@
 
   .planilhas-cartao-numero {
     font-size: 1.4rem;
+  }
+
+  /* Lado a lado, o atalho comeria metade da largura do item. */
+  .planilha-linha {
+    flex-direction: column;
+  }
+
+  .planilha-ver-dados {
+    justify-content: center;
+    padding: 0.6rem 1rem;
   }
 }

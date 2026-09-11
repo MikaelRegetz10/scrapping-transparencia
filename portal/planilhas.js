@@ -234,21 +234,50 @@ function itemPlanilha(planilha) {
     </span>
     <span class="documento-seta" aria-hidden="true">${converter ? "↓" : "↗"}</span>`;
 
-  // Sem URL utilizável o item ainda aparece, mas não como link falso.
-  if (!href) {
-    return `<div class="documento-item inativo">${corpo}</div>`;
-  }
-
   // O link convertido responde com anexo, e não com página: abri-lo numa aba
   // nova deixaria uma aba em branco para a pessoa fechar depois de cada
   // download. Os demais continuam saindo para o site da entidade, onde a aba
   // nova é o que preserva o catálogo já filtrado.
   const alvo = converter ? "" : ` target="_blank" rel="noopener noreferrer"`;
 
-  return `<a class="documento-item ${inativo ? "inativo" : ""}"
-             href="${escapar(href)}"${alvo}>
-            ${corpo}
-          </a>`;
+  // Sem URL utilizável o item ainda aparece, mas não como link falso.
+  const link = href
+    ? `<a class="documento-item ${inativo ? "inativo" : ""}"
+          href="${escapar(href)}"${alvo}>
+         ${corpo}
+       </a>`
+    : `<div class="documento-item inativo">${corpo}</div>`;
+
+  return `<div class="planilha-linha">${link}${atalhoParaOsDados(planilha)}</div>`;
+}
+
+/** Atalho para o conteúdo do arquivo, quando ele está no acervo.
+ *
+ * O item leva à fonte, que é o que a página promete. Mas quando o profiler
+ * conseguiu ler o arquivo, as linhas dele estão no Parquet — e abri-las no
+ * visualizador não custa download nem depende de o portal de origem estar no
+ * ar naquele momento.
+ *
+ * O catálogo não guarda o caminho do Parquet correspondente: o pipeline grava
+ * os dois em ramos separados, sem chave entre eles. O que se passa adiante é o
+ * título, e o visualizador procura por ele — abrindo direto se houver um
+ * conjunto só, ou deixando a lista pré-filtrada se houver mais.
+ */
+function atalhoParaOsDados(planilha) {
+  if (!ehSim(planilha.estruturado)) return "";
+
+  // O ano sai do termo: o `sanitize_name` do pipeline apaga anos isolados ao
+  // nomear a partição, então um "2025" vindo do título nunca casaria com o
+  // nome do conjunto — só estreitaria a busca até não sobrar nada.
+  const termo = (planilha.titulo || planilha.nome_arquivo || "")
+    .replace(/\b(19|20)\d{2}\b/g, " ")
+    .trim();
+
+  const params = new URLSearchParams({ busca: termo });
+  if (planilha.entidade) params.set("entidade", planilha.entidade);
+
+  return `<a class="planilha-ver-dados" href="visualizador.html?${params}"
+             title="Abrir o conteúdo deste arquivo em grade">Ver dados</a>`;
 }
 
 function renderizarLista(planilhas) {
