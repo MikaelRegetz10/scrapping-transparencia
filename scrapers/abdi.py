@@ -1,5 +1,7 @@
+# scrapers/abdi.py
 import json
 import os
+import re
 import time
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
@@ -10,8 +12,6 @@ from scrapers.base import BaseScraper
 
 BASE_SITE = "https://www.abdi.com.br"
 
-# Tipos que o core/profiler.py sabe perfilar. Os demais (pdf, zip...) são
-# apenas auditados quanto à disponibilidade pelo pipeline.
 PATH_DADOS_ABERTOS = "/transparencia/dados-abertos/"
 PATH_AQUISICOES = "/transparencia/aquisicao-de-bens-e-servicos/"
 PATH_PROCESSO_SELETIVO = "/transparencia/processo-seletivo/"
@@ -23,7 +23,6 @@ class CloudflareChallengeError(RuntimeError):
 
 def _normaliza(elemento) -> str:
     """Colapsa espaços/quebras de linha e remove ponto final decorativo."""
-    # get_text(" ") evita colar textos de tags irmãs ("...Projetos(Publicado em...").
     return " ".join(elemento.get_text(" ").split()).rstrip(".")
 
 
@@ -32,11 +31,7 @@ def _trunca(texto: str, limite: int) -> str:
 
 
 def _rotulo_licitacao(licitacao: str, documento: str) -> str:
-    """Junta licitação + documento evitando repetição e títulos quilométricos.
-
-    O nome do documento fica no fim e nunca é truncado: é ele que diferencia
-    o edital da ata e dos termos dentro de uma mesma licitação.
-    """
+    """Junta licitação + documento evitando repetição e títulos quilométricos."""
     if not licitacao:
         return _trunca(documento or "Documento", 200)
 
@@ -48,10 +43,7 @@ def _rotulo_licitacao(licitacao: str, documento: str) -> str:
 
 
 def _achata_para_form(prefixo: str, valor, destino: list) -> None:
-    """Converte dict/list aninhado no formato de form PHP (`chave[sub][]=v`).
-
-    É o formato que o admin-ajax do JetEngine espera receber no load more.
-    """
+    """Converte dict/list aninhado no formato de form PHP (`chave[sub][]=v`)."""
     if isinstance(valor, dict):
         for chave, sub in valor.items():
             _achata_para_form(f"{prefixo}[{chave}]", sub, destino)
@@ -67,13 +59,7 @@ def _achata_para_form(prefixo: str, valor, destino: list) -> None:
 
 
 class ABDIScraper(BaseScraper):
-    """Scraping estático dos caminhos de transparência da ABDI.
-
-    Cobre três caminhos independentes:
-      * /dados-abertos/            -> botões "Dados Abertos" (CSV/XLSX)
-      * /aquisicao-de-bens-e-servicos/ -> listing grid JetEngine paginado por AJAX
-      * /processo-seletivo/        -> HTML estático com PDFs dos comunicados
-    """
+    """Scraping estático dos caminhos de transparência da ABDI."""
 
     def __init__(
         self,
@@ -88,17 +74,14 @@ class ABDIScraper(BaseScraper):
             base_url=urljoin(BASE_SITE, "/transparencia/"),
             routes={
                 "Dados Abertos": urljoin(BASE_SITE, PATH_DADOS_ABERTOS),
-                "Aquisição de Bens e Serviços": urljoin(BASE_SITE, PATH_AQUISICOES),
-                "Processo Seletivo": urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO),
+                #"Aquisição de Bens e Serviços": urljoin(BASE_SITE, PATH_AQUISICOES),
+                #"Processo Seletivo": urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO),
             },
         )
         self.dados_abertos = dados_abertos
         self.aquisicoes = aquisicoes
         self.processo_seletivo = processo_seletivo
         self.max_paginas = max_paginas
-        # A ABDI derruba a conexão (RemoteDisconnected) quando o load more vai
-        # sem respiro: a varredura inteira morre por volta da 10ª página. Com
-        # pausa entre as páginas ela vai até o fim das ~34.
         self.pausa_paginas = pausa_paginas
 
         self.session = requests.Session()
@@ -110,15 +93,12 @@ class ABDIScraper(BaseScraper):
     def _get(self, url: str) -> requests.Response:
         response = self.session.get(url, timeout=30)
 
-        # O site fica atrás da Cloudflare: quando o desafio dispara o corpo
-        # devolvido é a página "Just a moment..." e não o HTML da seção.
         corpo = response.text[:4000]
         if response.status_code == 403 and (
             "Just a moment" in corpo or "cf-chl" in corpo or "challenge-platform" in corpo
         ):
             raise CloudflareChallengeError(
-                f"Cloudflare bloqueou o acesso a {url} (HTTP 403 - desafio JS). "
-                "Este IP precisa ser liberado ou o scraper migrado para navegador headless."
+                f"Cloudflare bloqueou o acesso a {url} (HTTP 403 - desafio JS)."
             )
 
         response.raise_for_status()
@@ -128,7 +108,6 @@ class ABDIScraper(BaseScraper):
     def _tipo_arquivo(url: str) -> str:
         """Deduz o tipo pelo caminho; links jet_download não têm extensão."""
         if "jet_download=" in url:
-            # Verificado via Content-Disposition: o JetEngine da ABDI serve PDF.
             return "pdf"
 
         ext = os.path.splitext(urlparse(url).path)[1].lower().lstrip(".")
@@ -137,6 +116,7 @@ class ABDIScraper(BaseScraper):
     def _registro(self, titulo: str, contexto: str, url: str) -> dict:
         return {
             "source": self.name,
+            "entidade": "ABDI",
             "title": titulo or "Título não identificado",
             "context": contexto,
             "download_url": url,
@@ -191,22 +171,54 @@ class ABDIScraper(BaseScraper):
 
         registros = []
         for anchor in soup.find_all("a", href=True):
-            if anchor.get_text(strip=True).lower() != "dados abertos":
+            texto_link = anchor.get_text(strip=True).lower()
+            href = anchor["href"].strip()
+
+            # Filtra botões de 'dados abertos' ou links diretos de arquivos
+            if "dados abertos" not in texto_link and not any(
+                ext in href.lower() for ext in [".csv", ".xlsx", ".xls", ".pdf", "jet_download="]
+            ):
                 continue
 
-            full_url = urljoin(url_secao, anchor["href"].strip())
-
-            # Sobe a árvore DOM procurando o título do relatório na mesma linha.
+            full_url = urljoin(url_secao, href)
             titulo = ""
-            for parent in anchor.parents:
-                heading = parent.find(
+
+            # 1. Tenta pegar o título imediatamente anterior no DOM
+            prev_heading = anchor.find_previous(
+                ["h1", "h2", "h3", "h4", "h5", "h6"],
+                class_=re.compile(r"heading|title", re.I),
+            )
+            if not prev_heading:
+                prev_heading = anchor.find_previous(
                     class_=["elementor-heading-title", "elementor-widget-heading"]
                 )
-                if heading:
-                    titulo = _normaliza(heading)
-                    break
 
-            registros.append(self._registro(titulo, "Botão Dados Abertos", full_url))
+            if prev_heading:
+                titulo = _normaliza(prev_heading)
+
+            # 2. Se não encontrou, procura dentro do card container local do Elementor
+            if not titulo:
+                card = anchor.find_parent(
+                    class_=["elementor-widget-wrap", "elementor-widget-container", "e-con"]
+                )
+                if card:
+                    heading_in_card = card.find(
+                        class_=["elementor-heading-title", "elementor-widget-heading"]
+                    )
+                    if heading_in_card:
+                        titulo = _normaliza(heading_in_card)
+
+            # 3. Fallback: extrai nome legível do arquivo a partir da URL
+            if not titulo or titulo.lower() in ["dados abertos", "transparência"]:
+                nome_arq = os.path.basename(urlparse(full_url).path)
+                titulo = (
+                    os.path.splitext(nome_arq)[0]
+                    .replace("_", " ")
+                    .replace("-", " ")
+                    .title()
+                )
+
+            registros.append(self._registro(titulo, "Dados Abertos", full_url))
 
         return registros
 
@@ -220,8 +232,6 @@ class ABDIScraper(BaseScraper):
 
         registros = self._parseia_itens_aquisicao(soup)
 
-        # O botão "Carregar Mais" é um POST para a própria página. Todo o payload
-        # (query + widget_settings + assinatura) vem embutido no atributo data-nav.
         grid = soup.select_one("div.jet-listing-grid__items[data-nav]")
         if grid is None:
             print("      ⚠️ Grid JetEngine não encontrado: apenas a 1ª página foi lida.")
@@ -244,8 +254,6 @@ class ABDIScraper(BaseScraper):
 
             trecho = self._carrega_pagina_aquisicao(url_ajax, payload, pagina)
             if trecho is None:
-                # Página perdida de vez: devolvemos o que já foi coletado em vez
-                # de derrubar a seção inteira por causa de uma queda de conexão.
                 print(
                     f"      ⚠️ Aquisições interrompidas na página {pagina}: "
                     f"{len(registros)} registro(s) preservado(s)."
@@ -272,11 +280,6 @@ class ABDIScraper(BaseScraper):
     def _carrega_pagina_aquisicao(
         self, url_ajax: str, payload: list, pagina: int
     ) -> str | None:
-        """Busca uma página do load more. Devolve o HTML ou None se desistir.
-
-        Recua e tenta de novo antes de desistir: a queda costuma ser a ABDI
-        cortando o ritmo, e não a paginação tendo acabado.
-        """
         for tentativa in range(1, 4):
             time.sleep(self.pausa_paginas * tentativa)
             try:
@@ -296,16 +299,12 @@ class ABDIScraper(BaseScraper):
         return None
 
     def _parseia_itens_aquisicao(self, soup: BeautifulSoup) -> list[dict[str, str]]:
-        """Cada item é um accordion: título da licitação + N documentos + situação."""
         registros = []
 
         for item in soup.select(".jet-listing-grid__item"):
             titulo_el = item.select_one(".e-n-accordion-item-title-text")
             licitacao = _normaliza(titulo_el) if titulo_el else ""
 
-            # Percorre o item em ordem de documento pareando cada botão de
-            # download com o último cabeçalho visto (ex: "Ata da Sessão - ...").
-            # O cabeçalho que sobra sem botão é a situação ("Em andamento").
             do_item = []
             rotulo_corrente = ""
             rotulo_usado = True
@@ -355,8 +354,6 @@ class ABDIScraper(BaseScraper):
         conteudo = soup.select_one(".eael-tabs-content") or soup
         registros = []
 
-        # Mesma lógica de ordem de documento: cabeçalho do comunicado imediatamente
-        # antes do botão "Visualizar". Cabeçalho sem botão é o cargo/processo.
         grupo = ""
         rotulo_corrente = ""
         rotulo_usado = True

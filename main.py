@@ -30,19 +30,13 @@ def main():
     config = Config()
     logger = setup_logger(config)
 
-    # Escolha aqui quais portais varrer.
-    #
-    # Coleta de PDFs via navegador headless (Playwright):
-    #     ABDIPdfScraper(), SesiPdfScraper(), SenarScraper(config.ano)
-    # Coleta estática (requests + BeautifulSoup), que também perfila datasets:
-    #     ABDIScraper(), SesiScraper(), SenaiScraper(), SesiTransparenciaScraper()
     scrapers = [
-        ABDIScraper(),
-        SesiScraper(),
-        SenaiScraper(),
-        SenarScraper(),
-        SescApiScraper(),
-        ABDIPdfScraper(),
+        #ABDIScraper(),
+        SesiScraper(ano=config.ano),
+        SenaiScraper(ano=config.ano),
+        SenarScraper(ano=config.ano),
+        SescApiScraper(ano=config.ano),
+        #ABDIPdfScraper(),
         SesiPdfScraper(),
     ]
 
