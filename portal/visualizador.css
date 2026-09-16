@@ -562,3 +562,22 @@ details[open] > .seletor-resumo::before {
     display: inline;
   }
 }
+
+/* O pé do card de documentação: a ponte para a página do dicionário, onde a
+   mesma medida vem com diagnóstico por coluna e filtros. */
+.dicionario-mais {
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.dicionario-mais a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.dicionario-mais a:hover {
+  text-decoration: underline;
+}

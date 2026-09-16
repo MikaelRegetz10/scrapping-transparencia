@@ -58,8 +58,13 @@ class Coluna(BaseModel):
     # vieram do CSV de origem, e é o que se mostra.
     nome: str
     rotulo: str
+    # `tipo` é a família — VARCHAR, INTEGER, DOUBLE, DATE/TIME, BOOLEAN —, que
+    # é o que se mostra. `tipo_bruto` guarda o que o Parquet diz de verdade,
+    # com largura e precisão, para quem for consultar o arquivo direto.
     tipo: str
-    # Só o dicionário de dados mede estes três; a grade devolve nome e tipo.
+    tipo_bruto: Optional[str] = None
+    # Só o dicionário de dados mede estes quatro; a grade devolve nome e tipo.
+    letra: Optional[str] = None
     preenchidas: Optional[int] = None
     distintos: Optional[int] = None
     preenchimento: Optional[float] = None
@@ -93,3 +98,7 @@ class DicionarioResponse(BaseModel):
     arquivo: str
     total: int
     colunas: List[Coluna]
+    # A ressalva viaja com o dado, e não só no HTML da página: o mesmo texto
+    # acompanha o `_dictionary.json` gravado junto do Parquet, para que quem
+    # consumir a medida fora do portal não a tome por descrição oficial.
+    ressalva: Optional[str] = None

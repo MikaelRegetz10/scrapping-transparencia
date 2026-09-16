@@ -610,6 +610,8 @@ async function abrirConjunto(arquivo) {
   $("grade-card").hidden = false;
   $("dicionario-card").hidden = false;
   $("dicionario-card").open = false;
+  $("dicionario-completo").href =
+    `dicionario.html?${new URLSearchParams({ arquivo })}`;
   $("seletor").open = false;
   $("grade-envelope").innerHTML = `<p class="carregando">Abrindo o conjunto…</p>`;
 
