@@ -1,0 +1,176 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 212,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "B",
+      "coluna": "instrumento",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 212
+    },
+    {
+      "col_letter": "C",
+      "coluna": "tipo de transferência",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "D",
+      "coluna": "nome do beneficiário",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 212
+    },
+    {
+      "col_letter": "E",
+      "coluna": "cnpj",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 212
+    },
+    {
+      "col_letter": "F",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "G",
+      "coluna": "data do firmamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "H",
+      "coluna": "qtde de parcelas total",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "I",
+      "coluna": "qtde parcelas transferida",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "J",
+      "coluna": "valor pactuado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 178
+    },
+    {
+      "col_letter": "K",
+      "coluna": "valor transferido (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 212
+    },
+    {
+      "col_letter": "L",
+      "coluna": "prestação de contas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "M",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "N",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "O",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "P",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "Q",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "212 de 212",
+      "linhas_validas": 212,
+      "total_linhas": 212,
+      "valores_distintos": 1
+    }
+  ]
+}

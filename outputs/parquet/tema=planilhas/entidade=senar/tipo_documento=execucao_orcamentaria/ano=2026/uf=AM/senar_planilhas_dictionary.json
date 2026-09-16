@@ -1,0 +1,216 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 4,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "id",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 4
+    },
+    {
+      "col_letter": "B",
+      "coluna": "fonte",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "C",
+      "coluna": "secao_rota",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "D",
+      "coluna": "titulo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 4
+    },
+    {
+      "col_letter": "E",
+      "coluna": "publicado_em",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 4",
+      "linhas_validas": 0,
+      "total_linhas": 4,
+      "valores_distintos": 0
+    },
+    {
+      "col_letter": "F",
+      "coluna": "contexto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "G",
+      "coluna": "tipo_arquivo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "H",
+      "coluna": "nome_arquivo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "I",
+      "coluna": "url_download",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 4
+    },
+    {
+      "col_letter": "J",
+      "coluna": "status_http",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "K",
+      "coluna": "ativo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "L",
+      "coluna": "content_type",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 3
+    },
+    {
+      "col_letter": "M",
+      "coluna": "estruturado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "N",
+      "coluna": "erros_qualidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "O",
+      "coluna": "avisos_qualidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "P",
+      "coluna": "verificado_em",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "Q",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "R",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "S",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "T",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "U",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "4 de 4",
+      "linhas_validas": 4,
+      "total_linhas": 4,
+      "valores_distintos": 1
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 71,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "modalidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 5
+    },
+    {
+      "col_letter": "B",
+      "coluna": "número/ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 69
+    },
+    {
+      "col_letter": "C",
+      "coluna": "processo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 41
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 45
+    },
+    {
+      "col_letter": "E",
+      "coluna": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 3
+    },
+    {
+      "col_letter": "F",
+      "coluna": "data da abertura das propostas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 94.4,
+      "linhas_com_valor_str": "67 de 71",
+      "linhas_validas": 67,
+      "total_linhas": 71,
+      "valores_distintos": 31
+    },
+    {
+      "col_letter": "G",
+      "coluna": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "H",
+      "coluna": "data de homologação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 94.4,
+      "linhas_com_valor_str": "67 de 71",
+      "linhas_validas": 67,
+      "total_linhas": 71,
+      "valores_distintos": 32
+    },
+    {
+      "col_letter": "I",
+      "coluna": "resultado do certame",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "J",
+      "coluna": "identificação dos licitantes|valores das propostas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 90.1,
+      "linhas_com_valor_str": "64 de 71",
+      "linhas_validas": 64,
+      "total_linhas": 71,
+      "valores_distintos": 63
+    },
+    {
+      "col_letter": "K",
+      "coluna": "situação da licitação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 3
+    },
+    {
+      "col_letter": "L",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "M",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "N",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "O",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "P",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "71 de 71",
+      "linhas_validas": 71,
+      "total_linhas": 71,
+      "valores_distintos": 1
+    }
+  ]
+}

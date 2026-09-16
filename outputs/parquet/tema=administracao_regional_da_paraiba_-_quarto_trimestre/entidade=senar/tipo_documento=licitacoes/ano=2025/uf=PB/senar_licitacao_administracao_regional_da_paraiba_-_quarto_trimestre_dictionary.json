@@ -1,0 +1,156 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 8,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "modalidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "B",
+      "coluna": "número/ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8
+    },
+    {
+      "col_letter": "C",
+      "coluna": "processo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8
+    },
+    {
+      "col_letter": "E",
+      "coluna": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "F",
+      "coluna": "data da abertura das propostas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 25.0,
+      "linhas_com_valor_str": "2 de 8",
+      "linhas_validas": 2,
+      "total_linhas": 8,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "G",
+      "coluna": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "H",
+      "coluna": "data de homologação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 75.0,
+      "linhas_com_valor_str": "6 de 8",
+      "linhas_validas": 6,
+      "total_linhas": 8,
+      "valores_distintos": 6
+    },
+    {
+      "col_letter": "I",
+      "coluna": "resultado do certame",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "J",
+      "coluna": "situação da licitação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "K",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "L",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "M",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "N",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "O",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    }
+  ]
+}
