@@ -18,7 +18,8 @@ import {
   escapar,
   numero,
   pedir,
-} from "./catalogo.js";
+  sigla,
+} from "./catalogo.js?v=1.2";
 
 const POR_PAGINA_CONJUNTOS = 20;
 
@@ -112,7 +113,7 @@ function itemConjunto(conjunto) {
   // de quase toda coleta da ABDI. Sem ano e UF na linha eles ficariam
   // indistinguíveis na lista.
   const tags = [
-    `<span class="conjunto-tag">${escapar(conjunto.entidade)}</span>`,
+    `<span class="conjunto-tag">${escapar(sigla(conjunto.entidade))}</span>`,
     `<span>${escapar(rotulo(conjunto.tipo_documento))}</span>`,
     `<span>${escapar(conjunto.ano)}</span>`,
     `<span>${escapar(conjunto.uf)}</span>`,
@@ -610,6 +611,8 @@ async function abrirConjunto(arquivo) {
   $("grade-card").hidden = false;
   $("dicionario-card").hidden = false;
   $("dicionario-card").open = false;
+  $("dicionario-completo").href =
+    `dicionario.html?${new URLSearchParams({ arquivo })}`;
   $("seletor").open = false;
   $("grade-envelope").innerHTML = `<p class="carregando">Abrindo o conjunto…</p>`;
 
@@ -797,7 +800,7 @@ async function carregarFiltros() {
   $("filtro-entidade").innerHTML =
     `<option value="">Todas</option>` +
     (opcoes.entidades || [])
-      .map((e) => `<option value="${escapar(e)}">${escapar(e)}</option>`)
+      .map((e) => `<option value="${escapar(e)}">${escapar(sigla(e))}</option>`)
       .join("");
 
   $("filtro-ano").innerHTML =

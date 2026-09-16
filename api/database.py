@@ -5,6 +5,21 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import duckdb
 import pandas as pd
 
+# A medição das colunas mora em `core/` porque tem dois consumidores: a
+# exportação, que grava o `_dictionary.json` ao lado de cada Parquet, e esta
+# API, que responde o `/conjuntos/colunas`. Os primitivos de escape e de
+# rótulo vêm de lá pelo mesmo motivo — o nome de coluna que a grade consulta
+# tem de ser o mesmo que o dicionário mede.
+from core.dictionary_generator import (
+    COLUNAS_INJETADAS,
+    RESSALVA,
+    colunas_do_parquet,
+    identificador_sql as _identificador_sql,
+    literal_sql as _literal_sql,
+    medir_colunas,
+    rotulo_da_coluna,
+)
+
 logger = logging.getLogger("api.database")
 
 
@@ -219,6 +234,13 @@ def execute_parquet_counts(
 
     Volta vazio quando a coluna não existe no acervo: um filtro sem opções é
     melhor que uma consulta derrubada.
+
+    O agrupamento é pela posição, e não pelo apelido `valor`. O `union_by_name`
+    junta o esquema de todo o acervo, e basta um arquivo com uma coluna
+    chamada `valor` — o balanço patrimonial da ABDI tem uma — para o `GROUP BY
+    valor` passar a casar com a coluna real em vez do apelido. A consulta
+    inteira cai então por `entidade` não estar no agrupamento, e o portal
+    perde todos os filtros de uma vez.
     """
     if por not in COLUNAS_AGRUPAVEIS:
         logger.warning(f"Coluna não agrupável: {por}")
@@ -240,8 +262,8 @@ def execute_parquet_counts(
             SELECT CAST({por} AS VARCHAR) AS valor, COUNT(*) AS total
             FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
             {where_str}
-            GROUP BY valor
-            HAVING valor IS NOT NULL
+            GROUP BY 1
+            HAVING CAST({por} AS VARCHAR) IS NOT NULL
             ORDER BY total DESC
             """,
             params,
@@ -363,11 +385,10 @@ def execute_parquet_query(
 # consulta lê só ele.
 # ==========================================================================
 
-# O `export_to_parquet` grava estas quatro dentro de cada arquivo, além de
-# usá-las como diretório Hive. Dentro de um conjunto elas são constantes — a
-# mesma palavra repetida em todas as linhas —, então ficam fora da grade e
-# aparecem uma vez só, no cabeçalho do conjunto.
-COLUNAS_INJETADAS = ("tema", "tipo_documento", "ano", "uf", "entidade")
+# As COLUNAS_INJETADAS vêm do core: o `export_to_parquet` grava estas cinco
+# dentro de cada arquivo, além de usá-las como diretório Hive. Dentro de um
+# conjunto elas são constantes — a mesma palavra repetida em todas as linhas
+# —, então ficam fora da grade e aparecem uma vez só, no cabeçalho.
 
 # Os dois temas de catálogo guardam inventário de link, não conteúdo de
 # planilha. Quem os quer ver tem as páginas de catálogo, que mostram cada
@@ -380,27 +401,6 @@ TEMAS_DE_CATALOGO = frozenset({"documentos", "planilhas"})
 # arquivos mudem — a assinatura é a contagem e a data de modificação mais
 # recente, que uma coleta nova altera.
 _cache_conjuntos: Dict[str, Any] = {"assinatura": None, "conjuntos": []}
-
-
-def _literal_sql(texto: str) -> str:
-    """Escapa uma string para entrar como literal no SQL.
-
-    O caminho do arquivo não pode ir como parâmetro ligado: `read_parquet`
-    exige o nome em tempo de planejamento. O caminho já foi validado contra a
-    raiz do acervo em `caminho_do_conjunto` — isto é o cinto além do
-    suspensório.
-    """
-    return str(texto).replace("'", "''")
-
-
-def _identificador_sql(nome: str) -> str:
-    """Escapa um nome de coluna para uso em SELECT e ORDER BY.
-
-    Os nomes vêm das planilhas das entidades e trazem de tudo: acento, `º`,
-    espaço, aspas. Só entram na consulta nomes que o esquema do próprio
-    arquivo confirmou existir.
-    """
-    return '"' + str(nome).replace('"', '""') + '"'
 
 
 def caminho_do_conjunto(base_dir: str, arquivo: str) -> Optional[str]:
@@ -541,37 +541,15 @@ def lista_conjuntos(base_dir: str = "outputs") -> List[Dict[str, Any]]:
     return conjuntos
 
 
-def rotulo_da_coluna(nome: str) -> str:
-    """O nome de uma coluna como se mostra a alguém.
-
-    Boa parte dos CSV do Sistema S sai com BOM e com o cabeçalho entre aspas,
-    e os dois foram parar dentro do Parquet como parte do nome da primeira
-    coluna — `ï»¿"MEMBROS DO CORPO TÉCNICO"`. O `execute_parquet_query` já
-    faz esta limpeza nos catálogos; aqui ela não pode substituir o nome, que
-    é o que identifica a coluna no arquivo e na consulta. Por isso são dois
-    campos: `nome` consulta, `rotulo` aparece.
-    """
-    limpo = (
-        str(nome).replace("﻿", "").replace("ï»¿", "").replace('"', "").strip()
-    )
-    return limpo or str(nome)
-
-
 def colunas_do_conjunto(con, caminho: str) -> List[Dict[str, str]]:
     """Nome, rótulo e tipo das colunas de um conjunto, na ordem publicada.
 
-    Sem as quatro que o pipeline injeta: repetir "tema" em toda linha de uma
-    grade é gastar uma coluna para dizer o que o cabeçalho já diz.
+    Sem as cinco que o pipeline injeta: repetir "tema" em toda linha de uma
+    grade é gastar uma coluna para dizer o que o cabeçalho já diz. Quem faz a
+    leitura é o `core`, que é de onde sai também o dicionário — assim a grade
+    e a documentação enxergam exatamente o mesmo conjunto de colunas.
     """
-    descricao = con.execute(
-        f"DESCRIBE SELECT * FROM read_parquet('{_literal_sql(caminho)}')"
-    ).fetchall()
-
-    return [
-        {"nome": linha[0], "rotulo": rotulo_da_coluna(linha[0]), "tipo": linha[1]}
-        for linha in descricao
-        if linha[0] not in COLUNAS_INJETADAS
-    ]
+    return colunas_do_parquet(con, caminho)
 
 
 def _valor_json(valor):
@@ -727,8 +705,11 @@ def dicionario_do_conjunto(
 
     É a documentação que o acervo consegue dar de si: os portais não publicam
     dicionário de dados, então o que dá para dizer de uma coluna é o que se
-    mede nela. Vai numa consulta só — um agregado por coluna, uma passada
-    pelo arquivo.
+    mede nela.
+
+    Quem mede é o `core.dictionary_generator`, o mesmo que grava o
+    `_dictionary.json` ao lado de cada Parquet na exportação. Aqui só se
+    acrescenta o nome do arquivo e a ressalva, que são de apresentação.
     """
     caminho = caminho_do_conjunto(base_dir, arquivo)
     if caminho is None:
@@ -736,29 +717,11 @@ def dicionario_do_conjunto(
 
     con = get_db_connection()
     try:
-        colunas = colunas_do_conjunto(con, caminho)
-        if not colunas:
+        medida = medir_colunas(caminho, con=con)
+        if medida is None:
             return None
 
-        fonte = f"read_parquet('{_literal_sql(caminho)}')"
-        agregados = ["COUNT(*)"]
-        for coluna in colunas:
-            identificador = _identificador_sql(coluna["nome"])
-            agregados.append(f"COUNT({identificador})")
-            agregados.append(f"COUNT(DISTINCT {identificador})")
-
-        medidas = con.execute(
-            f"SELECT {', '.join(agregados)} FROM {fonte}"
-        ).fetchone()
-
-        total = int(medidas[0])
-        for indice, coluna in enumerate(colunas):
-            preenchidas = int(medidas[1 + indice * 2])
-            coluna["preenchidas"] = preenchidas
-            coluna["distintos"] = int(medidas[2 + indice * 2])
-            coluna["preenchimento"] = round(preenchidas / total, 4) if total else 0.0
-
-        return {"arquivo": arquivo, "total": total, "colunas": colunas}
+        return {"arquivo": arquivo, "ressalva": RESSALVA, **medida}
 
     except Exception as e:
         logger.error(f"Erro ao descrever o conjunto {arquivo}: {e}")

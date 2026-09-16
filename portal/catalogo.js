@@ -96,3 +96,21 @@ export function preencherSelect(id, valores) {
 export function numero(valor) {
   return Number(valor || 0).toLocaleString("pt-BR");
 }
+
+/** A entidade como se escreve, a partir do valor gravado na partição.
+ *
+ * Os nomes de entidade do acervo são siglas — ABDI, SENAI, SESI —, mas o
+ * `sanitize_name` do pipeline passa tudo por `.lower()` para montar o caminho
+ * do Parquet, e de lá elas voltam como `abdi`, `senai`, `sesi_pdf`. Mostrar
+ * assim faria o portal escrever errado o nome de cada instituição que ele
+ * cataloga.
+ *
+ * Só a exibição muda: o valor que vai no filtro e na consulta continua sendo
+ * o da partição, que é o que a API conhece.
+ */
+export function sigla(valor) {
+  return String(valor || "")
+    .replaceAll("_", " ")
+    .trim()
+    .toUpperCase();
+}

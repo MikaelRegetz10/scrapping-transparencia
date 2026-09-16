@@ -1,0 +1,427 @@
+/* Dicionário de dados — o que é próprio desta página.
+ *
+ * O seletor de conjuntos, os filtros e os cards vêm de style.css e de
+ * catalogo.css, compartilhados com o visualizador. Aqui mora só o que a
+ * página tem de seu: a ressalva, o resumo com a faixa de tipos e a tabela de
+ * colunas com o diagnóstico de cada uma.
+ */
+
+/* --------------------------------------------------------------------------
+   A ressalva
+   -------------------------------------------------------------------------- */
+
+/* Tem a cara de um aviso e não de um card comum, de propósito: quem chega
+   procurando o significado das colunas precisa ler isto antes de acreditar
+   no resto da página. */
+.ressalva-card {
+  border-left: 4px solid #d97706;
+  background: #fffbeb;
+}
+
+.ressalva-card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #92400e;
+  margin-bottom: 0.4rem;
+}
+
+.ressalva-card p {
+  font-size: 0.9rem;
+  color: #78350f;
+  margin: 0;
+  max-width: 78ch;
+}
+
+/* --------------------------------------------------------------------------
+   O resumo do conjunto
+   -------------------------------------------------------------------------- */
+
+.resumo-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.resumo-cabecalho h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+
+.resumo-caminho {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.resumo-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.resumo-link:hover {
+  background: var(--bg);
+  border-color: var(--accent);
+}
+
+.resumo-numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.resumo-numero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.resumo-valor {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* O contador de ressalvas só ganha cor quando há ressalva: um zero em
+   vermelho diria que há problema justamente onde não há. */
+.resumo-valor-alerta {
+  color: #b45309;
+}
+
+.resumo-rotulo {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   A faixa de tipos
+   -------------------------------------------------------------------------- */
+
+.tipos-faixa {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.tipos-fatia {
+  display: block;
+  height: 100%;
+}
+
+.tipos-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin-top: 0.7rem;
+}
+
+.tipos-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.tipos-ponto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tipos-conta {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Controles da tabela
+   -------------------------------------------------------------------------- */
+
+.colunas-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.colunas-cabecalho h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.colunas-controles {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.colunas-controles input,
+.colunas-controles select {
+  font-family: var(--font);
+  font-size: 0.85rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--text);
+}
+
+.colunas-controles input {
+  min-width: 220px;
+}
+
+.colunas-controles input:focus,
+.colunas-controles select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+/* --------------------------------------------------------------------------
+   A tabela de colunas
+   -------------------------------------------------------------------------- */
+
+.dicionario-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.dicionario-tabela th {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+/* O `th, td` global do style.css vale para as tabelas de catálogo, onde cada
+   célula é um campo curto: corta no `max-width: 320px` e põe reticências. Aqui
+   a célula da coluna leva um parágrafo de diagnóstico, e herdar aquele
+   `nowrap` fazia o texto correr para fora e ser cortado pela rolagem. */
+.dicionario-tabela td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  max-width: none;
+}
+
+.dicionario-tabela tbody tr:hover {
+  background: var(--bg);
+}
+
+.dicionario-tabela th.numero,
+.dicionario-tabela td.numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* O "de 193" repetido em toda linha é contexto, não dado: fica apagado para
+   o olho descer pela coluna da esquerda, que é a que varia. */
+.de-total {
+  color: var(--muted);
+}
+
+.coluna-letra {
+  width: 3rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+}
+
+/* A coluna da identidade é a que leva o texto do diagnóstico, e por isso é a
+   única que pede largura: sem ela a tabela reparte o espaço pelas seis e a
+   nota fica numa tira de três palavras por linha. */
+.coluna-identidade {
+  min-width: 20rem;
+  width: 42%;
+}
+
+.coluna-rotulo {
+  display: block;
+  font-weight: 600;
+  color: var(--text-dark);
+  word-break: break-word;
+}
+
+/* O nome cru só aparece quando difere do rótulo — BOM e aspas herdados do
+   CSV de origem. É o nome que vale numa consulta ao arquivo. */
+.coluna-nome-cru {
+  display: block;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  word-break: break-all;
+  margin-top: 0.15rem;
+}
+
+.coluna-nota {
+  margin-top: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--muted);
+  background: var(--bg);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+  /* Sem largura própria: a nota se ajusta à célula. Um `max-width` em `ch`
+     aqui a fazia mais larga do que a coluna que a tabela concedeu, e o texto
+     era cortado pela rolagem horizontal do `.table-responsive`. */
+}
+
+.coluna-nota strong {
+  display: block;
+  color: var(--text-dark);
+}
+
+/* Três graus, e não um alerta só: uma coluna que é identificador não tem
+   defeito nenhum, e pintá-la da mesma cor de uma coluna vazia faria a página
+   gritar onde devia só informar. */
+.coluna-nota.grau-alerta {
+  border-left-color: #dc2626;
+  background: #fef2f2;
+}
+
+.coluna-nota.grau-aviso {
+  border-left-color: #d97706;
+  background: #fffbeb;
+}
+
+.coluna-nota.grau-nota {
+  border-left-color: var(--accent);
+  background: #f0f9ff;
+}
+
+.tipo-etiqueta {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--cor-tipo, var(--muted));
+  background: color-mix(in srgb, var(--cor-tipo, #94a3b8) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cor-tipo, #94a3b8) 30%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   A barra de preenchimento
+   -------------------------------------------------------------------------- */
+
+.preenchimento {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 9rem;
+}
+
+.preenchimento-barra {
+  flex: 1;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+  min-width: 4rem;
+}
+
+.preenchimento-barra > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--success);
+}
+
+.preenchimento-barra.parcial > span {
+  background: #d97706;
+}
+
+.preenchimento-barra.critica > span {
+  background: #dc2626;
+}
+
+/* Sem valor nenhum: a barra fica só com o trilho, e o número ao lado diz 0%.
+   Uma barra vermelha de largura zero não se vê. */
+.preenchimento-barra.vazia {
+  background: #fecaca;
+}
+
+.preenchimento-numero {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   Telas estreitas
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .resumo-valor {
+    font-size: 1.3rem;
+  }
+
+  /* Lado a lado, o campo de busca sobra uns poucos pixels e não cabe uma
+     palavra digitada. Cada controle ocupa a própria linha. */
+  .colunas-cabecalho,
+  .colunas-controles {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .colunas-controles input,
+  .colunas-controles select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Numa tela estreita a tabela rola na horizontal — é o .table-responsive
+     do style.css —, mas as duas colunas de contagem são as primeiras a
+     sobrar: a barra já diz a proporção. */
+  .dicionario-tabela .de-total {
+    display: none;
+  }
+
+  /* Os 42% que dão uma linha larga ao diagnóstico no desktop, aqui empurram o
+     texto para fora da parte visível da rolagem. Estreitar a célula faz a nota
+     quebrar dentro do que cabe na tela. */
+  .coluna-identidade {
+    width: auto;
+    min-width: 14rem;
+  }
+}

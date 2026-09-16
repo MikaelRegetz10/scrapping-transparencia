@@ -10,6 +10,7 @@ build: são HTML, CSS e JavaScript de módulo, servidos como arquivo.
 | `documentos.html` | Lista os links de PDF coletados dos portais de transparência. Cada item abre o arquivo na fonte. |
 | `planilhas.html` | Lista os arquivos tabulares — CSV, Excel, JSON — com o resultado da auditoria de cada link: se respondeu, quanto pesa, se o conteúdo pôde ser lido e o que o profiler reclamou. |
 | `visualizador.html` | Abre o **conteúdo** de uma planilha coletada em grade, como numa planilha de verdade: célula selecionável, cabeçalho e numeração fixos, ordenação por coluna, busca e exportação. |
+| `dicionario.html` | Descreve as **colunas** de um conjunto: tipo, preenchimento, valores distintos e o que cada medida dessas revela — coluna vazia, coluna de um valor só, coluna que é identificador. |
 
 As duas primeiras são catálogos de links e compartilham o mesmo esqueleto:
 
@@ -20,9 +21,9 @@ As duas primeiras são catálogos de links e compartilham o mesmo esqueleto:
   faceta, escapar o texto que veio raspado de terceiros.
 - `<página>.css` / `<página>.js` — o que é próprio de cada uma.
 
-O visualizador usa o mesmo `style.css` e o mesmo `catalogo.js`, mas não é um
-catálogo: em vez de listar links, lê linhas. O que ele tem de próprio está em
-`visualizador.css` e `visualizador.js`.
+O visualizador e o dicionário usam o mesmo `style.css` e o mesmo `catalogo.js`,
+mas não são catálogos: em vez de listar links, um lê linhas e o outro descreve
+colunas. O que cada um tem de próprio está no seu `.css` e no seu `.js`.
 
 ## Rodando
 
@@ -37,8 +38,9 @@ Precisa dos dois processos no ar: a API lê os Parquet, o portal consome a API.
 ```
 
 As páginas ficam em <http://localhost:8001/documentos.html>,
-<http://localhost:8001/planilhas.html> e
-<http://localhost:8001/visualizador.html>.
+<http://localhost:8001/planilhas.html>,
+<http://localhost:8001/visualizador.html> e
+<http://localhost:8001/dicionario.html>.
 
 Abrir o `.html` direto do disco (`file://`) não funciona: o navegador bloqueia
 módulos JavaScript nesse esquema.
@@ -153,12 +155,66 @@ A página aceita dois parâmetros na URL: `?arquivo=…` abre um conjunto direto
 abrindo sozinho quando só um conjunto casa. É por esse segundo que chega quem
 clica em "Ver dados" na página de planilhas.
 
+## O que o dicionário de dados mostra
+
+As entidades do Sistema S publicam a planilha e não publicam o dicionário: vem
+o arquivo, não vem o que cada campo significa. A página não inventa esse
+significado — mostra o que dá para **medir** no próprio conjunto, e diz isso
+antes de mostrar qualquer número.
+
+Por coluna: a letra (A, B, … AA, como numa planilha), o rótulo, o tipo, a
+fração preenchida, quantas linhas têm valor e quantos valores distintos há.
+
+O que a página acrescenta à medida crua é a leitura dela. "193 de 193, 1 valor
+distinto" está correto e não diz nada; a página traduz em cinco diagnósticos:
+
+| Diagnóstico | Quando | O que significa |
+|---|---|---|
+| **Sem nenhum valor** | nada preenchido | O campo foi publicado em branco na fonte. |
+| **Um valor só** | 1 valor distinto | Não distingue uma linha da outra — é rótulo do conjunto, não dado. |
+| **Preenchida em parte** | menos de 50% | Conta feita sobre ela cobre uma fração do conjunto. |
+| **Um valor por linha** | nenhum valor se repete | Comportamento de identificador — nº de processo, de contrato. |
+| **N categorias** | poucos valores, muito repetidos | Funciona como classificação, e dá um filtro útil. |
+
+Os dois primeiros e o terceiro contam como **ressalva** e aparecem no número do
+resumo; os dois últimos são informação, não defeito, e por isso não entram na
+conta nem ganham cor de alerta.
+
+A faixa colorida do resumo é a distribuição dos tipos. Num acervo raspado de
+portal ela é o indicador mais direto de quanto a fonte tipou os próprios dados,
+e na maioria dos conjuntos a resposta é "nada": a faixa vem inteira em VARCHAR.
+
+A tabela filtra por nome de coluna e por diagnóstico, no navegador — o conjunto
+tem dezenas de colunas, não milhares, e não vale uma ida à API por tecla.
+
+### Uma medida só, dois consumidores
+
+O mesmo número é entregue de duas formas, e é de propósito que saia de uma
+função só — `medir_colunas`, em `core/dictionary_generator.py`:
+
+- a exportação grava um `<arquivo>_dictionary.json` ao lado de cada Parquet,
+  para quem consome o acervo direto, sem passar pelo portal;
+- a API responde `GET /api/v1/conjuntos/colunas`, que é o que esta página e o
+  card do visualizador leem.
+
+Duas implementações da mesma estatística divergem com o tempo, e um acervo que
+se descreve de dois jeitos diferentes não se descreve. A ressalva viaja junto
+da medida nos dois caminhos, e não só no HTML: o JSON que acompanha o Parquet
+vai longe da página que explicaria de onde vieram aqueles números.
+
 ## Limitações conhecidas
 
-- **UF e ano são pouco úteis por enquanto.** Os scrapers não extraem essas
-  informações do arquivo, então tudo cai em `DN` e no exercício corrente. Nos
-  registros trazidos pelo backfill isso é certo: o Excel de qualidade não
-  guarda o `tcu_uf`/`tcu_ano` do item bruto. Uma coleta nova corrige.
+- **O ano é pouco útil por enquanto.** Os scrapers nem sempre extraem o
+  exercício do arquivo, e nos registros trazidos pelo backfill ele não tem como
+  vir: o Excel de qualidade não guarda o `tcu_ano` do item bruto, então tudo cai
+  no exercício corrente. Uma coleta nova corrige.
+- **A UF vale nos dois catálogos, mas só o de planilhas tem estado de verdade
+  hoje.** Ela sai do `tcu_uf` do scraper e, na falta dele, do texto do link
+  ("Administração Regional do Acre", "SESC AC") — ver `uf_do_texto`, em
+  `core/parquet_exporter.py`. No `tema=planilhas` isso dá 27 estados mais o
+  `DN`; no `tema=documentos` dá `DN` em tudo, e está certo: os PDF catalogados
+  são os da ABDI e do SESI nacional. O filtro do `documentos.html` só ganha
+  opções quando entrar no acervo um portal regional que publique PDF.
 - **`tamanho_kb` depende do servidor de origem.** Quando o portal não manda
   `Content-Length`, o campo fica vazio e o item sai sem o peso.
 - **O "Ver dados" procura pelo título, não por uma chave.** O pipeline grava o
@@ -172,6 +228,18 @@ clica em "Ver dados" na página de planilhas.
   alguns com o acento já corrompido na coleta (`CORPO TÃCNICO`). O visualizador
   limpa o BOM e as aspas para exibir; o acento quebrado é dado do acervo, e
   consertá-lo é trabalho de uma coleta nova, não da tela.
+- **O dicionário descreve o arquivo, não o campo.** Ele diz que uma coluna se
+  chama `NUM_INST`, que é texto e que nunca se repete; não diz o que a entidade
+  entende por instrumento. Essa parte não existe em lugar nenhum do acervo
+  porque não existe na fonte, e a página prefere dizer isso a preencher o vazio
+  com adivinhação.
+- **Os diagnósticos têm cortes arbitrários.** "Preenchida em parte" é abaixo de
+  50%, e "categoria" é até 25 valores distintos — `LIMITE_PARCIAL` e
+  `MAXIMO_CATEGORIAS`, em `portal/dicionario.js`. São escolhas de leitura, não
+  achados sobre o dado.
+- **Os tipos de hoje são quase todos `VARCHAR`.** O `core/cleaner.py` ganhou
+  tipagem de data, moeda e CNPJ, mas os Parquet em disco são anteriores a ela.
+  Uma coleta nova muda a faixa de tipos do resumo.
 - **A lista de rótulos de tipo é espelhada em dois lugares.**
   `TIPOS_DE_DOCUMENTO` existe em `core/pipeline.py` e, como
   `TIPOS_DE_DOCUMENTO`/`TIPOS_DE_DADO`, nas duas páginas. Só os rótulos
