@@ -1,32 +1,132 @@
 # core/cleaner.py
 import re
-from typing import List, Optional
+from typing import Any, List, Optional
 import pandas as pd
 
 # ------------------------------------------
-# 1. CONVERSÃO DE VALORES NUMÉRICOS
+# HELPER: DEDUPLICAÇÃO DE COLUNAS
 # ------------------------------------------
 
 
-def clean_currency_to_float(val) -> Optional[float]:
-    """Converte '101.711,14', '-3.143.391,01', '-' para float do Python/SQL."""
+def _make_columns_unique(cols: List[Any]) -> List[str]:
+    """Garante que todas as colunas tenham nomes únicos (ex: 'codigo', 'codigo_1')."""
+    seen = {}
+    new_cols = []
+    for col in cols:
+        col_str = str(col).strip().lower()
+        if col_str in seen:
+            seen[col_str] += 1
+            new_cols.append(f"{col_str}_{seen[col_str]}")
+        else:
+            seen[col_str] = 0
+            new_cols.append(col_str)
+    return new_cols
+
+
+# ------------------------------------------
+# 1. CONVERSÃO E LIMPEZA DE DATAS
+# ------------------------------------------
+
+
+def clean_date(val) -> Optional[str]:
+    """Extrai e padroniza datas para o formato ISO 'YYYY-MM-DD' (ou 'YYYY-MM-DD HH:MM:SS').
+
+    Trata textos como 'Publicado em 15/03/2024', formatos BR e ISO.
+    """
     if pd.isna(val) or val is None:
         return None
 
     val_str = str(val).strip()
+    if not val_str or val_str.lower() in ["none", "nan", "null", "-", "--"]:
+        return None
 
-    if val_str in ["-", "", "--", "None"]:
+    # 1. Tenta extrair padrões de data com regex (DD/MM/YYYY, DD-MM-YYYY, YYYY-MM-DD)
+    # Ex: Captura '15/03/2024' dentro de 'Publicado em 15/03/2024'
+    match_br = re.search(r"\b(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})\b", val_str)
+    match_iso = re.search(r"\b(\d{4})[/.-](\d{1,2})[/.-](\d{1,2})\b", val_str)
+
+    target_str = val_str
+    if match_br:
+        day, month, year = match_br.groups()
+        if len(year) == 2:
+            year = f"20{year}"
+        target_str = f"{day.zfill(2)}/{month.zfill(2)}/{year}"
+    elif match_iso:
+        year, month, day = match_iso.groups()
+        target_str = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+
+    # 2. Converte via pandas com dayfirst=True para tratar o padrão brasileiro corretamente
+    try:
+        dt = pd.to_datetime(target_str, dayfirst=True, errors="coerce")
+        if pd.notna(dt):
+            # Se a hora for meia-noite exata (sem hora definida), retorna apenas 'YYYY-MM-DD'
+            if dt.time() == pd.Timestamp("00:00:00").time():
+                return dt.strftime("%Y-%m-%d")
+            return dt.strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        pass
+
+    return None
+
+
+# ------------------------------------------
+# 2. CONVERSÃO DE VALORES NUMÉRICOS, CNPJ E TEXTO
+# ------------------------------------------
+
+
+def clean_currency_to_float(val) -> Optional[float]:
+    """Converte '101.711,14', '-3.143.391,01', '1234.56', '-', etc., para float."""
+    if pd.isna(val) or val is None:
+        return None
+
+    if isinstance(val, (int, float)):
+        return float(val)
+
+    val_str = str(val).strip()
+
+    if val_str in ["-", "", "--", "None", "nan", "NaN"]:
         return 0.0
 
+    val_str = re.sub(r"[R$\s]", "", val_str)
+
     try:
-        cleaned = val_str.replace(".", "").replace(",", ".")
-        return float(cleaned)
+        if "," in val_str:
+            val_str = val_str.replace(".", "").replace(",", ".")
+        return float(val_str)
     except ValueError:
         return None
 
 
+def clean_cnpj(value) -> Optional[str]:
+    """Aplica a máscara XX.XXX.XXX/XXXX-XX no CNPJ."""
+    if pd.isna(value) or value is None:
+        return None
+
+    val_str = str(value).strip()
+    if val_str.endswith(".0"):
+        val_str = val_str[:-2]
+
+    digits = re.sub(r"\D", "", val_str)
+    if not digits:
+        return None
+
+    digits = digits.zfill(14)
+
+    if len(digits) == 14:
+        return f"{digits[:2]}.{digits[2:5]}.{digits[5:8]}/{digits[8:12]}-{digits[12:]}"
+    return digits
+
+
+def clean_text(value) -> Optional[str]:
+    """Limpa espaços extras e mapeia vazios para None."""
+    if pd.isna(value) or value is None:
+        return None
+    text = str(value).strip()
+    return text if text and text.lower() not in ["none", "nan", "null"] else None
+
+
 # ------------------------------------------
-# 2. REMOÇÃO DE METADADOS E CABEÇALHO DINÂMICO
+# 3. REMOÇÃO DE METADADOS E CABEÇALHO DINÂMICO
 # ------------------------------------------
 
 
@@ -47,18 +147,20 @@ def drop_metadata_rows(
         df = df.iloc[header_idx + 1 :].reset_index(drop=True)
 
     df = df.dropna(how="all").dropna(how="all", axis=1)
-    df.columns = [str(c).strip().lower() for c in df.columns]
+    df.columns = _make_columns_unique(list(df.columns))
     return df
 
 
 # ------------------------------------------
-# 3. SEPARAÇÃO DE TABELAS LADO A LADO
+# 4. SEPARAÇÃO DE TABELAS LADO A LADO
 # ------------------------------------------
 
 
 def split_side_by_side_table(df: pd.DataFrame) -> pd.DataFrame:
     """Separa tabelas do tipo ATIVO (esq) e PASSIVO (dir) em uma única tabela."""
-    row_strings = " ".join(df.astype(str).values.flatten()).upper()
+    row_strings = " ".join(
+        str(x) for x in df.values.flatten() if pd.notna(x)
+    ).upper()
 
     if "ATIVO" in row_strings and "PASSIVO" in row_strings:
         mid = len(df.columns) // 2
@@ -83,17 +185,14 @@ def split_side_by_side_table(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # ------------------------------------------
-# 4. UNPIVOT / MELT DE ANOS E MESES
+# 5. UNPIVOT / MELT DE ANOS E MESES
 # ------------------------------------------
 
 
 def unpivot_periods(
     df: pd.DataFrame, id_vars: List[str], value_name: str = "valor"
 ) -> pd.DataFrame:
-    """Transforma colunas '2025', '2024', 'mar/24' em linhas da coluna
-
-    'exercicio_periodo'.
-    """
+    """Transforma colunas '2025', '2024', 'mar/24' em linhas da coluna 'exercicio_periodo'."""
     period_cols = [
         c
         for c in df.columns
@@ -115,10 +214,8 @@ def unpivot_periods(
     )
 
 
-
-
 # ------------------------------------------
-# 5. MÁSCARA / PIPELINE DE LIMPEZA
+# 6. PIPELINE DE LIMPEZA
 # ------------------------------------------
 
 
@@ -151,20 +248,48 @@ def clean_dataframe(df_raw: pd.DataFrame) -> pd.DataFrame:
             df, id_vars=["codigo", "conta", "descricao", "categoria_balanco"]
         )
 
-        # 4. Normaliza colunas numéricas para float do SQL
+        # Garante colunas únicas novamente
+        df.columns = _make_columns_unique(list(df.columns))
+
+        # 4. Aplica limpeza específica por tipo/coluna
         for col in df.columns:
-            if col in [
+            col_lower = str(col).lower()
+
+            # Trata CNPJ
+            if "cnpj" in col_lower:
+                df[col] = df[col].apply(clean_cnpj)
+
+            # Trata DATAS (ex: publicado_em, data_publicacao, dt_emissao)
+            elif any(
+                term in col_lower
+                for term in [
+                    "publicado",
+                    "data",
+                    "dt_",
+                    "emissao",
+                    "vencimento",
+                    "criado_em",
+                    "atualizado_em",
+                ]
+            ):
+                df[col] = df[col].apply(clean_date)
+
+            # Trata VALORES NUMÉRICOS / MONETÁRIOS
+            elif col_lower in [
                 "valor",
                 "executado",
                 "saldo",
                 "orc_inicial",
                 "orc_reformulado",
-            ] or any(year in str(col) for year in ["2023", "2024", "2025"]):
+            ] or any(year in col_lower for year in ["2023", "2024", "2025"]):
                 df[col] = df[col].apply(clean_currency_to_float)
+
+            # Limpeza genérica de TEXTO
+            elif df[col].dtype == "object":
+                df[col] = df[col].apply(clean_text)
 
         return df
 
     except Exception as e:
-        # Em caso de estrutura totalmente atípica, retorna o original sem quebrar o pipeline
         print(f" (Aviso: limpeza parcial aplicada -> {e})", end="")
         return df_raw
