@@ -18,7 +18,8 @@ import {
   escapar,
   numero,
   pedir,
-} from "./catalogo.js";
+  sigla,
+} from "./catalogo.js?v=1.2";
 
 const POR_PAGINA_CONJUNTOS = 20;
 
@@ -230,7 +231,7 @@ function itemConjunto(conjunto) {
   // de quase toda coleta da ABDI. Sem ano e UF na linha eles ficariam
   // indistinguíveis na lista.
   const tags = [
-    `<span class="conjunto-tag">${escapar(conjunto.entidade)}</span>`,
+    `<span class="conjunto-tag">${escapar(sigla(conjunto.entidade))}</span>`,
     `<span>${escapar(rotulo(conjunto.tipo_documento))}</span>`,
     `<span>${escapar(conjunto.ano)}</span>`,
     `<span>${escapar(conjunto.uf)}</span>`,
@@ -364,7 +365,7 @@ function desenharResumo(dicionario, conjunto) {
   // exercício, de que UF. Sem ele a página descreveria colunas no vazio.
   $("resumo-caminho").textContent = conjunto
     ? [
-        conjunto.entidade,
+        sigla(conjunto.entidade),
         rotulo(conjunto.tipo_documento),
         conjunto.ano,
         conjunto.uf,
@@ -633,15 +634,17 @@ function ligarEventos() {
 async function carregarFiltros() {
   const opcoes = await pedir("/api/v1/filtros", new URLSearchParams());
 
-  const preencher = (id, valores, todos) => {
+  // O `value` é sempre o valor cru da partição, que é o que a API conhece; o
+  // `rotular` só muda o que se lê na opção.
+  const preencher = (id, valores, todos, rotular = (v) => v) => {
     $(id).innerHTML =
       `<option value="">${todos}</option>` +
       (valores || [])
-        .map((v) => `<option value="${escapar(v)}">${escapar(v)}</option>`)
+        .map((v) => `<option value="${escapar(v)}">${escapar(rotular(v))}</option>`)
         .join("");
   };
 
-  preencher("filtro-entidade", opcoes.entidades, "Todas");
+  preencher("filtro-entidade", opcoes.entidades, "Todas", sigla);
   preencher("filtro-ano", opcoes.anos, "Todos");
   preencher("filtro-uf", opcoes.ufs, "Todas");
 }

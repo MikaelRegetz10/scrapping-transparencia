@@ -234,6 +234,13 @@ def execute_parquet_counts(
 
     Volta vazio quando a coluna não existe no acervo: um filtro sem opções é
     melhor que uma consulta derrubada.
+
+    O agrupamento é pela posição, e não pelo apelido `valor`. O `union_by_name`
+    junta o esquema de todo o acervo, e basta um arquivo com uma coluna
+    chamada `valor` — o balanço patrimonial da ABDI tem uma — para o `GROUP BY
+    valor` passar a casar com a coluna real em vez do apelido. A consulta
+    inteira cai então por `entidade` não estar no agrupamento, e o portal
+    perde todos os filtros de uma vez.
     """
     if por not in COLUNAS_AGRUPAVEIS:
         logger.warning(f"Coluna não agrupável: {por}")
@@ -255,8 +262,8 @@ def execute_parquet_counts(
             SELECT CAST({por} AS VARCHAR) AS valor, COUNT(*) AS total
             FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
             {where_str}
-            GROUP BY valor
-            HAVING valor IS NOT NULL
+            GROUP BY 1
+            HAVING CAST({por} AS VARCHAR) IS NOT NULL
             ORDER BY total DESC
             """,
             params,
