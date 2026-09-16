@@ -1,0 +1,176 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 8,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "datapublicacao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "B",
+      "coluna": "periodo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "C",
+      "coluna": "tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "D",
+      "coluna": "fonte",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "E",
+      "coluna": "legenda",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "F",
+      "coluna": "contas.iditemtransp",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8
+    },
+    {
+      "col_letter": "G",
+      "coluna": "contas.nivel",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "H",
+      "coluna": "contas.nmitemtransp",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8
+    },
+    {
+      "col_letter": "I",
+      "coluna": "contas.valorestimada",
+      "tipo": "DOUBLE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "J",
+      "coluna": "contas.valorrealizada",
+      "tipo": "DOUBLE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "K",
+      "coluna": "contas.execperc",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "L",
+      "coluna": "contas.pesoperc",
+      "tipo": "DOUBLE",
+      "preenchimento_pct": 87.5,
+      "linhas_com_valor_str": "7 de 8",
+      "linhas_validas": 7,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "M",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "N",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "O",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "P",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "Q",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1
+    }
+  ]
+}

@@ -209,7 +209,6 @@ cython_debug/
 tempCodeRunnerFile.py
 
 # Saídas geradas pelo pipeline: são artefato de execução, não código-fonte.
-outputs/
 logs/
 
 # Dados coletados dos portais: reproduzíveis rodando a coleta de novo e grandes
