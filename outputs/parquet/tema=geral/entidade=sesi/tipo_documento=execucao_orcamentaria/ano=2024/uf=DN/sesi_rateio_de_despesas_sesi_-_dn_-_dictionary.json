@@ -10,7 +10,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Data e hora de publicação das informações de transparência."
     },
     {
       "col_letter": "B",
@@ -20,7 +21,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 18
+      "valores_distintos": 18,
+      "descricao": "Área ou diretoria responsável pela gestão do objeto."
     },
     {
       "col_letter": "C",
@@ -30,7 +32,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 177
+      "valores_distintos": 177,
+      "descricao": "Descrição da atividade ou objeto gerido pela área."
     },
     {
       "col_letter": "D",
@@ -40,7 +43,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 20
+      "valores_distintos": 20,
+      "descricao": "Critério adotado para o rateio de custos e recursos."
     },
     {
       "col_letter": "E",
@@ -50,7 +54,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 27
+      "valores_distintos": 27,
+      "descricao": "Percentual do custo ou orçamento alocado ao SESI."
     },
     {
       "col_letter": "F",
@@ -60,7 +65,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 28
+      "valores_distintos": 28,
+      "descricao": "Percentual do custo ou orçamento alocado ao SENAI."
     },
     {
       "col_letter": "G",
@@ -70,7 +76,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 20
+      "valores_distintos": 20,
+      "descricao": "Percentual do custo ou orçamento alocado à CNI."
     },
     {
       "col_letter": "H",
@@ -80,7 +87,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 15
+      "valores_distintos": 15,
+      "descricao": "Percentual do custo ou orçamento alocado ao IEL."
     },
     {
       "col_letter": "I",
@@ -90,7 +98,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Percentual alocado a outras entidades não especificadas."
     },
     {
       "col_letter": "J",
@@ -100,7 +109,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "K",
@@ -110,7 +120,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "L",
@@ -120,7 +131,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "M",
@@ -130,7 +142,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "N",
@@ -140,7 +153,8 @@
       "linhas_com_valor_str": "189 de 189",
       "linhas_validas": 189,
       "total_linhas": 189,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     }
   ]
 }

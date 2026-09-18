@@ -10,7 +10,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 3
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -20,7 +21,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 149
+      "valores_distintos": 149,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "C",
@@ -30,7 +32,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 131
+      "valores_distintos": 131,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -40,7 +43,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 112
+      "valores_distintos": 112,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -50,7 +54,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 124
+      "valores_distintos": 124,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -60,7 +65,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 135
+      "valores_distintos": 135,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -70,7 +76,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",
@@ -80,7 +87,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "I",
@@ -90,7 +98,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "J",
@@ -100,7 +109,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "K",
@@ -110,7 +120,8 @@
       "linhas_com_valor_str": "214 de 214",
       "linhas_validas": 214,
       "total_linhas": 214,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     }
   ]
 }

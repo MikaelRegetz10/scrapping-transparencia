@@ -23,6 +23,16 @@ class Contagem(BaseModel):
     valor: str
     total: int
 
+class DocumentoSchema(BaseModel):
+    id: str
+    titulo: str
+    entidade: str
+    ano: int
+    uf: str
+    ods: Optional[List[int]] = None  # Mapeamento dos códigos ODS (ex: [1, 4, 8])
+
+    class Config:
+        from_attributes = True
 
 class CountsResponse(BaseModel):
     por: str

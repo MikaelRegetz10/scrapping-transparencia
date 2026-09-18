@@ -1,0 +1,106 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesi_despesas_por_licitacao_sesi_-_dn_-",
+  "total_rows": 12,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "datapublicacao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 1,
+      "descricao": "Data e hora de publicação das informações de transparência."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "licitacoes.periodo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 1,
+      "descricao": "Período de apuração dos processos licitatórios."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "licitacoes.tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 3,
+      "descricao": "Tipo de processo de contratação ou seleção pública."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "licitacoes.total",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 3,
+      "descricao": "Valor total despendido em licitações no período."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "licitacoes.perctotalgeral",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 3,
+      "descricao": "Percentual do valor licitado sobre o total das despesas."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "licitacoes.composicao.regulamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 91.67,
+      "linhas_com_valor_str": "11 de 12",
+      "linhas_validas": 11,
+      "total_linhas": 12,
+      "valores_distintos": 2,
+      "descricao": "Regulamento de licitações utilizado no processo de contratação."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "licitacoes.composicao.modalidade_forma",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 91.67,
+      "linhas_com_valor_str": "11 de 12",
+      "linhas_validas": 11,
+      "total_linhas": 12,
+      "valores_distintos": 11,
+      "descricao": "Modalidade ou formato adotado para realização da licitação."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "licitacoes.composicao.despesarealizada",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 91.67,
+      "linhas_com_valor_str": "11 de 12",
+      "linhas_validas": 11,
+      "total_linhas": 12,
+      "valores_distintos": 10,
+      "descricao": "Valor executado na modalidade específica de licitação."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "licitacoes.composicao.percentual",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 91.67,
+      "linhas_com_valor_str": "11 de 12",
+      "linhas_validas": 11,
+      "total_linhas": 12,
+      "valores_distintos": 10,
+      "descricao": "Percentual da modalidade licitatória no total executado em compras."
+    }
+  ]
+}

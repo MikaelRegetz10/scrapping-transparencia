@@ -21,10 +21,9 @@ from core.profiler import analyze_dataset_quality
 from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
 
-
 # Formatos que o core/profiler.py sabe perfilar. Os demais (zip, doc, docx...)
 # são auditados só quanto à disponibilidade, sem baixar o corpo do arquivo.
-PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json"}
+PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json", "ods"}
 
 # Linhas de amostra guardadas por dataset aprovado no profiling.
 ROWS_PER_SAMPLE = 20
@@ -105,7 +104,7 @@ def tipo_do_documento(item: dict, title: str, section: str) -> str:
 
 
 def particao_do_link(
-    item: dict, title: str, section: str, config: Config, tema: str
+        item: dict, title: str, section: str, config: Config, tema: str
 ) -> tuple:
     """Chave Hive (tema, tipo_documento, ano, uf) de um link catalogado.
 
@@ -163,12 +162,12 @@ def numera_status(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def exporta_catalogo_para_parquet(
-    registros: list,
-    particoes: list,
-    entidade: str,
-    config: Config,
-    logger,
-    especie: str,
+        registros: list,
+        particoes: list,
+        entidade: str,
+        config: Config,
+        logger,
+        especie: str,
 ) -> int:
     """Grava um catálogo de links no Parquet Hive que a API de consulta lê.
 
@@ -212,7 +211,7 @@ def exporta_catalogo_para_parquet(
 
 
 def run_scraper_pipeline(
-    scraper: BaseScraper, config: Config, logger
+        scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
     """Executa o scraping, valida os links, exporta Parquet e gera o Excel."""
     logger.info(
@@ -339,29 +338,44 @@ def run_scraper_pipeline(
                         )
 
                         # ==========================================
-                        # EXPORTAÇÃO PARQUET HIVE (TEMA / TIPO_DOC / ANO / UF)
+                        # EXPORTAÇÃO PARQUET HIVE E DICIONÁRIO JSON
                         # ==========================================
-                        export_to_parquet(
+                        caminho_parquet = export_to_parquet(
                             df=df_valid,
                             entidade=scraper.name,
                             base_dir=config.output_dir,
                             tema=item.get("tcu_tema") or section,
                             tipo_documento=(
-                                item.get("tcu_tipo_documento")
-                                or item.get("tipo_documento")
-                                or title
+                                    item.get("tcu_tipo_documento")
+                                    or item.get("tipo_documento")
+                                    or title
                             ),
                             ano=item.get("tcu_ano") or config.ano,
                             # Mesma regra do catálogo: o conteúdo de uma
                             # planilha regional não pode cair numa UF diferente
                             # da do link que o trouxe.
                             uf=(
-                                item.get("tcu_uf")
-                                or uf_do_texto(section, title)
-                                or "DN"
+                                    item.get("tcu_uf")
+                                    or uf_do_texto(section, title)
+                                    or "DN"
                             ),
                             prefixo_nome=f"{item.get('source', 'extracao')}_{title}",
                         )
+
+                        # 👇 NOVO: Salva o JSON na exata mesma pasta do Parquet recém-criado
+                        if caminho_parquet:
+                            from core.profiler import gerar_json_dicionario_base
+
+                            # Extrai a pasta destino exata e o nome do arquivo base (sem o .parquet)
+                            pasta_destino = os.path.dirname(caminho_parquet)
+                            nome_base = os.path.splitext(os.path.basename(caminho_parquet))[0]
+
+                            gerar_json_dicionario_base(
+                                df=df_valid,
+                                dataset_name=nome_base,
+                                output_dir=pasta_destino
+                            )
+
                     elif config.log_detalhado:
                         for err in profiling["errors"]:
                             logger.debug(f"   - {err}")

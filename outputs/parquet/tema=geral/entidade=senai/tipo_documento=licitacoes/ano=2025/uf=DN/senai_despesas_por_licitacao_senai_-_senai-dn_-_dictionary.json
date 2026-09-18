@@ -10,7 +10,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Data e hora de publicação das informações de transparência."
     },
     {
       "col_letter": "B",
@@ -20,7 +21,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Período de apuração dos processos licitatórios."
     },
     {
       "col_letter": "C",
@@ -30,7 +32,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 3
+      "valores_distintos": 3,
+      "descricao": "Tipo de processo de contratação ou seleção pública."
     },
     {
       "col_letter": "D",
@@ -40,7 +43,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 3
+      "valores_distintos": 3,
+      "descricao": "Valor total despendido em licitações no período."
     },
     {
       "col_letter": "E",
@@ -50,7 +54,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 3
+      "valores_distintos": 3,
+      "descricao": "Percentual do valor licitado sobre o total das despesas."
     },
     {
       "col_letter": "F",
@@ -60,7 +65,8 @@
       "linhas_com_valor_str": "11 de 12",
       "linhas_validas": 11,
       "total_linhas": 12,
-      "valores_distintos": 2
+      "valores_distintos": 2,
+      "descricao": "Regulamento de licitações utilizado no processo de contratação."
     },
     {
       "col_letter": "G",
@@ -70,7 +76,8 @@
       "linhas_com_valor_str": "11 de 12",
       "linhas_validas": 11,
       "total_linhas": 12,
-      "valores_distintos": 11
+      "valores_distintos": 11,
+      "descricao": "Modalidade ou formato adotado para realização da licitação."
     },
     {
       "col_letter": "H",
@@ -80,7 +87,8 @@
       "linhas_com_valor_str": "11 de 12",
       "linhas_validas": 11,
       "total_linhas": 12,
-      "valores_distintos": 10
+      "valores_distintos": 10,
+      "descricao": "Valor executado na modalidade específica de licitação."
     },
     {
       "col_letter": "I",
@@ -90,7 +98,8 @@
       "linhas_com_valor_str": "11 de 12",
       "linhas_validas": 11,
       "total_linhas": 12,
-      "valores_distintos": 10
+      "valores_distintos": 10,
+      "descricao": "Percentual da modalidade licitatória no total executado em compras."
     },
     {
       "col_letter": "J",
@@ -100,7 +109,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "K",
@@ -110,7 +120,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "L",
@@ -120,7 +131,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "M",
@@ -130,7 +142,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "N",
@@ -140,7 +153,8 @@
       "linhas_com_valor_str": "12 de 12",
       "linhas_validas": 12,
       "total_linhas": 12,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     }
   ]
 }

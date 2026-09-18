@@ -10,7 +10,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Período de apuração dos dados orçamentários apresentados."
     },
     {
       "col_letter": "B",
@@ -20,7 +21,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Texto normativo oficial que aprovou o orçamento do exercício."
     },
     {
       "col_letter": "C",
@@ -30,7 +32,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 2
+      "valores_distintos": 2,
+      "descricao": "Categoria da informação financeira, como receitas ou despesas."
     },
     {
       "col_letter": "D",
@@ -40,7 +43,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 144
+      "valores_distintos": 144,
+      "descricao": "Código de identificação da conta contábil associada."
     },
     {
       "col_letter": "E",
@@ -50,7 +54,8 @@
       "linhas_com_valor_str": "3 de 145",
       "linhas_validas": 3,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Código da conta contábil superior na hierarquia."
     },
     {
       "col_letter": "F",
@@ -60,7 +65,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 133
+      "valores_distintos": 133,
+      "descricao": "Nome ou título oficial da conta contábil."
     },
     {
       "col_letter": "G",
@@ -70,7 +76,8 @@
       "linhas_com_valor_str": "143 de 145",
       "linhas_validas": 143,
       "total_linhas": 145,
-      "valores_distintos": 2
+      "valores_distintos": 2,
+      "descricao": "Indicador de natureza financeira da conta, como receita ou despesa."
     },
     {
       "col_letter": "H",
@@ -80,7 +87,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 142
+      "valores_distintos": 142,
+      "descricao": "Valor total orçado aprovado para o exercício financeiro."
     },
     {
       "col_letter": "I",
@@ -90,7 +98,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "J",
@@ -100,7 +109,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "K",
@@ -110,7 +120,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "L",
@@ -120,7 +131,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "M",
@@ -130,7 +142,8 @@
       "linhas_com_valor_str": "145 de 145",
       "linhas_validas": 145,
       "total_linhas": 145,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     }
   ]
 }

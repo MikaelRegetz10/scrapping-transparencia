@@ -10,7 +10,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Data e hora de publicação das informações de transparência."
     },
     {
       "col_letter": "B",
@@ -20,7 +21,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Período de apuração dos dados orçamentários apresentados."
     },
     {
       "col_letter": "C",
@@ -30,7 +32,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Categoria da informação financeira, como receitas ou despesas."
     },
     {
       "col_letter": "D",
@@ -40,7 +43,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Setor ou órgão responsável pela geração e prestação das informações."
     },
     {
       "col_letter": "E",
@@ -50,7 +54,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição simplificada do contexto ou alteração do orçamento."
     },
     {
       "col_letter": "F",
@@ -60,7 +65,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 8
+      "valores_distintos": 8,
+      "descricao": "Código identificador único do item de transparência."
     },
     {
       "col_letter": "G",
@@ -70,7 +76,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Nível hierárquico da conta na estrutura do relatório."
     },
     {
       "col_letter": "H",
@@ -80,7 +87,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 8
+      "valores_distintos": 8,
+      "descricao": "Nome descritivo do item de transparência orçamentária."
     },
     {
       "col_letter": "I",
@@ -90,7 +98,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Valor previsto ou estimado para a conta no período apurado."
     },
     {
       "col_letter": "J",
@@ -100,7 +109,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Valor arrecadado ou executado efetivamente na conta contábil."
     },
     {
       "col_letter": "K",
@@ -110,7 +120,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Percentual de execução do valor estimado."
     },
     {
       "col_letter": "L",
@@ -120,7 +131,8 @@
       "linhas_com_valor_str": "7 de 8",
       "linhas_validas": 7,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Percentual de representatividade do item em relação ao total."
     },
     {
       "col_letter": "M",
@@ -130,7 +142,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "N",
@@ -140,7 +153,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "O",
@@ -150,7 +164,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "P",
@@ -160,7 +175,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "Q",
@@ -170,7 +186,8 @@
       "linhas_com_valor_str": "8 de 8",
       "linhas_validas": 8,
       "total_linhas": 8,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     }
   ]
 }

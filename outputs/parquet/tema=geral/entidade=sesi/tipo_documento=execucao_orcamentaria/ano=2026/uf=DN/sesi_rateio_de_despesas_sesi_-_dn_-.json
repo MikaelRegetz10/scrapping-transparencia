@@ -1,0 +1,117 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesi_rateio_de_despesas_sesi_-_dn_-",
+  "total_rows": 47,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "legenda",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 47",
+      "linhas_validas": 0,
+      "total_linhas": 47,
+      "valores_distintos": 0,
+      "descricao": "Descrição simplificada do contexto ou alteração do orçamento."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "datapublicacao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 1,
+      "descricao": "Data e hora de publicação das informações de transparência."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "areas.area",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 20,
+      "descricao": "Área ou diretoria responsável pela gestão do objeto."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "areas.objetos.objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 47,
+      "descricao": "Descrição da atividade ou objeto gerido pela área."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "areas.objetos.criterio",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 19,
+      "descricao": "Critério adotado para o rateio de custos e recursos."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "areas.objetos.percsesi",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 26,
+      "descricao": "Percentual do custo ou orçamento alocado ao SESI."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "areas.objetos.percsenai",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 28,
+      "descricao": "Percentual do custo ou orçamento alocado ao SENAI."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "areas.objetos.perccni",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 23,
+      "descricao": "Percentual do custo ou orçamento alocado à CNI."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "areas.objetos.perciel",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 16,
+      "descricao": "Percentual do custo ou orçamento alocado ao IEL."
+    },
+    {
+      "col_letter": "J",
+      "coluna": "areas.objetos.percoutras",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 1,
+      "descricao": "Percentual alocado a outras entidades não especificadas."
+    }
+  ]
+}

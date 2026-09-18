@@ -1,0 +1,150 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesi_saldo_exercicio_anterior_sesi_-_dn_-",
+  "total_rows": 10,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "datapublicacao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Data e hora de publicação das informações de transparência."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "periodo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Período de apuração dos dados orçamentários apresentados."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Categoria da informação financeira, como receitas ou despesas."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "fonte",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Setor ou órgão responsável pela geração e prestação das informações."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "legenda",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Descrição simplificada do contexto ou alteração do orçamento."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "contas.iditemtransp",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 10,
+      "descricao": "Código identificador único do item de transparência."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "contas.iditemtranspsuperior",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 10",
+      "linhas_validas": 0,
+      "total_linhas": 10,
+      "valores_distintos": 0,
+      "descricao": "Código do item de transparência pai na hierarquia das contas."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "contas.nivel",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Nível hierárquico da conta na estrutura do relatório."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "contas.nmitemtransp",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 10,
+      "descricao": "Nome descritivo do item de transparência orçamentária."
+    },
+    {
+      "col_letter": "J",
+      "coluna": "contas.valorestimada",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Valor previsto ou estimado para a conta no período apurado."
+    },
+    {
+      "col_letter": "K",
+      "coluna": "contas.valorrealizada",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Valor arrecadado ou executado efetivamente na conta contábil."
+    },
+    {
+      "col_letter": "L",
+      "coluna": "contas.execperc",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Percentual de execução do valor estimado."
+    },
+    {
+      "col_letter": "M",
+      "coluna": "contas.pesoperc",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 90.0,
+      "linhas_com_valor_str": "9 de 10",
+      "linhas_validas": 9,
+      "total_linhas": 10,
+      "valores_distintos": 1,
+      "descricao": "Percentual de representatividade do item em relação ao total."
+    }
+  ]
+}

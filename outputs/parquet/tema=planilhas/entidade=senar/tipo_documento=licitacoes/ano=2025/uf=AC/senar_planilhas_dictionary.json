@@ -10,7 +10,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 5
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -20,7 +21,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Setor ou órgão responsável pela geração e prestação das informações."
     },
     {
       "col_letter": "C",
@@ -30,7 +32,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 4
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -40,7 +43,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 5
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -50,7 +54,8 @@
       "linhas_com_valor_str": "0 de 5",
       "linhas_validas": 0,
       "total_linhas": 5,
-      "valores_distintos": 0
+      "valores_distintos": 0,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -60,7 +65,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -70,7 +76,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",
@@ -80,7 +87,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "I",
@@ -90,7 +98,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 5
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "J",
@@ -100,7 +109,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "K",
@@ -110,7 +120,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "L",
@@ -120,7 +131,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "M",
@@ -130,7 +142,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "N",
@@ -140,7 +153,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 2
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "O",
@@ -150,7 +164,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "P",
@@ -160,7 +175,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "Q",
@@ -170,7 +186,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "R",
@@ -180,7 +197,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "S",
@@ -190,7 +208,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "T",
@@ -200,7 +219,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "U",
@@ -210,7 +230,8 @@
       "linhas_com_valor_str": "5 de 5",
       "linhas_validas": 5,
       "total_linhas": 5,
-      "valores_distintos": 1
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
     }
   ]
 }
