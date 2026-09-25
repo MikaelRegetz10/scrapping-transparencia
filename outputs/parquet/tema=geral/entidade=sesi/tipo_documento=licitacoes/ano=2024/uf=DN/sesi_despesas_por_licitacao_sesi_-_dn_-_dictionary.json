@@ -11,7 +11,7 @@
       "linhas_validas": 12,
       "total_linhas": 12,
       "valores_distintos": 1,
-      "descricao": "Data e hora de publicação das informações de transparência."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -22,7 +22,7 @@
       "linhas_validas": 12,
       "total_linhas": 12,
       "valores_distintos": 1,
-      "descricao": "Período de apuração dos processos licitatórios."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "C",
@@ -33,7 +33,7 @@
       "linhas_validas": 12,
       "total_linhas": 12,
       "valores_distintos": 3,
-      "descricao": "Tipo de processo de contratação ou seleção pública."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -44,7 +44,7 @@
       "linhas_validas": 12,
       "total_linhas": 12,
       "valores_distintos": 3,
-      "descricao": "Valor total despendido em licitações no período."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -55,7 +55,7 @@
       "linhas_validas": 12,
       "total_linhas": 12,
       "valores_distintos": 3,
-      "descricao": "Percentual do valor licitado sobre o total das despesas."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -66,7 +66,7 @@
       "linhas_validas": 11,
       "total_linhas": 12,
       "valores_distintos": 2,
-      "descricao": "Regulamento de licitações utilizado no processo de contratação."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -77,7 +77,7 @@
       "linhas_validas": 11,
       "total_linhas": 12,
       "valores_distintos": 11,
-      "descricao": "Modalidade ou formato adotado para realização da licitação."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",
@@ -88,7 +88,7 @@
       "linhas_validas": 11,
       "total_linhas": 12,
       "valores_distintos": 9,
-      "descricao": "Valor executado na modalidade específica de licitação."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "I",
@@ -99,7 +99,7 @@
       "linhas_validas": 11,
       "total_linhas": 12,
       "valores_distintos": 9,
-      "descricao": "Percentual da modalidade licitatória no total executado em compras."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "J",

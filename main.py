@@ -40,7 +40,7 @@ def main():
     logger = setup_logger(config)
 
     scrapers = [
-        #ABDIScraper(),
+        ABDIScraper(),
         SesiScraper(ano=config.ano),
         #SenaiScraper(ano=config.ano),
         #SenarScraper(ano=config.ano),

@@ -11,7 +11,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 1,
-      "descricao": "Data e hora de publicação das informações de transparência."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -22,7 +22,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 1,
-      "descricao": "Período de apuração dos dados orçamentários apresentados."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "C",
@@ -33,7 +33,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 1,
-      "descricao": "Categoria da informação financeira, como receitas ou despesas."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -44,7 +44,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 1,
-      "descricao": "Setor ou órgão responsável pela geração e prestação das informações."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -55,7 +55,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 1,
-      "descricao": "Descrição simplificada do contexto ou alteração do orçamento."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -66,7 +66,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 7,
-      "descricao": "Código identificador único do item de transparência."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -77,7 +77,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 1,
-      "descricao": "Nível hierárquico da conta na estrutura do relatório."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",
@@ -88,7 +88,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 7,
-      "descricao": "Nome descritivo do item de transparência orçamentária."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "I",
@@ -99,7 +99,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 4,
-      "descricao": "Valor previsto ou estimado para a conta no período apurado."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "J",
@@ -110,7 +110,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 2,
-      "descricao": "Valor arrecadado ou executado efetivamente na conta contábil."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "K",
@@ -121,7 +121,7 @@
       "linhas_validas": 7,
       "total_linhas": 7,
       "valores_distintos": 3,
-      "descricao": "Percentual de execução do valor estimado."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "L",

@@ -1,9 +1,11 @@
 # core/pipeline.py
 from collections import defaultdict
 from datetime import datetime
+import glob
 import os
 import re
 import time
+import duckdb
 import pandas as pd
 import requests
 from openpyxl.cell.cell import ILLEGAL_CHARACTERS_RE
@@ -21,8 +23,7 @@ from core.profiler import analyze_dataset_quality
 from core.validator import DEFAULT_HEADERS, check_url_status
 from scrapers.base import BaseScraper
 
-# Formatos que o core/profiler.py sabe perfilar. Os demais (zip, doc, docx...)
-# são auditados só quanto à disponibilidade, sem baixar o corpo do arquivo.
+# Formatos que o core/profiler.py sabe perfilar.
 PROFILABLE_TYPES = {"csv", "xlsx", "xls", "json", "ods"}
 
 # Linhas de amostra guardadas por dataset aprovado no profiling.
@@ -30,12 +31,7 @@ ROWS_PER_SAMPLE = 20
 
 
 def limpa_caracteres_ilegais(valor):
-    """Remove os caracteres de controle ASCII que o formato XLSX recusa.
-
-    Texto vindo dos portais traz \x00-\x08 e afins com frequência; sem esta
-    limpeza o openpyxl levanta IllegalCharacterError e o relatório inteiro
-    deixa de ser gravado por causa de uma célula.
-    """
+    """Remove os caracteres de controle ASCII que o formato XLSX recusa."""
     if isinstance(valor, str):
         return ILLEGAL_CHARACTERS_RE.sub("", valor)
     return valor
@@ -48,47 +44,54 @@ def sanitize_sheet_name(title: str, index: int) -> str:
     return f"{index:02d}_{short_title}" if short_title else f"Aba_{index:02d}"
 
 
-# Tema reservado aos links de documento. A API devolve documentos e linhas de
-# planilha pelo mesmo endpoint, e ambos usam tipo_documento=contratos,
-# licitacoes etc. Sem um tema próprio o portal teria de separar os dois no
-# cliente, e aí o `total` da resposta — que é contado no banco, antes da
-# filtragem — deixaria a paginação errada. A seção de origem não se perde:
-# continua na coluna `secao_rota` de cada registro.
+def carregar_cache_urls_processadas(output_dir: str) -> dict:
+    """Consulta o DuckDB e carrega todas as URLs de planilhas e APIs já catalogadas.
+
+    Mapeia apenas a pasta 'tema=planilhas' usando union_by_name=True para tratar schemas divergentes.
+    Retorna um dicionário: { 'https://url...': tamanho_kb }
+    """
+    if not os.path.exists(output_dir):
+        return {}
+
+    path_pattern = os.path.join(output_dir, "parquet", "tema=planilhas", "**", "*.parquet")
+
+    if not glob.glob(path_pattern, recursive=True):
+        return {}
+
+    try:
+        conn = duckdb.connect()
+        # Usa read_parquet com union_by_name=True para tolerar arquivos com schemas diferentes
+        query = f"""
+            SELECT url_download, CAST(tamanho_kb AS DOUBLE) as tamanho_kb 
+            FROM read_parquet('{path_pattern}', union_by_name=True) 
+            WHERE (ativo = 'SIM' OR status_http = 200)
+              AND url_download IS NOT NULL
+        """
+        df_cache = conn.execute(query).df()
+        if df_cache.empty:
+            return {}
+
+        return dict(zip(df_cache["url_download"], df_cache["tamanho_kb"]))
+    except Exception as e:
+        print(f"⚠️ [Cache] Aviso ao carregar catálogo DuckDB: {e}")
+        return {}
+
+
+# Tema reservado aos links de documento (PDFs)
 TEMA_DOCUMENTOS = "documentos"
 
-# Tema reservado ao catálogo das planilhas. O ramo tabular já exporta o
-# conteúdo de cada dataset — cada um no seu tema ("dados_abertos",
-# "administracao_regional_…") —, mas o inventário dos arquivos em si (link,
-# tamanho, se abriu, o que o profiler reclamou) só existia no Excel de
-# qualidade. Ele mora aqui, separado do conteúdo, pela mesma razão que
-# `documentos`: o `total` da API é contado no banco, antes de o cliente
-# filtrar, e misturar catálogo com linha de dado quebraria a paginação.
+# Tema reservado ao catálogo das planilhas e APIs
 TEMA_PLANILHAS = "planilhas"
 
-# Processo seletivo é o grupo mais volumoso da ABDI e não cabe em nenhuma das
-# categorias do `inferir_tipo_documento`. Fica aqui, e não lá, porque aquela
-# função também classifica os datasets tabulares: mexer no vocabulário dela
-# reclassificaria partições que já existem.
+# Processo seletivo
 TIPO_PROCESSO_SELETIVO = "processos_seletivos"
 
-# Vocabulário fechado dos documentos. O portal espelha esta lista para montar
-# o filtro de tipo (ver portal/documentos.js, TIPOS_DE_DOCUMENTO).
+# Vocabulário fechado dos documentos
 TIPOS_DE_DOCUMENTO = frozenset(TIPOS_CONHECIDOS | {TIPO_PROCESSO_SELETIVO})
 
 
 def tipo_do_documento(item: dict, title: str, section: str) -> str:
-    """Categoria de um documento, preferindo a seção de origem ao título.
-
-    A seção é a rota do portal em que o link foi encontrado ("Licitações",
-    "Demonstrações Contábeis") e descreve o documento melhor que o título. Um
-    comunicado de processo seletivo chamado "... - Contratos" trata da vaga na
-    área de contratos; classificá-lo pelo título o transformaria num contrato.
-
-    Sem categoria reconhecida o documento vira "outros" — nunca uma categoria
-    própria. O título de um PDF é quase único, e deixá-lo virar tipo_documento
-    criaria uma partição por arquivo e um filtro impossível de usar no portal.
-    O título continua inteiro na coluna `titulo`.
-    """
+    """Categoria de um documento, preferindo a seção de origem ao título."""
     for texto in (item.get("tcu_tipo_documento"), section, title):
         if not texto:
             continue
@@ -106,24 +109,7 @@ def tipo_do_documento(item: dict, title: str, section: str) -> str:
 def particao_do_link(
         item: dict, title: str, section: str, config: Config, tema: str
 ) -> tuple:
-    """Chave Hive (tema, tipo_documento, ano, uf) de um link catalogado.
-
-    Devolve os valores já sanitizados, iguais aos que o `export_to_parquet`
-    calcularia: assim dois links que caem na mesma pasta caem também no mesmo
-    grupo, em vez de gerarem dois arquivos que se sobrescrevem.
-
-    Serve aos dois catálogos — o de PDF e o de planilha —, que se distinguem
-    apenas pelo `tema`. O tipo sai do mesmo vocabulário fechado nos dois
-    casos: uma planilha de contratos e um contrato em PDF são a mesma
-    categoria vista em formatos diferentes, e o portal filtra por ela igual.
-
-    A UF preferida é a que o scraper informa. Quando ele não informa, ela sai
-    do texto — que é onde a entidade a escreve de todo jeito ("Administração
-    Regional do Acre"). Sem essa segunda tentativa o catálogo inteiro cai em
-    DN, e um filtro de UF que só oferece "DN" não filtra nada: foi o que
-    aconteceu com o `tema=planilhas` reconstruído a partir dos Excel, que não
-    guardam o `tcu_uf`.
-    """
+    """Chave Hive (tema, tipo_documento, ano, uf) de um link catalogado."""
     uf = item.get("tcu_uf") or uf_do_texto(section, title) or "DN"
 
     return (
@@ -135,25 +121,14 @@ def particao_do_link(
 
 
 def sim_ou_nao(valor) -> str:
-    """Normaliza o `ativo`, que chega bool do ramo tabular e "SIM"/"NÃO" do PDF.
-
-    O Excel de qualidade preserva cada um como veio; o Parquet não pode, senão
-    o portal precisaria testar as duas formas para saber se um link caiu.
-    """
+    """Normaliza o `ativo`."""
     if isinstance(valor, str):
         return valor
     return "SIM" if valor else "NÃO"
 
 
 def numera_status(df: pd.DataFrame) -> pd.DataFrame:
-    """Deixa `status_http` inteiro, trocando por nulo o "ERRO" da verificação.
-
-    Quando a requisição sequer completa, o laço grava a string "ERRO" no lugar
-    do código HTTP. Numa partição em que ela apareça depois de algumas linhas
-    numéricas o pyarrow já terá inferido int64 e recusa o arquivo inteiro — a
-    partição some sem que nada além de um log denuncie. O aviso não se perde:
-    a linha continua com `ativo="NÃO"` e com o motivo em `erros_qualidade`.
-    """
+    """Deixa `status_http` inteiro, trocando por nulo o "ERRO" da verificação."""
     if "status_http" in df.columns:
         df["status_http"] = pd.to_numeric(
             df["status_http"], errors="coerce"
@@ -169,18 +144,7 @@ def exporta_catalogo_para_parquet(
         logger,
         especie: str,
 ) -> int:
-    """Grava um catálogo de links no Parquet Hive que a API de consulta lê.
-
-    São dois catálogos, distinguidos pela `especie` — "documentos" para os PDF,
-    "planilhas" para os arquivos tabulares. Em ambos o dado útil é o próprio
-    link, e não o conteúdo: o PDF não tem o que perfilar, e o conteúdo da
-    planilha já sai daqui por outro caminho, dataset a dataset. Sem esta
-    gravação os dois inventários ficariam só no Excel, fora do alcance do
-    portal.
-
-    Os registros vão em lote, agrupados por partição, para não criar um
-    arquivo Parquet por link.
-    """
+    """Grava um catálogo de links no Parquet Hive."""
     if not registros:
         return 0
 
@@ -213,10 +177,17 @@ def exporta_catalogo_para_parquet(
 def run_scraper_pipeline(
         scraper: BaseScraper, config: Config, logger
 ) -> pd.DataFrame:
-    """Executa o scraping, valida os links, exporta Parquet e gera o Excel."""
+    """Executa o scraping incremental, valida os links, exporta Parquet e gera o Excel."""
     logger.info(
-        f"Iniciando Auditoria Multi-Rotas: {scraper.name} (Exercício: {config.ano})"
+        f"Iniciando Auditoria Multi-Rotas Incremental: {scraper.name} (Exercício: {config.ano})"
     )
+
+    # 1. Carrega o cache exclusivo do catálogo de planilhas/APIs
+    cache_processados = carregar_cache_urls_processadas(config.output_dir)
+    if cache_processados:
+        logger.info(
+            f"⚡ [Cache] {len(cache_processados)} recurso(s) mapeado(s) no catálogo de execuções anteriores."
+        )
 
     raw_items = scraper.extract_links()
     total = len(raw_items)
@@ -226,9 +197,6 @@ def run_scraper_pipeline(
 
     summary_tables = []
     summary_pdfs = []
-    # Partição Hive de cada link, na mesma ordem do `summary_` correspondente.
-    # É calculada dentro do laço porque depende do item bruto — que não
-    # sobrevive a ele —, mas só é usada no fim.
     particoes_pdfs = []
     particoes_tabelas = []
     structured_samples = {}
@@ -248,11 +216,11 @@ def run_scraper_pipeline(
                 f"[{section}] Verificando: {title[:40]} ({file_type.upper()})"
             )
 
-        # Check Conectividade
+        # Check Conectividade leve (HEAD request)
         status_info = check_url_status(url)
         is_active = status_info["is_active"]
         status_code = status_info["status_code"] or "ERRO"
-        size_kb = status_info["content_length_kb"]
+        size_kb = status_info.get("content_length_kb", 0)
 
         if not is_active:
             logger.warning(f"❌ [{section}] Link inativo (HTTP {status_code}): {title[:60]}")
@@ -282,10 +250,9 @@ def run_scraper_pipeline(
             pdf_idx += 1
 
         # ==========================================
-        # 2. TRATAMENTO PARA TABELAS (CSV, XLSX, JSON)
+        # 2. TRATAMENTO PARA TABELAS E APIS (CSV, XLSX, JSON)
         # ==========================================
         else:
-
             if config.max_planilhas and (table_idx > config.max_planilhas):
                 logger.info(
                     f"[Limite atingido] Interrompendo a leitura de tabelas após atingir "
@@ -297,9 +264,27 @@ def run_scraper_pipeline(
             erros_str = ""
             avisos_str = ""
 
-            if is_active and file_type not in PROFILABLE_TYPES:
-                # Formatos que o profiler não lê (zip, docx, ods...): auditamos
-                # só a disponibilidade em vez de baixar o arquivo à toa.
+            # ----------------------------------------------------
+            # 🔍 VERIFICAÇÃO INCREMENTAL DE CACHE (Lógica Adaptativa)
+            # ----------------------------------------------------
+            ja_processado = False
+            if url in cache_processados:
+                tamanho_cache = cache_processados[url]
+                # Para arquivos estáticos com tamanho em KB definido
+                if tamanho_cache and size_kb and float(size_kb) > 0 and float(tamanho_cache) > 0:
+                    ja_processado = abs(float(tamanho_cache) - float(size_kb)) < 0.1
+                else:
+                    # Para APIs/downloads dinâmicos que retornam Content-Length zero/chunked
+                    ja_processado = True
+
+            if ja_processado:
+                # Pula o download pesado e a profiling pois já existe e não mudou
+                is_structured = True
+                if config.log_detalhado:
+                    logger.debug(
+                        f"⏭️  [{section}] Recurso/API já existente no catálogo e sem alterações. Pulando download."
+                    )
+            elif is_active and file_type not in PROFILABLE_TYPES:
                 erros_str = (
                     f"Formato '{file_type}' fora do escopo do profiler: "
                     "link auditado apenas quanto à disponibilidade."
@@ -309,6 +294,7 @@ def run_scraper_pipeline(
                         f"⏭️  Formato '{file_type}' não perfilável (download ignorado)."
                     )
             elif is_active:
+                # Recurso NOVO ou ALTERADO: realiza o download e o processamento completo
                 try:
                     res = requests.get(
                         url, headers=DEFAULT_HEADERS, timeout=25
@@ -337,9 +323,7 @@ def run_scraper_pipeline(
                             f"✅ [{section}] Dado estruturado. Amostra na aba '{sheet_name}'."
                         )
 
-                        # ==========================================
                         # EXPORTAÇÃO PARQUET HIVE E DICIONÁRIO JSON
-                        # ==========================================
                         caminho_parquet = export_to_parquet(
                             df=df_valid,
                             entidade=scraper.name,
@@ -351,9 +335,6 @@ def run_scraper_pipeline(
                                     or title
                             ),
                             ano=item.get("tcu_ano") or config.ano,
-                            # Mesma regra do catálogo: o conteúdo de uma
-                            # planilha regional não pode cair numa UF diferente
-                            # da do link que o trouxe.
                             uf=(
                                     item.get("tcu_uf")
                                     or uf_do_texto(section, title)
@@ -362,18 +343,18 @@ def run_scraper_pipeline(
                             prefixo_nome=f"{item.get('source', 'extracao')}_{title}",
                         )
 
-                        # 👇 NOVO: Salva o JSON na exata mesma pasta do Parquet recém-criado
                         if caminho_parquet:
                             from core.profiler import gerar_json_dicionario_base
 
-                            # Extrai a pasta destino exata e o nome do arquivo base (sem o .parquet)
                             pasta_destino = os.path.dirname(caminho_parquet)
-                            nome_base = os.path.splitext(os.path.basename(caminho_parquet))[0]
+                            nome_base = os.path.splitext(
+                                os.path.basename(caminho_parquet)
+                            )[0]
 
                             gerar_json_dicionario_base(
                                 df=df_valid,
                                 dataset_name=nome_base,
-                                output_dir=pasta_destino
+                                output_dir=pasta_destino,
                             )
 
                     elif config.log_detalhado:
@@ -412,9 +393,7 @@ def run_scraper_pipeline(
         if config.delay_entre_requisicoes > 0:
             time.sleep(config.delay_entre_requisicoes)
 
-    # ==========================================
-    # EXPORTAÇÃO PARQUET DOS CATÁLOGOS (PDF E PLANILHAS)
-    # ==========================================
+    # EXPORTAÇÃO PARQUET DOS CATÁLOGOS
     exporta_catalogo_para_parquet(
         summary_pdfs, particoes_pdfs, scraper.name, config, logger, "documentos"
     )
@@ -422,9 +401,7 @@ def run_scraper_pipeline(
         summary_tables, particoes_tabelas, scraper.name, config, logger, "planilhas"
     )
 
-    # ==========================================
-    # EXPORTAÇÃO PARA O EXCEL COM 2 ABAS DE RESUMO
-    # ==========================================
+    # EXPORTAÇÃO PARA EXCEL
     os.makedirs(config.output_dir, exist_ok=True)
     excel_path = os.path.join(
         config.output_dir, f"{scraper.name.lower()}_relatorio_qualidade.xlsx"
@@ -445,7 +422,6 @@ def run_scraper_pipeline(
     }
 
     with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
-        # Aba 1: Resumo de Planilhas e APIs Tabulares
         if not df_summary_tables.empty:
             df_summary_tables.to_excel(
                 writer, sheet_name="Resumo_Geral", index=False
@@ -455,7 +431,6 @@ def run_scraper_pipeline(
                 writer, sheet_name="Resumo_Geral", index=False
             )
 
-        # Aba 2: Resumo exclusivo de PDFs e Documentos
         if not df_summary_pdfs.empty:
             df_summary_pdfs.to_excel(
                 writer, sheet_name="Resumo_PDFs", index=False
@@ -465,7 +440,6 @@ def run_scraper_pipeline(
                 writer, sheet_name="Resumo_PDFs", index=False
             )
 
-        # Demais Abas: Amostras das planilhas/APIs aprovadas
         for sheet_name, df_data in structured_samples.items():
             df_data.to_excel(writer, sheet_name=sheet_name, index=False)
 

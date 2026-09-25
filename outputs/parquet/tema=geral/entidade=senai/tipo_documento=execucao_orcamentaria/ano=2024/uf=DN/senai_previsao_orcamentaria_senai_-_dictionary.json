@@ -11,7 +11,7 @@
       "linhas_validas": 149,
       "total_linhas": 149,
       "valores_distintos": 1,
-      "descricao": "Período de apuração dos dados orçamentários apresentados."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -22,7 +22,7 @@
       "linhas_validas": 149,
       "total_linhas": 149,
       "valores_distintos": 2,
-      "descricao": "Categoria da informação financeira, como receitas ou despesas."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "C",
@@ -33,7 +33,7 @@
       "linhas_validas": 149,
       "total_linhas": 149,
       "valores_distintos": 148,
-      "descricao": "Código de identificação da conta contábil associada."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -44,7 +44,7 @@
       "linhas_validas": 3,
       "total_linhas": 149,
       "valores_distintos": 1,
-      "descricao": "Código da conta contábil superior na hierarquia."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -55,7 +55,7 @@
       "linhas_validas": 149,
       "total_linhas": 149,
       "valores_distintos": 137,
-      "descricao": "Nome ou título oficial da conta contábil."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -66,7 +66,7 @@
       "linhas_validas": 147,
       "total_linhas": 149,
       "valores_distintos": 2,
-      "descricao": "Indicador de natureza financeira da conta, como receita ou despesa."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -77,7 +77,7 @@
       "linhas_validas": 149,
       "total_linhas": 149,
       "valores_distintos": 147,
-      "descricao": "Valor total orçado aprovado para o exercício financeiro."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",

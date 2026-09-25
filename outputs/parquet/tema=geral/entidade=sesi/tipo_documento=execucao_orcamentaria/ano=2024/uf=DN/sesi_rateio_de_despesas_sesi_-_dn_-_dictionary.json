@@ -11,7 +11,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 1,
-      "descricao": "Data e hora de publicação das informações de transparência."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -22,7 +22,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 18,
-      "descricao": "Área ou diretoria responsável pela gestão do objeto."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "C",
@@ -33,7 +33,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 177,
-      "descricao": "Descrição da atividade ou objeto gerido pela área."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -44,7 +44,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 20,
-      "descricao": "Critério adotado para o rateio de custos e recursos."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -55,7 +55,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 27,
-      "descricao": "Percentual do custo ou orçamento alocado ao SESI."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -66,7 +66,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 28,
-      "descricao": "Percentual do custo ou orçamento alocado ao SENAI."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -77,7 +77,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 20,
-      "descricao": "Percentual do custo ou orçamento alocado à CNI."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",
@@ -88,7 +88,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 15,
-      "descricao": "Percentual do custo ou orçamento alocado ao IEL."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "I",
@@ -99,7 +99,7 @@
       "linhas_validas": 189,
       "total_linhas": 189,
       "valores_distintos": 1,
-      "descricao": "Percentual alocado a outras entidades não especificadas."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "J",

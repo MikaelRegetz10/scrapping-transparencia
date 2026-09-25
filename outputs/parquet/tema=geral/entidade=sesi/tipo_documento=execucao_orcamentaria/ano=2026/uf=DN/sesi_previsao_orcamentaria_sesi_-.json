@@ -12,7 +12,7 @@
       "linhas_validas": 154,
       "total_linhas": 154,
       "valores_distintos": 1,
-      "descricao": "Período de apuração dos dados orçamentários apresentados."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "B",
@@ -23,7 +23,7 @@
       "linhas_validas": 154,
       "total_linhas": 154,
       "valores_distintos": 1,
-      "descricao": "Texto normativo oficial que aprovou o orçamento do exercício."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "C",
@@ -34,7 +34,7 @@
       "linhas_validas": 154,
       "total_linhas": 154,
       "valores_distintos": 2,
-      "descricao": "Categoria da informação financeira, como receitas ou despesas."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "D",
@@ -45,7 +45,7 @@
       "linhas_validas": 154,
       "total_linhas": 154,
       "valores_distintos": 153,
-      "descricao": "Código de identificação da conta contábil associada."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "E",
@@ -56,7 +56,7 @@
       "linhas_validas": 2,
       "total_linhas": 154,
       "valores_distintos": 1,
-      "descricao": "Código da conta contábil superior na hierarquia."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "F",
@@ -67,7 +67,7 @@
       "linhas_validas": 154,
       "total_linhas": 154,
       "valores_distintos": 142,
-      "descricao": "Nome ou título oficial da conta contábil."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "G",
@@ -78,7 +78,7 @@
       "linhas_validas": 152,
       "total_linhas": 154,
       "valores_distintos": 2,
-      "descricao": "Indicador de natureza financeira da conta, como receita ou despesa."
+      "descricao": "Descrição indisponível."
     },
     {
       "col_letter": "H",
@@ -89,7 +89,7 @@
       "linhas_validas": 154,
       "total_linhas": 154,
       "valores_distintos": 152,
-      "descricao": "Valor total orçado aprovado para o exercício financeiro."
+      "descricao": "Descrição indisponível."
     }
   ]
 }
