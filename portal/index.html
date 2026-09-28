@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início | Portal de Dados Abertos TCU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="catalogo.css?v=1.1">
+  <link rel="stylesheet" href="index.css?v=1.0">
+</head>
+<!-- parquet-page: as regras de .card, .btn e .aviso-erro vêm escopadas nessa
+     classe no style.css compartilhado. -->
+<body class="parquet-page">
+
+<header>
+  <div class="container">
+    <h1>Portal de Dados Abertos TCU</h1>
+    <p class="subtitle">
+      O que as entidades do Sistema S publicam nos seus portais de
+      transparência, coletado, auditado e aberto para consulta: os documentos,
+      as planilhas e o conteúdo de dentro delas.
+    </p>
+    <div class="badges-wrapper">
+      <span class="badge ouro">ABDI</span>
+      <span class="badge ouro">SESI</span>
+      <span class="badge ouro">SENAI</span>
+      <span class="badge ouro">SENAR</span>
+      <span class="badge ouro">SESC</span>
+      <span class="badge" id="badge-api">API</span>
+    </div>
+    <nav class="catalogo-nav" aria-label="Seções do portal">
+      <a href="index.html" aria-current="page">Início</a>
+      <a href="documentos.html">Documentos</a>
+      <a href="planilhas.html">Planilhas e dados</a>
+      <a href="visualizador.html">Visualizador</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <!-- Aviso de API fora do ar, escondido enquanto tudo funciona. Esta página
+         explica o sistema mesmo sem a API: só os números ficam em "—". -->
+    <section class="card aviso-erro" id="aviso-erro" hidden>
+      <h2>Não foi possível falar com a API</h2>
+      <p id="aviso-erro-texto"></p>
+      <pre class="aviso-erro-comando">uvicorn api.main_api:app --reload</pre>
+    </section>
+
+    <!-- Os números vêm da API, não de um texto fixo: eles mudam a cada coleta. -->
+    <section class="inicio-numeros" id="numeros" aria-label="Tamanho do acervo">
+      <a class="inicio-cartao" href="documentos.html">
+        <span class="inicio-cartao-numero" id="total-documentos">—</span>
+        <span class="inicio-cartao-rotulo">documentos catalogados</span>
+        <span class="inicio-cartao-nota">PDF de editais, contratos, convênios e contas</span>
+      </a>
+      <a class="inicio-cartao" href="planilhas.html">
+        <span class="inicio-cartao-numero" id="total-planilhas">—</span>
+        <span class="inicio-cartao-rotulo">planilhas catalogadas</span>
+        <span class="inicio-cartao-nota">CSV, Excel e JSON, com a auditoria de cada link</span>
+      </a>
+      <a class="inicio-cartao" href="visualizador.html">
+        <span class="inicio-cartao-numero" id="total-conjuntos">—</span>
+        <span class="inicio-cartao-rotulo">conjuntos abríveis em grade</span>
+        <span class="inicio-cartao-nota">o conteúdo das planilhas que o profiler aprovou</span>
+      </a>
+      <div class="inicio-cartao inicio-cartao-estatico">
+        <span class="inicio-cartao-numero" id="total-linhas">—</span>
+        <span class="inicio-cartao-rotulo">linhas no acervo</span>
+        <span class="inicio-cartao-nota" id="total-recorte">em Parquet particionado por tema, ano e UF</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Como funciona</h2>
+      <p class="inicio-intro">
+        Nada aqui é digitado à mão: cada número desta página é o fim de uma
+        esteira que começa no portal da entidade e termina nesta tela. São cinco
+        etapas, e cada uma tem um lugar no repositório.
+      </p>
+
+      <ol class="inicio-fluxo">
+        <li>
+          <h3>Coleta</h3>
+          <p>
+            Um módulo por portal em <code>scrapers/</code> lê as páginas de
+            transparência e devolve os links que a entidade publica — título,
+            seção, endereço e formato do arquivo. Quando a página monta a lista
+            por JavaScript, o scraper chama a mesma rota que ela consome, em vez
+            de automatizar um navegador.
+          </p>
+        </li>
+        <li>
+          <h3>Auditoria</h3>
+          <p>
+            <code>core/pipeline.py</code> conduz o resto. O
+            <strong>validator</strong> pergunta a cada URL se ela responde e
+            quanto pesa; o <strong>profiler</strong> baixa o que é tabular e diz
+            se o conteúdo pôde ser lido; o <strong>cleaner</strong> endireita as
+            planilhas feitas para o olho, não para a máquina.
+          </p>
+        </li>
+        <li>
+          <h3>Acervo</h3>
+          <p>
+            O resultado vira Parquet em <code>outputs/parquet/</code>,
+            particionado por tema, tipo de documento, ano e UF. São dois
+            catálogos de links — um de documentos, um de planilhas — mais um
+            conjunto por planilha aprovada, com as linhas de dentro dela. Sai
+            também o relatório de qualidade em Excel, uma aba por dataset.
+          </p>
+        </li>
+        <li>
+          <h3>API</h3>
+          <p>
+            <code>api/</code> serve esse acervo com FastAPI e DuckDB, lendo os
+            Parquet direto: filtros combinados, contagem por faceta, paginação,
+            exportação em CSV, Excel ou JSON — e a conversão em planilha dos
+            itens cuja fonte é um endpoint que só devolve JSON.
+          </p>
+        </li>
+        <li>
+          <h3>Portal</h3>
+          <p>
+            Estas páginas. HTML, CSS e JavaScript de módulo, sem etapa de build:
+            tudo o que aparece na tela veio da API na hora em que você abriu.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Por onde começar</h2>
+      <div class="inicio-paginas">
+        <a class="inicio-pagina" href="documentos.html">
+          <h3>Documentos <span aria-hidden="true">→</span></h3>
+          <p>
+            Os PDF coletados. Cada item abre o arquivo no portal de origem, e os
+            filtros de tipo, ano e UF trabalham sobre o catálogo inteiro.
+          </p>
+        </a>
+        <a class="inicio-pagina" href="planilhas.html">
+          <h3>Planilhas e dados <span aria-hidden="true">→</span></h3>
+          <p>
+            Os arquivos tabulares com o laudo de cada link: se respondeu, quanto
+            pesa, se o conteúdo entrou no acervo e o que o profiler reclamou.
+          </p>
+        </a>
+        <a class="inicio-pagina" href="visualizador.html">
+          <h3>Visualizador <span aria-hidden="true">→</span></h3>
+          <p>
+            O conteúdo de uma planilha coletada, em grade: célula selecionável,
+            ordenação e busca sobre o conjunto todo, exportação do que está na
+            tela.
+          </p>
+        </a>
+      </div>
+      <p class="inicio-nota">
+        Catálogo e conteúdo respondem a perguntas diferentes: as duas primeiras
+        páginas dizem <em>o que existe e se está no ar</em>; o visualizador abre
+        <em>o que a última coleta guardou</em>, sem download e sem depender de a
+        fonte estar de pé.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Rodando na sua máquina</h2>
+      <p class="inicio-intro">
+        São dois processos: a API lê os Parquet, o portal consome a API. Os
+        comandos valem na raiz do projeto, com o <code>.venv</code> já criado.
+      </p>
+
+      <dl class="inicio-comandos">
+        <dt>Subir a API, na porta 8000</dt>
+        <dd><pre><code>.venv/bin/uvicorn api.main_api:app --reload --port 8000</code></pre></dd>
+
+        <dt>Servir o portal, na porta 8001</dt>
+        <dd><pre><code>.venv/bin/python -m http.server 8001 --directory portal</code></pre></dd>
+
+        <dt>Coletar de novo, alimentando o acervo</dt>
+        <dd><pre><code>.venv/bin/python main.py</code></pre></dd>
+      </dl>
+
+      <p class="inicio-nota">
+        Abrir os <code>.html</code> direto do disco não funciona: o navegador
+        bloqueia módulos JavaScript no esquema <code>file://</code>. Para
+        apontar para outra API sem editar código, passe o endereço na URL —
+        <code>planilhas.html?api=https://api.exemplo.org</code>. A documentação
+        interativa da API fica em <a id="link-api-docs" href="#">/docs</a>, e os
+        detalhes de cada página estão no
+        <a href="README.md">README do portal</a>.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>O que o acervo ainda não faz</h2>
+      <ul class="inicio-limites">
+        <li>
+          <strong>O ano é pouco confiável.</strong> Os scrapers nem sempre acham
+          o exercício no arquivo, e os registros trazidos do histórico caem no
+          ano corrente. Uma coleta nova corrige.
+        </li>
+        <li>
+          <strong>A UF só tem estado de verdade nas planilhas.</strong> Nos
+          documentos tudo é <code>DN</code>, e está certo: os PDF catalogados
+          são os da ABDI e do SESI nacional.
+        </li>
+        <li>
+          <strong>Cabeçalho torto na origem continua torto aqui.</strong> Acento
+          corrompido na coleta é dado do acervo; consertá-lo é trabalho de uma
+          coleta nova, não da tela.
+        </li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Portal de Dados Abertos TCU · Documentos coletados dos portais de transparência</p>
+  </div>
+</footer>
+
+<script type="module" src="index.js?v=1.0"></script>
+</body>
+</html>
