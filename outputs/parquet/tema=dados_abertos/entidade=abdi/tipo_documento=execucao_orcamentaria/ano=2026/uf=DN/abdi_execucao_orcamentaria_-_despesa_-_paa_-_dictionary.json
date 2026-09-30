@@ -1,0 +1,76 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 9,
+  "colunas": [
+    {
+      "nome": "codigo",
+      "rotulo": "codigo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 9,
+      "distintos": 9,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descricao",
+      "rotulo": "descricao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 9,
+      "distintos": 9,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "fonte",
+      "rotulo": "fonte",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "C",
+      "preenchidas": 9,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_inic",
+      "rotulo": "orc_prog_inic",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 9,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_ref",
+      "rotulo": "orc_prog_ref",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "E",
+      "preenchidas": 9,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_ref_1",
+      "rotulo": "orc_prog_ref_1",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 9,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vlr_realiz",
+      "rotulo": "vlr_realiz",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 9,
+      "distintos": 9,
+      "preenchimento": 1.0
+    }
+  ]
+}

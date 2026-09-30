@@ -1,0 +1,29 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_plano_de_contas_-_balanco_orcamentario",
+  "total_rows": 78,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "código",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "78 de 78",
+      "linhas_validas": 78,
+      "total_linhas": 78,
+      "valores_distintos": 78,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "78 de 78",
+      "linhas_validas": 78,
+      "total_linhas": 78,
+      "valores_distintos": 78,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

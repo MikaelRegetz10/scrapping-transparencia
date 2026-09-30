@@ -139,7 +139,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "N",
       "preenchidas": 2,
-      "distintos": 2,
+      "distintos": 1,
       "preenchimento": 1.0
     },
     {
@@ -159,7 +159,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "P",
       "preenchidas": 2,
-      "distintos": 1,
+      "distintos": 2,
       "preenchimento": 1.0
     },
     {

@@ -1,6 +1,6 @@
 {
   "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total": 238,
+  "total": 239,
   "colunas": [
     {
       "nome": "id",
@@ -8,8 +8,8 @@
       "tipo": "INTEGER",
       "tipo_bruto": "BIGINT",
       "letra": "A",
-      "preenchidas": 238,
-      "distintos": 238,
+      "preenchidas": 239,
+      "distintos": 239,
       "preenchimento": 1.0
     },
     {
@@ -18,7 +18,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "B",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 1,
       "preenchimento": 1.0
     },
@@ -28,7 +28,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "C",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 2,
       "preenchimento": 1.0
     },
@@ -38,8 +38,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "D",
-      "preenchidas": 238,
-      "distintos": 238,
+      "preenchidas": 239,
+      "distintos": 239,
       "preenchimento": 1.0
     },
     {
@@ -58,7 +58,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "F",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 5,
       "preenchimento": 1.0
     },
@@ -68,7 +68,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "G",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 1,
       "preenchimento": 1.0
     },
@@ -78,7 +78,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "H",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 1,
       "preenchimento": 1.0
     },
@@ -88,8 +88,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "I",
-      "preenchidas": 238,
-      "distintos": 238,
+      "preenchidas": 239,
+      "distintos": 239,
       "preenchimento": 1.0
     },
     {
@@ -98,7 +98,7 @@
       "tipo": "INTEGER",
       "tipo_bruto": "BIGINT",
       "letra": "J",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 2,
       "preenchimento": 1.0
     },
@@ -108,7 +108,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "K",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 2,
       "preenchimento": 1.0
     },
@@ -128,7 +128,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "M",
-      "preenchidas": 238,
+      "preenchidas": 239,
       "distintos": 1,
       "preenchimento": 1.0
     }

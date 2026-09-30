@@ -1,0 +1,36 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 152,
+  "colunas": [
+    {
+      "nome": "cargo",
+      "rotulo": "cargo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 152,
+      "distintos": 10,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "remuneracao_mensal",
+      "rotulo": "remuneracao_mensal",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 152,
+      "distintos": 26,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "obs",
+      "rotulo": "obs",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 37,
+      "distintos": 8,
+      "preenchimento": 0.2434
+    }
+  ]
+}

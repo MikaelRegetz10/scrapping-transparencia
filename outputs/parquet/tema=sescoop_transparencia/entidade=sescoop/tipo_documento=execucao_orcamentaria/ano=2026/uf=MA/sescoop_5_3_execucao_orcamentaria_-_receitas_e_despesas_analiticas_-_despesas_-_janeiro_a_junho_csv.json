@@ -1,0 +1,95 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_5_3_execucao_orcamentaria_-_receitas_e_despesas_analiticas_-_despesas_-_janeiro_a_junho_csv",
+  "total_rows": 26,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "cod_conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "desc_conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "orcado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 25,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "retificado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "suplementado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "transposto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "realizado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "obs",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 26",
+      "linhas_validas": 0,
+      "total_linhas": 26,
+      "valores_distintos": 0,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

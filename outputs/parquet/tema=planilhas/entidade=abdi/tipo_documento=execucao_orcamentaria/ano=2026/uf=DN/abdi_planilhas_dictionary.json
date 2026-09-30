@@ -128,9 +128,9 @@
       "tipo": "DOUBLE",
       "tipo_bruto": "DOUBLE",
       "letra": "M",
-      "preenchidas": 67,
-      "distintos": 57,
-      "preenchimento": 0.8701
+      "preenchidas": 66,
+      "distintos": 56,
+      "preenchimento": 0.8571
     },
     {
       "nome": "estruturado",
@@ -149,7 +149,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "O",
       "preenchidas": 77,
-      "distintos": 3,
+      "distintos": 38,
       "preenchimento": 1.0
     },
     {
@@ -159,7 +159,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "P",
       "preenchidas": 77,
-      "distintos": 1,
+      "distintos": 12,
       "preenchimento": 1.0
     },
     {

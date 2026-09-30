@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_demonstracoes_resultados_dos_exercicios_3_trimestre",
+  "total_rows": 26,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "código",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "ano atual",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "ano anterior",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "26 de 26",
+      "linhas_validas": 26,
+      "total_linhas": 26,
+      "valores_distintos": 26,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 12,
+  "colunas": [
+    {
+      "nome": "mês",
+      "rotulo": "mês",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 12,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "rec_contrib",
+      "rotulo": "rec_contrib",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 12,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "rec_patrim",
+      "rotulo": "rec_patrim",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 12,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "transf_correntes",
+      "rotulo": "transf_correntes",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "D",
+      "preenchidas": 12,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "rec_capital",
+      "rotulo": "rec_capital",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "E",
+      "preenchidas": 12,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "rec_diversas",
+      "rotulo": "rec_diversas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 12,
+      "distintos": 12,
+      "preenchimento": 1.0
+    }
+  ]
+}

@@ -149,7 +149,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "O",
       "preenchidas": 36,
-      "distintos": 2,
+      "distintos": 23,
       "preenchimento": 1.0
     },
     {
@@ -159,7 +159,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "P",
       "preenchidas": 36,
-      "distintos": 1,
+      "distintos": 3,
       "preenchimento": 1.0
     },
     {

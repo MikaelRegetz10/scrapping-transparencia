@@ -1,0 +1,76 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 17,
+  "colunas": [
+    {
+      "nome": "codigo",
+      "rotulo": "codigo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 17,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descricao",
+      "rotulo": "descricao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 17,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "fonte",
+      "rotulo": "fonte",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "C",
+      "preenchidas": 17,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_inic",
+      "rotulo": "orc_prog_inic",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "D",
+      "preenchidas": 17,
+      "distintos": 17,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "anul_suplem",
+      "rotulo": "anul_suplem",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "E",
+      "preenchidas": 17,
+      "distintos": 13,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_ref",
+      "rotulo": "orc_prog_ref",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "F",
+      "preenchidas": 17,
+      "distintos": 17,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vlr_realiz",
+      "rotulo": "vlr_realiz",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "G",
+      "preenchidas": 17,
+      "distintos": 16,
+      "preenchimento": 1.0
+    }
+  ]
+}

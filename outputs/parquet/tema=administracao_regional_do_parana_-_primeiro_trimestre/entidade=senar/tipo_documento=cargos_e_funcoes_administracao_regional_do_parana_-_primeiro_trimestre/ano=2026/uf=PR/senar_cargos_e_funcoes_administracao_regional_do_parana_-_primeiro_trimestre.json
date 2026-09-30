@@ -1,0 +1,62 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_cargos_e_funcoes_administracao_regional_do_parana_-_primeiro_trimestre",
+  "total_rows": 27,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "27 de 27",
+      "linhas_validas": 27,
+      "total_linhas": 27,
+      "valores_distintos": 15,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "nível",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "27 de 27",
+      "linhas_validas": 27,
+      "total_linhas": 27,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "nº empregados",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "27 de 27",
+      "linhas_validas": 27,
+      "total_linhas": 27,
+      "valores_distintos": 13,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "valor inicial (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "27 de 27",
+      "linhas_validas": 27,
+      "total_linhas": 27,
+      "valores_distintos": 15,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "valor final (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "27 de 27",
+      "linhas_validas": 27,
+      "total_linhas": 27,
+      "valores_distintos": 15,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

@@ -1,116 +1,56 @@
 {
-  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total_rows": 8,
-  "columns": [
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 8,
+  "colunas": [
     {
-      "col_letter": "A",
-      "coluna": "cargo",
+      "nome": "cargo",
+      "rotulo": "cargo",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 8,
-      "descricao": "Descrição indisponível."
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 8,
+      "distintos": 8,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "B",
-      "coluna": "nível",
+      "nome": "nível",
+      "rotulo": "nível",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 8,
-      "descricao": "Descrição indisponível."
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 8,
+      "distintos": 8,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "C",
-      "coluna": "nº empregados",
+      "nome": "nº empregados",
+      "rotulo": "nº empregados",
       "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 4,
-      "descricao": "Descrição indisponível."
+      "tipo_bruto": "BIGINT",
+      "letra": "C",
+      "preenchidas": 8,
+      "distintos": 4,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "D",
-      "coluna": "valor inicial (r$)",
+      "nome": "valor inicial (r$)",
+      "rotulo": "valor inicial (r$)",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 8,
-      "descricao": "Descrição indisponível."
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 8,
+      "distintos": 8,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "E",
-      "coluna": "valor final (r$)",
+      "nome": "valor final (r$)",
+      "rotulo": "valor final (r$)",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 8,
-      "descricao": "Descrição indisponível."
-    },
-    {
-      "col_letter": "F",
-      "coluna": "tema",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 1,
-      "descricao": "Descrição indisponível."
-    },
-    {
-      "col_letter": "G",
-      "coluna": "entidade",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 1,
-      "descricao": "Descrição indisponível."
-    },
-    {
-      "col_letter": "H",
-      "coluna": "tipo_documento",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 1,
-      "descricao": "Descrição indisponível."
-    },
-    {
-      "col_letter": "I",
-      "coluna": "ano",
-      "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 1,
-      "descricao": "Descrição indisponível."
-    },
-    {
-      "col_letter": "J",
-      "coluna": "uf",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "8 de 8",
-      "linhas_validas": 8,
-      "total_linhas": 8,
-      "valores_distintos": 1,
-      "descricao": "Descrição indisponível."
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 8,
+      "distintos": 8,
+      "preenchimento": 1.0
     }
   ]
 }

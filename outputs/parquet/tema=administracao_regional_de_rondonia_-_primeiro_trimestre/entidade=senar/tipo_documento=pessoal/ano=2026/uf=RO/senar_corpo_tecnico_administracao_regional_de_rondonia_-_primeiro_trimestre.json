@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_corpo_tecnico_administracao_regional_de_rondonia_-_primeiro_trimestre",
+  "total_rows": 50,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "ï»¿\"membros do corpo tãcnico\"",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "50 de 50",
+      "linhas_validas": 50,
+      "total_linhas": 50,
+      "valores_distintos": 50,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

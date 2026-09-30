@@ -1,0 +1,62 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_cargos_e_funcoes_administracao_regional_de_rondonia_-_primeiro_trimestre",
+  "total_rows": 9,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "9 de 9",
+      "linhas_validas": 9,
+      "total_linhas": 9,
+      "valores_distintos": 6,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "nível",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "9 de 9",
+      "linhas_validas": 9,
+      "total_linhas": 9,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "nº empregados",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "9 de 9",
+      "linhas_validas": 9,
+      "total_linhas": 9,
+      "valores_distintos": 8,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "valor inicial (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "9 de 9",
+      "linhas_validas": 9,
+      "total_linhas": 9,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "valor final (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "9 de 9",
+      "linhas_validas": 9,
+      "total_linhas": 9,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

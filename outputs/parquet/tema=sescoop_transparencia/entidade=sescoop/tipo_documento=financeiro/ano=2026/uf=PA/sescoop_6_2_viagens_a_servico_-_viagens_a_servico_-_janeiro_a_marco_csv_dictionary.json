@@ -1,0 +1,126 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 92,
+  "colunas": [
+    {
+      "nome": "cpf",
+      "rotulo": "cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 92,
+      "distintos": 18,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome",
+      "rotulo": "nome",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 92,
+      "distintos": 18,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cargo",
+      "rotulo": "cargo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 92,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "motivo",
+      "rotulo": "motivo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 92,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "justificativa",
+      "rotulo": "justificativa",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 92,
+      "distintos": 89,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "origem",
+      "rotulo": "origem",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 92,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "destino",
+      "rotulo": "destino",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 92,
+      "distintos": 35,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data ida",
+      "rotulo": "data ida",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 92,
+      "distintos": 47,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data volta",
+      "rotulo": "data volta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 92,
+      "distintos": 46,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "diária",
+      "rotulo": "diária",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 92,
+      "distintos": 10,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "demais despesas",
+      "rotulo": "demais despesas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 92,
+      "distintos": 42,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "total viagem",
+      "rotulo": "total viagem",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 92,
+      "distintos": 53,
+      "preenchimento": 1.0
+    }
+  ]
+}

@@ -128,9 +128,9 @@
       "tipo": "DOUBLE",
       "tipo_bruto": "DOUBLE",
       "letra": "M",
-      "preenchidas": 2,
-      "distintos": 2,
-      "preenchimento": 0.6667
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
     },
     {
       "nome": "estruturado",

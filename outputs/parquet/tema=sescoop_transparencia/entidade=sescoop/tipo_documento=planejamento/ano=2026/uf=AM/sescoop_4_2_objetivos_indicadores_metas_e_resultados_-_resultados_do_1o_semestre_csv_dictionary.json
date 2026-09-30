@@ -1,0 +1,66 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 19,
+  "colunas": [
+    {
+      "nome": "id",
+      "rotulo": "id",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 19,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "objetivo estratégico",
+      "rotulo": "objetivo estratégico",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 19,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "id do indicador",
+      "rotulo": "id do indicador",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "C",
+      "preenchidas": 19,
+      "distintos": 18,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "indicador",
+      "rotulo": "indicador",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 19,
+      "distintos": 19,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "meta",
+      "rotulo": "meta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 19,
+      "distintos": 14,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "resultado do 1º semestre",
+      "rotulo": "resultado do 1º semestre",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 19,
+      "distintos": 14,
+      "preenchimento": 1.0
+    }
+  ]
+}
