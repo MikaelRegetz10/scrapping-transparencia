@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dicionário de dados | Portal de Dados Abertos TCU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="catalogo.css?v=1.2">
+  <link rel="stylesheet" href="dicionario.css?v=1.0">
+</head>
+<!-- parquet-page: as regras de .filter-card, .table-heading, .empty-state e
+     afins vêm escopadas nessa classe no style.css compartilhado. -->
+<body class="parquet-page">
+
+<header>
+  <div class="container">
+    <h1>Dicionário de dados</h1>
+    <p class="subtitle">
+      O que cada coluna do acervo é: o tipo que o arquivo guardou, quanto dela
+      vem preenchido e quantos valores distintos tem — medido no próprio
+      conjunto, porque as entidades não publicam essa documentação.
+    </p>
+    <div class="badges-wrapper">
+      <span class="badge ouro">Medido</span>
+      <span class="badge">Não oficial</span>
+      <span class="badge" id="badge-api">API</span>
+    </div>
+    <nav class="catalogo-nav" aria-label="Seções do portal">
+      <a href="index.html">Início</a>
+      <a href="documentos.html">Documentos</a>
+      <a href="planilhas.html">Planilhas e dados</a>
+      <a href="visualizador.html">Visualizador</a>
+      <a href="dicionario.html" aria-current="page">Dicionário</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <!-- Aviso de API fora do ar, escondido enquanto tudo funciona -->
+    <section class="card aviso-erro" id="aviso-erro" hidden>
+      <h2>Não foi possível falar com a API</h2>
+      <p id="aviso-erro-texto"></p>
+      <pre class="aviso-erro-comando">uvicorn api.main_api:app --reload</pre>
+    </section>
+
+    <!-- A ressalva é a primeira coisa da página, e não um rodapé: quem chega
+         aqui está procurando o significado das colunas, e o que a página tem
+         a oferecer não é isso. Dizer depois da tabela seria dizer tarde. -->
+    <section class="card ressalva-card">
+      <h2>Estes números descrevem o arquivo, não a coluna</h2>
+      <p id="ressalva-texto">
+        As entidades do Sistema S não publicam dicionário de dados junto com os
+        arquivos: vem a planilha, não vem o que cada campo significa. O que está
+        aqui foi medido no próprio conjunto — nada disto é descrição oficial, e
+        um nome de coluna continua valendo o que a entidade quis que valesse.
+      </p>
+    </section>
+
+    <!-- O seletor fica aberto enquanto nenhum conjunto foi escolhido e se
+         fecha sozinho quando um é: a partir daí a tela é sobre as colunas. -->
+    <details class="card seletor-card" id="seletor" open>
+      <summary class="seletor-resumo">
+        <span class="seletor-titulo">Escolher conjunto de dados</span>
+        <span class="seletor-atual" id="seletor-atual">Nenhum conjunto aberto</span>
+      </summary>
+
+      <div class="seletor-corpo">
+        <div class="documentos-filtros">
+          <div class="filter-group filter-group-busca">
+            <label for="filtro-busca">Buscar conjunto</label>
+            <input type="search" id="filtro-busca"
+                   placeholder="contratos, licitações, corpo técnico, Bahia…"
+                   autocomplete="off">
+          </div>
+          <div class="filter-group">
+            <label for="filtro-entidade">Entidade</label>
+            <select id="filtro-entidade">
+              <option value="">Todas</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filtro-ano">Exercício</label>
+            <select id="filtro-ano">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filtro-uf">UF</label>
+            <select id="filtro-uf">
+              <option value="">Todas</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filtro-ordem">Ordenar por</label>
+            <select id="filtro-ordem">
+              <option value="nome">Nome do conjunto</option>
+              <option value="linhas">Mais linhas primeiro</option>
+              <option value="entidade">Entidade</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="conjuntos-cabecalho">
+          <p id="conjuntos-resumo">Carregando conjuntos…</p>
+          <span class="filter-chip" id="conjuntos-contador">—</span>
+        </div>
+
+        <div id="conjuntos-lista" class="conjuntos-lista"></div>
+
+        <div class="pagination" id="conjuntos-paginacao" hidden>
+          <span id="conjuntos-paginacao-texto"></span>
+          <div class="pagination-buttons">
+            <button class="pagination-btn" id="conjuntos-anterior" type="button">← Anterior</button>
+            <button class="pagination-btn" id="conjuntos-proxima" type="button">Próxima →</button>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Estado inicial: ninguém escolheu conjunto nenhum ainda. -->
+    <section class="card" id="convite" >
+      <p class="empty-state">
+        Escolha um conjunto acima para ver o que se sabe das colunas dele.
+      </p>
+    </section>
+
+    <!-- O painel do conjunto aberto -->
+    <section id="painel" hidden>
+
+      <section class="card resumo-card">
+        <div class="resumo-cabecalho">
+          <div>
+            <h2 id="resumo-nome">—</h2>
+            <p class="resumo-caminho" id="resumo-caminho"></p>
+          </div>
+          <a class="resumo-link" id="resumo-abrir" href="#">Abrir em grade →</a>
+        </div>
+
+        <div class="resumo-numeros">
+          <div class="resumo-numero">
+            <span class="resumo-valor" id="resumo-linhas">—</span>
+            <span class="resumo-rotulo">linhas</span>
+          </div>
+          <div class="resumo-numero">
+            <span class="resumo-valor" id="resumo-colunas">—</span>
+            <span class="resumo-rotulo">colunas</span>
+          </div>
+          <div class="resumo-numero">
+            <span class="resumo-valor" id="resumo-preenchimento">—</span>
+            <span class="resumo-rotulo">preenchimento médio</span>
+          </div>
+          <div class="resumo-numero">
+            <span class="resumo-valor" id="resumo-alertas">—</span>
+            <span class="resumo-rotulo">colunas com ressalva</span>
+          </div>
+        </div>
+
+        <!-- A barra de tipos: uma leitura do conjunto antes de ler a tabela.
+             Onde tudo é VARCHAR, a fonte publicou texto puro e nada foi
+             tipado — o que é um achado sobre a fonte, não sobre nós. -->
+        <div class="tipos-faixa" id="tipos-faixa" role="img"
+             aria-label="Distribuição dos tipos de coluna"></div>
+        <div class="tipos-legenda" id="tipos-legenda"></div>
+      </section>
+
+      <section class="card">
+        <div class="colunas-cabecalho">
+          <h2>Colunas</h2>
+          <div class="colunas-controles">
+            <input type="search" id="colunas-busca"
+                   placeholder="Filtrar coluna pelo nome…" autocomplete="off">
+            <select id="colunas-diagnostico">
+              <option value="">Todas as colunas</option>
+              <option value="alerta">Só as que têm ressalva</option>
+              <option value="vazia">Sem nenhum valor</option>
+              <option value="parcial">Preenchidas em parte</option>
+              <option value="constante">Um valor só</option>
+              <option value="identificador">Um valor por linha</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="colunas-conteudo"></div>
+      </section>
+
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Portal de Dados Abertos TCU · Conteúdo tabular coletado dos portais de transparência</p>
+  </div>
+</footer>
+
+<script type="module" src="dicionario.js?v=1.2"></script>
+</body>
+</html>

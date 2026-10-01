@@ -1,0 +1,106 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 45,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 11
+    },
+    {
+      "col_letter": "B",
+      "coluna": "nível",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 45
+    },
+    {
+      "col_letter": "C",
+      "coluna": "nº empregados",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 6
+    },
+    {
+      "col_letter": "D",
+      "coluna": "valor inicial (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 9
+    },
+    {
+      "col_letter": "E",
+      "coluna": "valor final (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 10
+    },
+    {
+      "col_letter": "F",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "G",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "H",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "I",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "J",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 1
+    }
+  ]
+}

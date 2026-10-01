@@ -139,7 +139,7 @@
   color: var(--text);
 }
 
-/* --- Atalhos para as três páginas --- */
+/* --- Atalhos para as quatro páginas --- */
 .inicio-paginas {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

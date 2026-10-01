@@ -14,8 +14,9 @@ import {
   pedir,
   preencherSelect,
   selecionados,
+  sigla,
   urlSegura,
-} from "./catalogo.js";
+} from "./catalogo.js?v=1.2";
 
 const TEMA_DOCUMENTOS = "documentos";
 const POR_PAGINA = 20;
@@ -92,7 +93,7 @@ function itemDocumento(doc) {
   if (doc.tipo_documento) {
     tags.push(`<span class="documento-tag">${escapar(rotulo(doc.tipo_documento))}</span>`);
   }
-  if (doc.entidade) tags.push(`<span class="documento-tag">${escapar(doc.entidade)}</span>`);
+  if (doc.entidade) tags.push(`<span class="documento-tag">${escapar(sigla(doc.entidade))}</span>`);
   if (doc.publicado_em) {
     tags.push(`<span>Publicado em ${escapar(doc.publicado_em)}</span>`);
   }

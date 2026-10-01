@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=1.1">
-  <link rel="stylesheet" href="catalogo.css?v=1.1">
-  <link rel="stylesheet" href="visualizador.css?v=1.0">
+  <link rel="stylesheet" href="catalogo.css?v=1.2">
+  <link rel="stylesheet" href="visualizador.css?v=1.1">
 </head>
 <!-- parquet-page: as regras de .filter-card, .table-heading, .empty-state e
      afins vêm escopadas nessa classe no style.css compartilhado. -->
@@ -32,6 +32,7 @@
       <a href="documentos.html">Documentos</a>
       <a href="planilhas.html">Planilhas e dados</a>
       <a href="visualizador.html" aria-current="page">Visualizador</a>
+      <a href="dicionario.html">Dicionário</a>
     </nav>
   </div>
 </header>
@@ -168,6 +169,13 @@
           descrição oficial da coluna.
         </p>
         <div id="dicionario-conteudo"></div>
+        <!-- A mesma medida, com o diagnóstico de cada coluna e os filtros que
+             não cabem num card lateral da grade. -->
+        <p class="dicionario-mais">
+          <a id="dicionario-completo" href="dicionario.html">
+            Ver este conjunto no dicionário de dados →
+          </a>
+        </p>
       </div>
     </details>
 
@@ -180,6 +188,6 @@
   </div>
 </footer>
 
-<script type="module" src="visualizador.js?v=1.0"></script>
+<script type="module" src="visualizador.js?v=1.2"></script>
 </body>
 </html>

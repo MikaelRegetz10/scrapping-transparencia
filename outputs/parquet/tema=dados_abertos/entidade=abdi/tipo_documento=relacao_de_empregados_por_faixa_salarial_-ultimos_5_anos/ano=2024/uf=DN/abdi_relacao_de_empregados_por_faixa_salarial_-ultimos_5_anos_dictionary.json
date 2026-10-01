@@ -1,0 +1,126 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 2047,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "mes_ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 58
+    },
+    {
+      "col_letter": "B",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 8
+    },
+    {
+      "col_letter": "C",
+      "coluna": "escolaridade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "D",
+      "coluna": "nível",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 87.2,
+      "linhas_com_valor_str": "1784 de 2047",
+      "linhas_validas": 1784,
+      "total_linhas": 2047,
+      "valores_distintos": 22
+    },
+    {
+      "col_letter": "E",
+      "coluna": "padrao",
+      "tipo": "DOUBLE",
+      "preenchimento_pct": 94.2,
+      "linhas_com_valor_str": "1929 de 2047",
+      "linhas_validas": 1929,
+      "total_linhas": 2047,
+      "valores_distintos": 26
+    },
+    {
+      "col_letter": "F",
+      "coluna": "salario",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 158
+    },
+    {
+      "col_letter": "G",
+      "coluna": "qtd. emp. faixa",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 21
+    },
+    {
+      "col_letter": "H",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "I",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "J",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "K",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "L",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "2047 de 2047",
+      "linhas_validas": 2047,
+      "total_linhas": 2047,
+      "valores_distintos": 1
+    }
+  ]
+}

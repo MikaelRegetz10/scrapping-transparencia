@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=1.1">
-  <link rel="stylesheet" href="catalogo.css?v=1.1">
+  <link rel="stylesheet" href="catalogo.css?v=1.2">
   <link rel="stylesheet" href="index.css?v=1.0">
 </head>
 <!-- parquet-page: as regras de .card, .btn e .aviso-erro vêm escopadas nessa
@@ -36,6 +36,7 @@
       <a href="documentos.html">Documentos</a>
       <a href="planilhas.html">Planilhas e dados</a>
       <a href="visualizador.html">Visualizador</a>
+      <a href="dicionario.html">Dicionário</a>
     </nav>
   </div>
 </header>
@@ -110,8 +111,10 @@
             O resultado vira Parquet em <code>outputs/parquet/</code>,
             particionado por tema, tipo de documento, ano e UF. São dois
             catálogos de links — um de documentos, um de planilhas — mais um
-            conjunto por planilha aprovada, com as linhas de dentro dela. Sai
-            também o relatório de qualidade em Excel, uma aba por dataset.
+            conjunto por planilha aprovada, com as linhas de dentro dela. Ao lado
+            de cada Parquet fica o <code>_dictionary.json</code> que descreve as
+            colunas dele, medidas por <code>core/dictionary_generator.py</code>.
+            Sai também o relatório de qualidade em Excel, uma aba por dataset.
           </p>
         </li>
         <li>
@@ -158,12 +161,21 @@
             tela.
           </p>
         </a>
+        <a class="inicio-pagina" href="dicionario.html">
+          <h3>Dicionário <span aria-hidden="true">→</span></h3>
+          <p>
+            As colunas de um conjunto: tipo, quanto vem preenchido e quantos
+            valores distintos tem. Medido no arquivo, porque as entidades
+            publicam a planilha e não publicam o dicionário.
+          </p>
+        </a>
       </div>
       <p class="inicio-nota">
-        Catálogo e conteúdo respondem a perguntas diferentes: as duas primeiras
-        páginas dizem <em>o que existe e se está no ar</em>; o visualizador abre
-        <em>o que a última coleta guardou</em>, sem download e sem depender de a
-        fonte estar de pé.
+        São três perguntas diferentes: as duas primeiras páginas dizem <em>o que
+        existe e se está no ar</em>; o visualizador abre <em>o que a última
+        coleta guardou</em>, sem download e sem depender de a fonte estar de pé;
+        o dicionário não mostra dado, e sim <em>a forma do dado</em> — que
+        colunas o conjunto tem e o que se pode medir nelas.
       </p>
     </section>
 
@@ -213,6 +225,12 @@
           <strong>Cabeçalho torto na origem continua torto aqui.</strong> Acento
           corrompido na coleta é dado do acervo; consertá-lo é trabalho de uma
           coleta nova, não da tela.
+        </li>
+        <li>
+          <strong>O dicionário descreve o arquivo, não o campo.</strong> Ele diz
+          que uma coluna é texto e que nunca se repete; não diz o que a entidade
+          entende por ela. Esse significado não está no acervo porque não está na
+          fonte, e a página prefere dizer isso a adivinhar.
         </li>
       </ul>
     </section>

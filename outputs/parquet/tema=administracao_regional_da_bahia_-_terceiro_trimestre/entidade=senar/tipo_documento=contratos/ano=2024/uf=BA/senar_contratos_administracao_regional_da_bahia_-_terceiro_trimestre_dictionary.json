@@ -1,0 +1,196 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total_rows": 1519,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "contrato",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1519
+    },
+    {
+      "col_letter": "B",
+      "coluna": "modalidade de licitação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 5
+    },
+    {
+      "col_letter": "C",
+      "coluna": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 2
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 55
+    },
+    {
+      "col_letter": "E",
+      "coluna": "categoria do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 15
+    },
+    {
+      "col_letter": "F",
+      "coluna": "nome da contratada",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 291
+    },
+    {
+      "col_letter": "G",
+      "coluna": "cnpj",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 98.8,
+      "linhas_com_valor_str": "1501 de 1519",
+      "linhas_validas": 1501,
+      "total_linhas": 1519,
+      "valores_distintos": 283
+    },
+    {
+      "col_letter": "H",
+      "coluna": "cpf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 1.2,
+      "linhas_com_valor_str": "18 de 1519",
+      "linhas_validas": 18,
+      "total_linhas": 1519,
+      "valores_distintos": 11
+    },
+    {
+      "col_letter": "I",
+      "coluna": "data de contrato",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 66
+    },
+    {
+      "col_letter": "J",
+      "coluna": "valor do contrato (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 160
+    },
+    {
+      "col_letter": "K",
+      "coluna": "valor pago (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "L",
+      "coluna": "vigência (meses)",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 23
+    },
+    {
+      "col_letter": "M",
+      "coluna": "valor aditivo preço (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "N",
+      "coluna": "valor aditivo prazo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "O",
+      "coluna": "tema",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "P",
+      "coluna": "entidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "Q",
+      "coluna": "tipo_documento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "R",
+      "coluna": "ano",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    },
+    {
+      "col_letter": "S",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1519 de 1519",
+      "linhas_validas": 1519,
+      "total_linhas": 1519,
+      "valores_distintos": 1
+    }
+  ]
+}

@@ -19,8 +19,9 @@ import {
   numero,
   pedir,
   selecionados,
+  sigla,
   urlSegura,
-} from "./catalogo.js";
+} from "./catalogo.js?v=1.2";
 
 const TEMA_PLANILHAS = "planilhas";
 const POR_PAGINA = 20;
@@ -254,7 +255,7 @@ function itemPlanilha(planilha) {
     );
   }
   if (planilha.entidade) {
-    tags.push(`<span class="documento-tag">${escapar(planilha.entidade)}</span>`);
+    tags.push(`<span class="documento-tag">${escapar(sigla(planilha.entidade))}</span>`);
   }
   tags.push(seloLeitura(planilha));
   if (converter) {
@@ -414,7 +415,7 @@ async function carregarFiltrosEResumo() {
     ]);
 
   preencherFiltro("filtro-formato", porFormato, (f) => f.toUpperCase());
-  preencherFiltro("filtro-entidade", porEntidade, (e) => e);
+  preencherFiltro("filtro-entidade", porEntidade, sigla);
   preencherFiltro("filtro-tipo", porTipo, rotulo);
   preencherFiltro("filtro-uf", ufsOrdenadas(porUf), (u) => UFS[u] || u);
 

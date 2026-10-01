@@ -6,12 +6,19 @@
 /* --- Navegação entre os catálogos --- */
 .catalogo-nav {
   display: flex;
-  gap: 1.5rem;
+  /* Cinco seções não cabem numa linha de 375px, e a barra não rola: sem a
+     quebra, a última delas fica fora da tela e inalcançável no celular. */
+  flex-wrap: wrap;
+  gap: 0.1rem 1.5rem;
   margin-top: 1.75rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .catalogo-nav a {
+  /* Quem quebra é a barra, não o rótulo: "Planilhas e dados" partido em duas
+     linhas dentro do próprio item lê pior do que o item inteiro na linha de
+     baixo. */
+  white-space: nowrap;
   padding: 0.55rem 0.15rem;
   border-bottom: 3px solid transparent;
   color: #94a3b8;
