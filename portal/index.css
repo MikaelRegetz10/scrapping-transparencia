@@ -1,0 +1,248 @@
+/* Tela inicial — a porta de entrada do portal.
+   O visual base (cores, cards, cabeçalho, rodapé) vem do style.css e a
+   navegação entre as páginas vem do catalogo.css. Aqui só o que é próprio
+   desta página: os números do acervo, a esteira de etapas e os atalhos. */
+
+/* --- Números do acervo --- */
+.inicio-numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Três dos quatro cartões levam a uma página, e por isso são links; o quarto
+   é só leitura. Os dois têm o mesmo corpo, e o hover distingue quem navega. */
+.inicio-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.inicio-cartao:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.15);
+}
+
+.inicio-cartao:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.inicio-cartao:active {
+  transform: scale(0.995);
+}
+
+.inicio-cartao-estatico,
+.inicio-cartao-estatico:hover {
+  border-color: var(--border);
+  box-shadow: none;
+  background: #f1f5f9;
+}
+
+.inicio-cartao-numero {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-dark);
+}
+
+.inicio-cartao-rotulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.inicio-cartao-nota {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* --- Texto dos blocos --- */
+.inicio-intro {
+  max-width: 68ch;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+.inicio-nota {
+  max-width: 72ch;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.parquet-page .card code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: var(--text-dark);
+}
+
+/* --- A esteira: coleta → auditoria → acervo → API → portal --- */
+.inicio-fluxo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  /* A numeração é a própria ordem das etapas, e ela vai no lugar do marcador
+     do <ol> — daí a contagem manual. */
+  counter-reset: etapa;
+  list-style: none;
+}
+
+.inicio-fluxo li {
+  counter-increment: etapa;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+
+.inicio-fluxo h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.inicio-fluxo h3::before {
+  content: counter(etapa);
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.inicio-fluxo p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- Atalhos para as quatro páginas --- */
+.inicio-paginas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.inicio-pagina {
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.inicio-pagina:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.15);
+}
+
+.inicio-pagina:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.inicio-pagina h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* A seta anda no hover para dizer que o cartão inteiro é o link. */
+.inicio-pagina h3 span {
+  display: inline-block;
+  transition: transform 0.15s;
+}
+
+.inicio-pagina:hover h3 span {
+  transform: translateX(3px);
+}
+
+.inicio-pagina p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- Comandos --- */
+.inicio-comandos dt {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.inicio-comandos dd {
+  margin: 0.4rem 0 1.15rem;
+}
+
+.inicio-comandos dd:last-child {
+  margin-bottom: 0;
+}
+
+.inicio-comandos pre {
+  overflow-x: auto;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--primary);
+}
+
+.inicio-comandos code {
+  /* O <pre> já é o bloco: dentro dele o code não leva fundo nem caixa. */
+  padding: 0;
+  background: none;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+}
+
+/* --- Limitações --- */
+.inicio-limites {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 78ch;
+  padding-left: 1.1rem;
+}
+
+.inicio-limites li {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.inicio-limites strong {
+  color: var(--text-dark);
+}
+
+@media (max-width: 600px) {
+  .inicio-numeros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .inicio-cartao-numero {
+    font-size: 1.4rem;
+  }
+}

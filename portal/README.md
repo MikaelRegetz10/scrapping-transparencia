@@ -7,12 +7,16 @@ build: são HTML, CSS e JavaScript de módulo, servidos como arquivo.
 
 | Arquivo | O que faz |
 |---|---|
+| `index.html` | A porta de entrada: explica o caminho que o dado percorre — coleta, auditoria, acervo, API, portal — e mede o acervo pela própria API. É a única página que continua útil com a API fora do ar: o texto é fixo, só os números ficam em "—". |
 | `documentos.html` | Lista os links de PDF coletados dos portais de transparência. Cada item abre o arquivo na fonte. |
 | `planilhas.html` | Lista os arquivos tabulares — CSV, Excel, JSON — com o resultado da auditoria de cada link: se respondeu, quanto pesa, se o conteúdo pôde ser lido e o que o profiler reclamou. |
 | `visualizador.html` | Abre o **conteúdo** de uma planilha coletada em grade, como numa planilha de verdade: célula selecionável, cabeçalho e numeração fixos, ordenação por coluna, busca e exportação. |
 | `dicionario.html` | Descreve as **colunas** de um conjunto: tipo, preenchimento, valores distintos e o que cada medida dessas revela — coluna vazia, coluna de um valor só, coluna que é identificador. |
 
-As duas primeiras são catálogos de links e compartilham o mesmo esqueleto:
+A inicial tem o `index.css` e o `index.js` só dela, e do tronco comum usa o
+`style.css` e, do `catalogo.js`, o endereço da API e o formatador de número.
+
+As duas seguintes são catálogos de links e compartilham o mesmo esqueleto:
 
 - `style.css` — o visual base, herdado do portal de dados abertos.
 - `catalogo.css` — o chrome comum às duas: navegação, filtros, itens da lista,
@@ -37,7 +41,8 @@ Precisa dos dois processos no ar: a API lê os Parquet, o portal consome a API.
 .venv/bin/python -m http.server 8001 --directory portal
 ```
 
-As páginas ficam em <http://localhost:8001/documentos.html>,
+A inicial fica em <http://localhost:8001/> e leva às outras quatro:
+<http://localhost:8001/documentos.html>,
 <http://localhost:8001/planilhas.html>,
 <http://localhost:8001/visualizador.html> e
 <http://localhost:8001/dicionario.html>.
