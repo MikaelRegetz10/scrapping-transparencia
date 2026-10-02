@@ -1,0 +1,66 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 35,
+  "colunas": [
+    {
+      "nome": "registros.exercicio",
+      "rotulo": "registros.exercicio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 35,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.descricao",
+      "rotulo": "registros.descricao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 35,
+      "distintos": 24,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.reservas patrimoniais",
+      "rotulo": "registros.reservas patrimoniais",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 35,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.reserva de expansao",
+      "rotulo": "registros.reserva de expansao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 35,
+      "distintos": 7,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.resultado acumulado",
+      "rotulo": "registros.resultado acumulado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 35,
+      "distintos": 19,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.total do patrimnio liquido",
+      "rotulo": "registros.total do patrimnio liquido",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 35,
+      "distintos": 16,
+      "preenchimento": 1.0
+    }
+  ]
+}

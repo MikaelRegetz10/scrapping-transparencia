@@ -15,13 +15,14 @@ from scrapers.sesi_pdf import SesiPdfScraper
 from scrapers.sesi_transparencia import SesiTransparenciaScraper
 from scrapers.apexbrasil import ApexBrasilScraper
 from scrapers.senac import SenacScraper
+from scrapers.sescoop import SescoopScraper
+
 
 from core.metadata_enricher import processar_schemas_pendentes
 
 
 def configurar_saida_utf8() -> None:
     """Garante que os emojis dos logs não quebrem a execução.
-
     No Windows o stdout redirecionado (`python main.py > log.txt`) usa cp1252 e
     levanta UnicodeEncodeError no primeiro 🚀. Forçar UTF-8 resolve sem exigir
     variável de ambiente de cada pessoa do time.
@@ -40,15 +41,16 @@ def main():
     logger = setup_logger(config)
 
     scrapers = [
-        ABDIScraper(),
-        SesiScraper(ano=config.ano),
+        #ABDIScraper(),
+        #SesiScraper(ano=config.ano),
+        #SescoopScraper(anos=[config.ano]),
         #SenaiScraper(ano=config.ano),
         #SenarScraper(ano=config.ano),
         #SescApiScraper(ano=config.ano),
         #ABDIPdfScraper(),
         #SesiPdfScraper(),
         #ApexBrasilScraper(),
-        #SenacScraper(),
+        SenacScraper()
     ]
 
 

@@ -53,13 +53,14 @@ def gerar_json_dicionario_base(df: pd.DataFrame, dataset_name: str, output_dir: 
     columns_meta = []
 
     for idx, col in enumerate(df.columns):
+        col_clean = str(col).replace("ï»¿", "").replace("\ufeff", "").lower().strip()
         serie = df[col]
         linhas_validas = int(serie.notna().sum())
         pct = round((linhas_validas / total_linhas) * 100, 2) if total_linhas > 0 else 0.0
 
         columns_meta.append({
             "col_letter": get_col_letter(idx),
-            "coluna": str(col).lower().strip(),
+            "coluna": col_clean,
             "tipo": inferir_tipo_coluna_rapido(serie),
             "preenchimento_pct": pct,
             "linhas_com_valor_str": f"{linhas_validas} de {total_linhas}",
@@ -275,37 +276,68 @@ def analyze_dataset_quality(
         elif file_type in ["xlsx", "xls"] or "excel" in file_type:
             file_stream_raw = io.BytesIO(file_bytes)
             file_stream_std = io.BytesIO(file_bytes)
-            df_bruto = pd.read_excel(file_stream_raw, header=None)
-            df_std = pd.read_excel(file_stream_std, header=0)
+            df_bruto = pd.read_excel(file_stream_raw, header=None, dtype=str)
+            df_std = pd.read_excel(file_stream_std, header=0, dtype=str)
 
         # --- C) TRATAMENTO EXCLUSIVO PARA ODS (.ods) ---
         elif file_type == "ods":
             file_stream_raw = io.BytesIO(file_bytes)
             file_stream_std = io.BytesIO(file_bytes)
-            df_bruto = pd.read_excel(file_stream_raw, header=None, engine="odf")
-            df_std = pd.read_excel(file_stream_std, header=0, engine="odf")
+            df_bruto = pd.read_excel(file_stream_raw, header=None, engine="odf", dtype=str)
+            df_std = pd.read_excel(file_stream_std, header=0, engine="odf", dtype=str)
 
-        # --- D) TRATAMENTO PARA CSV ---
+        # --- D) TRATAMENTO MULTI-ENTIDADE PARA CSV ---
         else:
             file_stream_raw = io.BytesIO(file_bytes)
             file_stream_std = io.BytesIO(file_bytes)
-            for enc in ["utf-8", "latin1", "iso-8859-1"]:
-                for sep in [";", ",", "\t"]:
+
+            encodings = ["utf-8-sig", "utf-8", "latin1", "cp1252", "iso-8859-1"]
+            separators = [";", ",", "\t"]
+
+            # 1. Tentativa por combinações explícitas de encoding e delimitador
+            for enc in encodings:
+                for sep in separators:
                     try:
                         file_stream_raw.seek(0)
-                        df_bruto = pd.read_csv(
-                            file_stream_raw, header=None, encoding=enc, sep=sep
+                        df_bruto_candidate = pd.read_csv(
+                            file_stream_raw, header=None, encoding=enc, sep=sep, dtype=str, on_bad_lines="skip"
                         )
                         file_stream_std.seek(0)
-                        df_std = pd.read_csv(
-                            file_stream_std, header=0, encoding=enc, sep=sep
+                        df_std_candidate = pd.read_csv(
+                            file_stream_std, header=0, encoding=enc, sep=sep, dtype=str, on_bad_lines="skip"
                         )
-                        if len(df_std.columns) > 1:
+                        if df_std_candidate is not None and len(df_std_candidate.columns) > 1:
+                            df_bruto = df_bruto_candidate
+                            df_std = df_std_candidate
                             break
                     except Exception:
                         continue
                 if df_std is not None and len(df_std.columns) > 1:
                     break
+
+            # 2. Fallback resiliente com autodetecção por Python Engine (para tabelas de 1 coluna ou separadores atípicos)
+            if df_std is None or df_std.empty:
+                for enc in encodings:
+                    try:
+                        file_stream_raw.seek(0)
+                        df_bruto = pd.read_csv(
+                            file_stream_raw, header=None, encoding=enc, sep=None, engine="python", dtype=str, on_bad_lines="skip"
+                        )
+                        file_stream_std.seek(0)
+                        df_std = pd.read_csv(
+                            file_stream_std, header=0, encoding=enc, sep=None, engine="python", dtype=str, on_bad_lines="skip"
+                        )
+                        if df_std is not None:
+                            break
+                    except Exception:
+                        continue
+
+            # 3. Higienização universal de cabeçalhos (Remove caracteres de BOM e espaços)
+            if df_std is not None and not df_std.empty:
+                df_std.columns = [
+                    str(c).replace("ï»¿", "").replace("\ufeff", "").strip()
+                    for c in df_std.columns
+                ]
 
         # ---------------------------------------------------------
         # PARTE 3: Validação Adaptativa de Qualidade

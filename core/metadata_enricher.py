@@ -1,8 +1,14 @@
 import json
 import os
 import glob
+import time
+import logging
 import duckdb
-from google import genai  # Novo import oficial
+from google import genai
+from google.genai import types
+
+# Inicializa o logger específico para o enriquecimento
+logger = logging.getLogger("core.metadata_enricher")
 
 # Nome do arquivo de cache de descrições
 CACHE_DB = "outputs/metadata_cache.duckdb"
@@ -45,12 +51,12 @@ def salvar_cache(novas_descricoes: dict):
 
 def processar_schemas_pendentes(api_key: str):
     """Lê todos os JSONs gerados pelo scraper, chama a LLM para colunas novas e atualiza os arquivos."""
-    print("\n🧠 [Enriquecimento] Iniciando geração de Dicionário de Dados...")
+    logger.info("🧠 [Enriquecimento] Iniciando geração de Dicionário de Dados...")
     inicializar_cache()
 
     arquivos_json = glob.glob("outputs/parquet/**/*.json", recursive=True)
     if not arquivos_json:
-        print("Nenhum schema encontrado para processar.")
+        logger.info("ℹ️ Nenhum schema encontrado para processar.")
         return
 
     # Extrai todas as colunas de todos os arquivos
@@ -69,37 +75,53 @@ def processar_schemas_pendentes(api_key: str):
     cache_atual = buscar_cache(list(todas_colunas_pendentes.keys()))
     colunas_para_llm = {k: v for k, v in todas_colunas_pendentes.items() if k not in cache_atual}
 
-    # 2. Chama a LLM apenas para colunas inéditas no sistema
+    # 2. Chama a LLM apenas para colunas inéditas no sistema com mecanismo de Retry
     if colunas_para_llm and api_key:
-        print(f"🤖 Solicitando descrição para {len(colunas_para_llm)} nova(s) coluna(s) à LLM...")
+        logger.info("🤖 Solicitando descrição para %d nova(s) coluna(s) à LLM...", len(colunas_para_llm))
 
-        # Nova forma de inicializar o Client da API
         client = genai.Client(api_key=api_key)
 
         prompt = f"""
         Você é um auditor de transparência.
         Gere uma descrição clara (máx 15 palavras) para cada coluna abaixo, baseando-se no nome e nas amostras.
-        Responda APENAS com um JSON válido: {{"nome_coluna": "descrição"}}.
+        Responda APENAS com um JSON válido onde a chave é o nome da coluna e o valor é a descrição.
         Dados:
         {json.dumps(colunas_para_llm, ensure_ascii=False)}
         """
 
-        try:
-            # Nova forma de chamar o modelo (usando gemini-3.6-flash)
-            response = client.models.generate_content(
-                model='gemini-3.6-flash',
-                contents=prompt
-            )
+        max_tentativas = 3
+        for tentativa in range(1, max_tentativas + 1):
+            try:
+                # O config força a LLM a devolver um JSON estrito, evitando erros de formatação
+                response = client.models.generate_content(
+                    model='gemini-3.6-flash',
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        temperature=0.1
+                    )
+                )
 
-            texto_limpo = response.text.replace('```json', '').replace('```', '').strip()
-            novas_desc = json.loads(texto_limpo)
+                texto_limpo = response.text.replace('```json', '').replace('```', '').strip()
+                novas_desc = json.loads(texto_limpo)
 
-            # Atualiza Cache e Memória
-            salvar_cache(novas_desc)
-            cache_atual.update(novas_desc)
-            print("✅ Descrições geradas e oxigenadas no cache!")
-        except Exception as e:
-            print(f"❌ Erro na LLM: {e}")
+                # Atualiza Cache e Memória
+                salvar_cache(novas_desc)
+                cache_atual.update(novas_desc)
+                logger.info("✅ Descrições geradas e oxigenadas no cache!")
+                break  # Sucesso! Sai do loop de tentativas
+
+            except Exception as e:
+                erro_msg = str(e)
+                logger.warning("⚠️ Erro na LLM (Tentativa %d/%d): %s...", tentativa, max_tentativas, erro_msg[:100])
+
+                if tentativa < max_tentativas:
+                    tempo_espera = 10 * tentativa  # Espera 10s, depois 20s...
+                    logger.info("⏳ API congestionada. Aguardando %ds antes da próxima tentativa...", tempo_espera)
+                    time.sleep(tempo_espera)
+                else:
+                    logger.error(
+                        "❌ Falha definitiva de conexão com a API da LLM. As descrições ficarão em branco desta vez.")
 
     # 3. Atualiza os arquivos JSON removendo as amostras
     for caminho in arquivos_json:
@@ -114,4 +136,4 @@ def processar_schemas_pendentes(api_key: str):
         with open(caminho, "w", encoding="utf-8") as f:
             json.dump(schema, f, ensure_ascii=False, indent=2)
 
-    print("🎯 Dicionários de Dados finalizados com sucesso!")
+    logger.info("🎯 Dicionários de Dados finalizados com sucesso!")

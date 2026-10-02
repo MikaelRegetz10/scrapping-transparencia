@@ -1,0 +1,95 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_rs_-_todos_os_convenios_que_houve_pagamentos_-_por_exercicio_cod_183",
+  "total_rows": 11,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "registros.exercicio",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 11,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "registros.numero_convenio",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "registros.objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "registros.favorecido",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "registros.cnpj_cpf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "registros.valor_da_contrapartida",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "registros.data_da_firmatura",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "registros.valor_do_pagamento_no_exercicio",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

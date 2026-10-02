@@ -98,9 +98,9 @@
       "tipo": "INTEGER",
       "tipo_bruto": "BIGINT",
       "letra": "J",
-      "preenchidas": 3,
+      "preenchidas": 2,
       "distintos": 1,
-      "preenchimento": 1.0
+      "preenchimento": 0.6667
     },
     {
       "nome": "ativo",
@@ -109,7 +109,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "K",
       "preenchidas": 3,
-      "distintos": 1,
+      "distintos": 2,
       "preenchimento": 1.0
     },
     {
@@ -119,7 +119,7 @@
       "tipo_bruto": "VARCHAR",
       "letra": "L",
       "preenchidas": 3,
-      "distintos": 1,
+      "distintos": 2,
       "preenchimento": 1.0
     },
     {

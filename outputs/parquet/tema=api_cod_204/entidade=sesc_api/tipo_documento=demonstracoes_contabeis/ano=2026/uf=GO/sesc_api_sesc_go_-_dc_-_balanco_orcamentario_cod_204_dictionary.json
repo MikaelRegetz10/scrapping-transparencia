@@ -1,0 +1,86 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 128,
+  "colunas": [
+    {
+      "nome": "registros.ano",
+      "rotulo": "registros.ano",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 128,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.tipo",
+      "rotulo": "registros.tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 128,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.grupo de contas",
+      "rotulo": "registros.grupo de contas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 128,
+      "distintos": 113,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.previsao inicial",
+      "rotulo": "registros.previsao inicial",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 128,
+      "distintos": 76,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.previsao atualizadas",
+      "rotulo": "registros.previsao atualizadas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 128,
+      "distintos": 87,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.receitas realizadas",
+      "rotulo": "registros.receitas realizadas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 128,
+      "distintos": 41,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.despesas liquidas",
+      "rotulo": "registros.despesas liquidas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 128,
+      "distintos": 49,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.saldo",
+      "rotulo": "registros.saldo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 128,
+      "distintos": 94,
+      "preenchimento": 1.0
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 3,
+  "colunas": [
+    {
+      "nome": "registros.exercicio",
+      "rotulo": "registros.exercicio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.numero_patrocinio",
+      "rotulo": "registros.numero_patrocinio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.objeto",
+      "rotulo": "registros.objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.favorecido",
+      "rotulo": "registros.favorecido",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.cnpj_cpf",
+      "rotulo": "registros.cnpj_cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 0.3333
+    },
+    {
+      "nome": "registros.valor_do_patrocinio",
+      "rotulo": "registros.valor_do_patrocinio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.valor_da_contrapartida",
+      "rotulo": "registros.valor_da_contrapartida",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.data_da_firmatura",
+      "rotulo": "registros.data_da_firmatura",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 0.3333
+    },
+    {
+      "nome": "registros.valor_total",
+      "rotulo": "registros.valor_total",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    }
+  ]
+}

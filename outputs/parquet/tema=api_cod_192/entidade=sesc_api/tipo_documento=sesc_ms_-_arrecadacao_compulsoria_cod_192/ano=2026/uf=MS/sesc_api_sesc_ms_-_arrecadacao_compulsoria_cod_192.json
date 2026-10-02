@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_ms_-_arrecadacao_compulsoria_cod_192",
+  "total_rows": 10,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "registros.competencia",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 10,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "registros.arrecadacao_compulsoria",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 10,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "registros.comissao_rfb",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 10,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "registros.arrecadacao_liquida",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "10 de 10",
+      "linhas_validas": 10,
+      "total_linhas": 10,
+      "valores_distintos": 10,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

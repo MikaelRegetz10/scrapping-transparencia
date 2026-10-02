@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_pr_-_dc_-_demonstracao_das_variacoes_patrimoniais_cod_196",
+  "total_rows": 82,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "registros.ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "82 de 82",
+      "linhas_validas": 82,
+      "total_linhas": 82,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "registros.tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "82 de 82",
+      "linhas_validas": 82,
+      "total_linhas": 82,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "registros.grupo de contas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "82 de 82",
+      "linhas_validas": 82,
+      "total_linhas": 82,
+      "valores_distintos": 39,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "registros.valor",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "82 de 82",
+      "linhas_validas": 82,
+      "total_linhas": 82,
+      "valores_distintos": 68,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

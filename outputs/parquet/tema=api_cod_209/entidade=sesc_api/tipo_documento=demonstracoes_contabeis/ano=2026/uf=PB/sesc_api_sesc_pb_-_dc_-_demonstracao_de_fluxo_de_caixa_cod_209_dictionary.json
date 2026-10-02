@@ -1,0 +1,56 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 68,
+  "colunas": [
+    {
+      "nome": "registros.ano",
+      "rotulo": "registros.ano",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 68,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.atividade",
+      "rotulo": "registros.atividade",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 68,
+      "distintos": 7,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.grupo de contas",
+      "rotulo": "registros.grupo de contas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 68,
+      "distintos": 14,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.contas",
+      "rotulo": "registros.contas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 68,
+      "distintos": 49,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.valor",
+      "rotulo": "registros.valor",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 68,
+      "distintos": 45,
+      "preenchimento": 1.0
+    }
+  ]
+}

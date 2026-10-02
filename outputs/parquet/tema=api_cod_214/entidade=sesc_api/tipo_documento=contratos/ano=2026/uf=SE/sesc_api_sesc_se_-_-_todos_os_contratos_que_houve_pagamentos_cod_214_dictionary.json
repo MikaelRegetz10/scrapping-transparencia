@@ -1,0 +1,136 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 367,
+  "colunas": [
+    {
+      "nome": "registros.ano_licitacao",
+      "rotulo": "registros.ano_licitacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 367,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.contrato",
+      "rotulo": "registros.contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 367,
+      "distintos": 355,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.mod_licitacao",
+      "rotulo": "registros.mod_licitacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 367,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.desc_objeto",
+      "rotulo": "registros.desc_objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 367,
+      "distintos": 208,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.nome_contratada",
+      "rotulo": "registros.nome_contratada",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 367,
+      "distintos": 240,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.cnpj",
+      "rotulo": "registros.cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 328,
+      "distintos": 208,
+      "preenchimento": 0.8937
+    },
+    {
+      "nome": "registros.cpf",
+      "rotulo": "registros.cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 367,
+      "distintos": 33,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.dt_contrato",
+      "rotulo": "registros.dt_contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 367,
+      "distintos": 204,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.vigencia",
+      "rotulo": "registros.vigencia",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 367,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.vl_aditivo_prazo",
+      "rotulo": "registros.vl_aditivo_prazo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 367,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.valor_contrato",
+      "rotulo": "registros.valor_contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 367,
+      "distintos": 291,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.vl_aditivo_preco",
+      "rotulo": "registros.vl_aditivo_preco",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 367,
+      "distintos": 123,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.vl_pago",
+      "rotulo": "registros.vl_pago",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 367,
+      "distintos": 281,
+      "preenchimento": 1.0
+    }
+  ]
+}
