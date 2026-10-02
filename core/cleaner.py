@@ -130,21 +130,68 @@ def clean_text(value) -> Optional[str]:
 # ------------------------------------------
 
 
+# O preâmbulo institucional — nome da entidade, título do balanço, data de
+# emissão — fica no alto do arquivo. Procurar o cabeçalho para além disso é
+# procurar no meio dos dados, e lá qualquer casamento é coincidência.
+MAXIMO_LINHAS_DE_PREAMBULO = 20
+
+
+def _e_linha_de_cabecalho(
+    df: pd.DataFrame, posicao: int, target_columns: List[str]
+) -> bool:
+    """Se a linha que casou com o vocabulário é mesmo o cabeçalho, ou é dado.
+
+    Casar com a palavra não basta. `ATIVO`, `PASSIVO` e `CONTA` são vocabulário
+    de balanço, mas também são valores plausíveis de uma coluna de situação —
+    e numa tabela de contratos cujo status é "Ativo" a primeira linha de dados
+    seria promovida a cabeçalho, levando embora o cabeçalho verdadeiro e toda
+    linha acima dela. Sem aviso: o conjunto exportado fica com uma coluna
+    chamada `001` e uma linha a menos.
+
+    O que separa um caso do outro é a repetição. A célula de um cabeçalho é
+    única na sua coluna, porque tudo abaixo dela é dado; um "Ativo" que é
+    status reaparece nas outras linhas da mesma coluna. Então o casamento só
+    vale quando nenhum dos valores que casaram se repete coluna abaixo.
+    """
+    alvos = {str(alvo).upper().strip() for alvo in target_columns}
+    linha = df.iloc[posicao]
+    casou = False
+
+    for indice_coluna, valor in enumerate(linha.values):
+        texto = str(valor).upper().strip()
+        if texto not in alvos:
+            continue
+
+        casou = True
+        coluna = df.iloc[:, indice_coluna].astype(str).str.upper().str.strip()
+        if int((coluna == texto).sum()) > 1:
+            return False
+
+    return casou
+
+
 def drop_metadata_rows(
     df: pd.DataFrame, target_columns: List[str]
 ) -> pd.DataFrame:
     """Elimina linhas institucionais e encontra a linha real de cabeçalho."""
-    header_idx = None
+    # A promoção do cabeçalho reescreve `df.columns`; sem a cópia isso voltaria
+    # para o DataFrame de quem chamou, que passaria a ver o próprio cabeçalho
+    # trocado por uma linha de dados.
+    df = df.copy()
+    header_pos = None
 
-    for idx, row in df.iterrows():
-        row_values = [str(val).upper().strip() for val in row.values]
-        if any(target in row_values for target in target_columns):
-            header_idx = idx
+    # Por posição, e não pelo rótulo do índice: `iterrows` devolve o rótulo, e
+    # o `iloc` logo abaixo o consumia como posição. Num frame cujo índice não
+    # começa em zero — o que um `dropna` anterior já produz — as duas coisas
+    # apontam para linhas diferentes.
+    for posicao in range(min(len(df), MAXIMO_LINHAS_DE_PREAMBULO)):
+        if _e_linha_de_cabecalho(df, posicao, target_columns):
+            header_pos = posicao
             break
 
-    if header_idx is not None:
-        df.columns = df.iloc[header_idx].values
-        df = df.iloc[header_idx + 1 :].reset_index(drop=True)
+    if header_pos is not None:
+        df.columns = df.iloc[header_pos].values
+        df = df.iloc[header_pos + 1 :].reset_index(drop=True)
 
     df = df.dropna(how="all").dropna(how="all", axis=1)
     df.columns = _make_columns_unique(list(df.columns))
