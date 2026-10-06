@@ -1,0 +1,96 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 1,
+  "colunas": [
+    {
+      "nome": "número",
+      "rotulo": "número",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "objeto",
+      "rotulo": "objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "patrocinado",
+      "rotulo": "patrocinado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cpf/cnpj",
+      "rotulo": "cpf/cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data de início",
+      "rotulo": "data de início",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data de fim",
+      "rotulo": "data de fim",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "situação",
+      "rotulo": "situação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "natureza",
+      "rotulo": "natureza",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor do repasse",
+      "rotulo": "valor do repasse",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 1.0
+    }
+  ]
+}

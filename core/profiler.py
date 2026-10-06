@@ -108,9 +108,16 @@ COLUNAS_IGNORAR_PADRAO = [
 ]
 
 
-def _format_row_numbers(row_indices: List[int], offset: int = 1, max_show: int = 10) -> str:
+def _format_row_numbers(row_indices: List[Any], offset: int = 1, max_show: int = 10) -> str:
     """Formata lista de índices de linha para números de linha do arquivo (1-based)."""
-    lines = [str(i + offset) for i in row_indices]
+    lines = []
+    for i in row_indices:
+        try:
+            # Garante que funciona mesmo se o índice vier sujo como texto
+            lines.append(str(int(i) + offset))
+        except (ValueError, TypeError):
+            lines.append(str(i))
+
     if len(lines) > max_show:
         return f"Linhas: {', '.join(lines[:max_show])}... (total {len(lines)})"
     return f"Linhas: {', '.join(lines)}"
@@ -334,10 +341,24 @@ def analyze_dataset_quality(
 
             # 3. Higienização universal de cabeçalhos (Remove caracteres de BOM e espaços)
             if df_std is not None and not df_std.empty:
+                # 3.1 Limpa BOM
                 df_std.columns = [
                     str(c).replace("ï»¿", "").replace("\ufeff", "").strip()
                     for c in df_std.columns
                 ]
+
+                # 3.2 Deduplicação: se houver duas colunas "Valor", vira "Valor" e "Valor_1"
+                if df_std.columns.duplicated().any():
+                    novas_cols = []
+                    vistos = {}
+                    for c in df_std.columns:
+                        if c in vistos:
+                            vistos[c] += 1
+                            novas_cols.append(f"{c}_{vistos[c]}")
+                        else:
+                            vistos[c] = 0
+                            novas_cols.append(c)
+                    df_std.columns = novas_cols
 
         # ---------------------------------------------------------
         # PARTE 3: Validação Adaptativa de Qualidade

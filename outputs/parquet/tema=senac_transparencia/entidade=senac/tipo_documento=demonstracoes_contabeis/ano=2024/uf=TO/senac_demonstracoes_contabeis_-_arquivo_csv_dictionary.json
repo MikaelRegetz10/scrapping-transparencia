@@ -1,0 +1,56 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 102,
+  "colunas": [
+    {
+      "nome": "exercício",
+      "rotulo": "exercício",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 102,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "tipo",
+      "rotulo": "tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 102,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "especificação",
+      "rotulo": "especificação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 102,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "item",
+      "rotulo": "item",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 102,
+      "distintos": 45,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor",
+      "rotulo": "valor",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "E",
+      "preenchidas": 102,
+      "distintos": 43,
+      "preenchimento": 1.0
+    }
+  ]
+}
