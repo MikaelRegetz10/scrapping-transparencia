@@ -1,0 +1,73 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senac_transferencias_regulamentares_-_download",
+  "total_rows": 31,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "31 de 31",
+      "linhas_validas": 31,
+      "total_linhas": 31,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "nome beneficiário",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "31 de 31",
+      "linhas_validas": 31,
+      "total_linhas": 31,
+      "valores_distintos": 30,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "cnpj",
+      "tipo": "CNPJ",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "31 de 31",
+      "linhas_validas": 31,
+      "total_linhas": 31,
+      "valores_distintos": 30,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "31 de 31",
+      "linhas_validas": 31,
+      "total_linhas": 31,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "observação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "31 de 31",
+      "linhas_validas": 31,
+      "total_linhas": 31,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "valor transferido",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "31 de 31",
+      "linhas_validas": 31,
+      "total_linhas": 31,
+      "valores_distintos": 31,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

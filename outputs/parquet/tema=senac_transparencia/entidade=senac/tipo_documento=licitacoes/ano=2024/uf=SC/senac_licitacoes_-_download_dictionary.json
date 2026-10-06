@@ -1,0 +1,56 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 158,
+  "colunas": [
+    {
+      "nome": "tipo",
+      "rotulo": "tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 158,
+      "distintos": 126,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "número",
+      "rotulo": "número",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 158,
+      "distintos": 151,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "natureza/objeto",
+      "rotulo": "natureza/objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 152,
+      "distintos": 148,
+      "preenchimento": 0.962
+    },
+    {
+      "nome": "abertura/horário",
+      "rotulo": "abertura/horário",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 155,
+      "distintos": 6,
+      "preenchimento": 0.981
+    },
+    {
+      "nome": "criterio de julgamento",
+      "rotulo": "criterio de julgamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 152,
+      "distintos": 152,
+      "preenchimento": 0.962
+    }
+  ]
+}

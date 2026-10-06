@@ -1,0 +1,95 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senac_licitacoes_-_download",
+  "total_rows": 96,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "96 de 96",
+      "linhas_validas": 96,
+      "total_linhas": 96,
+      "valores_distintos": 96,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "número",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "96 de 96",
+      "linhas_validas": 96,
+      "total_linhas": 96,
+      "valores_distintos": 94,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "natureza/objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "96 de 96",
+      "linhas_validas": 96,
+      "total_linhas": 96,
+      "valores_distintos": 94,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "abertura/horário",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "96 de 96",
+      "linhas_validas": 96,
+      "total_linhas": 96,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "situação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 96",
+      "linhas_validas": 0,
+      "total_linhas": 96,
+      "valores_distintos": 0,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "criterio de julgamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "96 de 96",
+      "linhas_validas": 96,
+      "total_linhas": 96,
+      "valores_distintos": 96,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "datahomologação/cancelamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 96",
+      "linhas_validas": 0,
+      "total_linhas": 96,
+      "valores_distintos": 0,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "participantes",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 96",
+      "linhas_validas": 0,
+      "total_linhas": 96,
+      "valores_distintos": 0,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

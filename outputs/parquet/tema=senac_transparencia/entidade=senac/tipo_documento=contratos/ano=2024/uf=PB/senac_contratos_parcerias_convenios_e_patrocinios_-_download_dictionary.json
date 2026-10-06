@@ -1,0 +1,126 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 60,
+  "colunas": [
+    {
+      "nome": "Número",
+      "rotulo": "Número",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 60,
+      "distintos": 51,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Objeto",
+      "rotulo": "Objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 60,
+      "distintos": 53,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Favorecido",
+      "rotulo": "Favorecido",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 60,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "CPF/CNPJ",
+      "rotulo": "CPF/CNPJ",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    },
+    {
+      "nome": "Modalidade Licitação",
+      "rotulo": "Modalidade Licitação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 60,
+      "distintos": 56,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Data da Contratação",
+      "rotulo": "Data da Contratação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    },
+    {
+      "nome": "Vigência",
+      "rotulo": "Vigência",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 60,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Situação",
+      "rotulo": "Situação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 60,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Natureza",
+      "rotulo": "Natureza",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    },
+    {
+      "nome": "Elemento Despesa",
+      "rotulo": "Elemento Despesa",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 60,
+      "distintos": 60,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Valor Total",
+      "rotulo": "Valor Total",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 60,
+      "distintos": 59,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Valor Pago",
+      "rotulo": "Valor Pago",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    }
+  ]
+}

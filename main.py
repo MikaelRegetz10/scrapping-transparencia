@@ -41,15 +41,15 @@ def main():
     logger = setup_logger(config)
 
     scrapers = [
-        #ABDIScraper(),
-        #SesiScraper(ano=config.ano),
-        #SescoopScraper(anos=[config.ano]),
-        #SenaiScraper(ano=config.ano),
-        #SenarScraper(ano=config.ano),
-        #SescApiScraper(ano=config.ano),
-        #ABDIPdfScraper(),
-        #SesiPdfScraper(),
-        #ApexBrasilScraper(),
+        ABDIScraper(),
+        SesiScraper(ano=config.ano),
+        SescoopScraper(anos=[config.ano]),
+        SenaiScraper(ano=config.ano),
+        SenarScraper(ano=config.ano),
+        SescApiScraper(ano=config.ano),
+        ABDIPdfScraper(),
+        SesiPdfScraper(),
+        ApexBrasilScraper(),
         SenacScraper()
     ]
 

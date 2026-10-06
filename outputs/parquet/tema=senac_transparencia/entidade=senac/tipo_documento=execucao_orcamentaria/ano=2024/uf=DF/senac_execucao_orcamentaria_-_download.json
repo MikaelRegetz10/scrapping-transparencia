@@ -1,0 +1,62 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senac_execucao_orcamentaria_-_download",
+  "total_rows": 7,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "especificacao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "prevista em r$",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "execução em r$",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "executado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "participacao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

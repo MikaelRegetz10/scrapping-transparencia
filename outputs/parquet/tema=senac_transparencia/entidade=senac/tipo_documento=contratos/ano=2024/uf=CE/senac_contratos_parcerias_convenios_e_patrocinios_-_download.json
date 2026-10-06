@@ -1,0 +1,106 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senac_contratos_parcerias_convenios_e_patrocinios_-_download",
+  "total_rows": 7,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "ct-023.2026",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "contrato de patrocínio com a fundação cultural nipônica brasileira para a realização do sana 2026 ? parte i.",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "fundacao cultural niponica brasileira",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "07741670000108",
+      "tipo": "CNPJ",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "30/01/2026 00:00:00",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "29/07/2026 00:00:00",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "ativo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "ordinária",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "125000,00",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "7 de 7",
+      "linhas_validas": 7,
+      "total_linhas": 7,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

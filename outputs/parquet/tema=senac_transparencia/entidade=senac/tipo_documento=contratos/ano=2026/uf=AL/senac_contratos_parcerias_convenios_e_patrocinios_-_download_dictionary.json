@@ -1,0 +1,26 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 204,
+  "colunas": [
+    {
+      "nome": "exercicio_periodo",
+      "rotulo": "exercicio_periodo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 204,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor",
+      "rotulo": "valor",
+      "tipo": "INTEGER",
+      "tipo_bruto": "INTEGER",
+      "letra": "B",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    }
+  ]
+}
