@@ -1,0 +1,176 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 193,
+  "colunas": [
+    {
+      "nome": "num_inst",
+      "rotulo": "num_inst",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 193,
+      "distintos": 193,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "num_proc",
+      "rotulo": "num_proc",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 193,
+      "distintos": 192,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "area_tec_resp",
+      "rotulo": "area_tec_resp",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 193,
+      "distintos": 13,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "tipo_conv",
+      "rotulo": "tipo_conv",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 193,
+      "distintos": 7,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "objeto",
+      "rotulo": "objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 193,
+      "distintos": 193,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "beneficiário",
+      "rotulo": "beneficiário",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 193,
+      "distintos": 169,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cnpj",
+      "rotulo": "cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 193,
+      "distintos": 138,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "val_global",
+      "rotulo": "val_global",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 193,
+      "distintos": 128,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "val_abdi",
+      "rotulo": "val_abdi",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 193,
+      "distintos": 123,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "val_rep_abdi",
+      "rotulo": "val_rep_abdi",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 193,
+      "distintos": 121,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "val_a_rep_abdi",
+      "rotulo": "val_a_rep_abdi",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 193,
+      "distintos": 7,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contrapartida",
+      "rotulo": "contrapartida",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 193,
+      "distintos": 193,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vig_inic",
+      "rotulo": "vig_inic",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 193,
+      "distintos": 165,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vig_fim",
+      "rotulo": "vig_fim",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "N",
+      "preenchidas": 193,
+      "distintos": 174,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "situação",
+      "rotulo": "situação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "O",
+      "preenchidas": 193,
+      "distintos": 14,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "gestor_conv",
+      "rotulo": "gestor_conv",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "P",
+      "preenchidas": 193,
+      "distintos": 41,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "gestor_area",
+      "rotulo": "gestor_area",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "Q",
+      "preenchidas": 193,
+      "distintos": 25,
+      "preenchimento": 1.0
+    }
+  ]
+}

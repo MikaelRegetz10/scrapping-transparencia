@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_senar_em_numeros_administracao_regional_do_rio_grande_do_sul_-_primeiro_trimestre",
+  "total_rows": 12,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "ação finalística",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "previsto anual",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 11,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "realizado acumulado",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 11,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "% execução",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 11,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

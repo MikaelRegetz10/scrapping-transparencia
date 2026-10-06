@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_corpo_tecnico_administracao_regional_da_bahia_-_primeiro_trimestre",
+  "total_rows": 129,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "ï»¿\"membros do corpo tãcnico\"",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "129 de 129",
+      "linhas_validas": 129,
+      "total_linhas": 129,
+      "valores_distintos": 129,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

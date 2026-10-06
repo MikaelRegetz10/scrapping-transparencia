@@ -1,0 +1,139 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_transferencias_convenios_e_congeneres_administracao_regional_de_santa_catarina_-_primeiro_trimestre",
+  "total_rows": 113,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "instrumento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 102,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "tipo de transferência",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "nome do beneficiário",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 96,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "cnpj",
+      "tipo": "CNPJ",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 94,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "data do firmamento",
+      "tipo": "DATE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 17,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "qtde de parcelas total",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "qtde parcelas transferida",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "J",
+      "coluna": "valor pactuado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "K",
+      "coluna": "valor transferido (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 89,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "L",
+      "coluna": "prestação de contas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "113 de 113",
+      "linhas_validas": 113,
+      "total_linhas": 113,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

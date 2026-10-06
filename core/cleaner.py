@@ -7,6 +7,19 @@ import pandas as pd
 # HELPER: DEDUPLICAÇÃO DE COLUNAS
 # ------------------------------------------
 
+def clean_ods(val):
+    """
+    Normaliza a coluna/campo ODS extraindo apenas os números identificadores.
+    """
+    if pd.isna(val) or not val:
+        return []
+    if isinstance(val, list):
+        return val
+    matches = re.findall(r'\b\d+\b', str(val))
+    return [int(m) for m in matches]
+
+# Alias para compatibilidade caso outro módulo use parse_ods
+parse_ods = clean_ods
 
 def _make_columns_unique(cols: List[Any]) -> List[str]:
     """Garante que todas as colunas tenham nomes únicos (ex: 'codigo', 'codigo_1')."""
@@ -240,12 +253,13 @@ def clean_dataframe(df_raw: pd.DataFrame) -> pd.DataFrame:
                 "DESCRIÇÃO",
                 "ATIVO",
                 "PASSIVO",
+                "ODS",
             ],
         )
 
         # 3. Transforma anos/períodos em linhas (Unpivot)
         df = unpivot_periods(
-            df, id_vars=["codigo", "conta", "descricao", "categoria_balanco"]
+            df, id_vars=["codigo", "conta", "descricao", "categoria_balanco", "ods"]
         )
 
         # Garante colunas únicas novamente
@@ -258,6 +272,10 @@ def clean_dataframe(df_raw: pd.DataFrame) -> pd.DataFrame:
             # Trata CNPJ
             if "cnpj" in col_lower:
                 df[col] = df[col].apply(clean_cnpj)
+
+            # Trata ODS (Objetivos de Desenvolvimento Sustentável)
+            elif "ods" in col_lower or "objetivo_sustentavel" in col_lower:
+                df[col] = df[col].apply(clean_ods)
 
             # Trata DATAS (ex: publicado_em, data_publicacao, dt_emissao)
             elif any(
@@ -281,7 +299,7 @@ def clean_dataframe(df_raw: pd.DataFrame) -> pd.DataFrame:
                 "saldo",
                 "orc_inicial",
                 "orc_reformulado",
-            ] or any(year in col_lower for year in ["2023", "2024", "2025"]):
+            ] or any(year in col_lower for year in ["2023", "2024", "2025", "2026"]):
                 df[col] = df[col].apply(clean_currency_to_float)
 
             # Limpeza genérica de TEXTO

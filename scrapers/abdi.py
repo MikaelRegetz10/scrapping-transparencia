@@ -74,8 +74,8 @@ class ABDIScraper(BaseScraper):
             base_url=urljoin(BASE_SITE, "/transparencia/"),
             routes={
                 "Dados Abertos": urljoin(BASE_SITE, PATH_DADOS_ABERTOS),
-                #"Aquisição de Bens e Serviços": urljoin(BASE_SITE, PATH_AQUISICOES),
-                #"Processo Seletivo": urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO),
+                "Aquisição de Bens e Serviços": urljoin(BASE_SITE, PATH_AQUISICOES),
+                "Processo Seletivo": urljoin(BASE_SITE, PATH_PROCESSO_SELETIVO),
             },
         )
         self.dados_abertos = dados_abertos

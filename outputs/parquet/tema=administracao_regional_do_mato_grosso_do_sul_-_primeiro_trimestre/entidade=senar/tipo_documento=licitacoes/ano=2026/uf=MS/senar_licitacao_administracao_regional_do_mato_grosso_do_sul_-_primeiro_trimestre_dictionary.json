@@ -1,166 +1,116 @@
 {
-  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total_rows": 62,
-  "columns": [
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 62,
+  "colunas": [
     {
-      "col_letter": "A",
-      "coluna": "modalidade",
+      "nome": "modalidade",
+      "rotulo": "modalidade",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 5
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 62,
+      "distintos": 5,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "B",
-      "coluna": "número/ano",
+      "nome": "número/ano",
+      "rotulo": "número/ano",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 56
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 62,
+      "distintos": 56,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "C",
-      "coluna": "processo",
+      "nome": "processo",
+      "rotulo": "processo",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 61
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 62,
+      "distintos": 61,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "D",
-      "coluna": "descrição do objeto",
+      "nome": "descrição do objeto",
+      "rotulo": "descrição do objeto",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 59
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 62,
+      "distintos": 59,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "E",
-      "coluna": "natureza do objeto",
+      "nome": "natureza do objeto",
+      "rotulo": "natureza do objeto",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 2
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 62,
+      "distintos": 2,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "F",
-      "coluna": "data da abertura das propostas",
+      "nome": "data da abertura das propostas",
+      "rotulo": "data da abertura das propostas",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 88.7,
-      "linhas_com_valor_str": "55 de 62",
-      "linhas_validas": 55,
-      "total_linhas": 62,
-      "valores_distintos": 52
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 55,
+      "distintos": 52,
+      "preenchimento": 0.8871
     },
     {
-      "col_letter": "G",
-      "coluna": "critério de julgamento",
+      "nome": "critério de julgamento",
+      "rotulo": "critério de julgamento",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 2
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 62,
+      "distintos": 2,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "H",
-      "coluna": "data de homologação",
+      "nome": "data de homologação",
+      "rotulo": "data de homologação",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 77.4,
-      "linhas_com_valor_str": "48 de 62",
-      "linhas_validas": 48,
-      "total_linhas": 62,
-      "valores_distintos": 39
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 49,
+      "distintos": 40,
+      "preenchimento": 0.7903
     },
     {
-      "col_letter": "I",
-      "coluna": "resultado do certame",
+      "nome": "resultado do certame",
+      "rotulo": "resultado do certame",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 2
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 62,
+      "distintos": 2,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "J",
-      "coluna": "identificação dos licitantes|valores das propostas",
+      "nome": "identificação dos licitantes|valores das propostas",
+      "rotulo": "identificação dos licitantes|valores das propostas",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 3.2,
-      "linhas_com_valor_str": "2 de 62",
-      "linhas_validas": 2,
-      "total_linhas": 62,
-      "valores_distintos": 2
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 2,
+      "distintos": 2,
+      "preenchimento": 0.0323
     },
     {
-      "col_letter": "K",
-      "coluna": "situação da licitação",
+      "nome": "situação da licitação",
+      "rotulo": "situação da licitação",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 4
-    },
-    {
-      "col_letter": "L",
-      "coluna": "tema",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "M",
-      "coluna": "entidade",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "N",
-      "coluna": "tipo_documento",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "O",
-      "coluna": "ano",
-      "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "P",
-      "coluna": "uf",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "62 de 62",
-      "linhas_validas": 62,
-      "total_linhas": 62,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 62,
+      "distintos": 4,
+      "preenchimento": 1.0
     }
   ]
 }

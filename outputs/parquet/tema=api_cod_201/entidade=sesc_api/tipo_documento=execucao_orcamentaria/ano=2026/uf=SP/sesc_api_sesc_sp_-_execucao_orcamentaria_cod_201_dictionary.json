@@ -1,116 +1,66 @@
 {
-  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total_rows": 168,
-  "columns": [
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 168,
+  "colunas": [
     {
-      "col_letter": "A",
-      "coluna": "registros.ano",
+      "nome": "registros.ano",
+      "rotulo": "registros.ano",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 4
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 168,
+      "distintos": 4,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "B",
-      "coluna": "registros.cod_conta",
+      "nome": "registros.cod_conta",
+      "rotulo": "registros.cod_conta",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 37
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 168,
+      "distintos": 37,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "C",
-      "coluna": "registros.desc_conta",
+      "nome": "registros.desc_conta",
+      "rotulo": "registros.desc_conta",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 31
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 168,
+      "distintos": 31,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "D",
-      "coluna": "registros.orcado",
+      "nome": "registros.orcado",
+      "rotulo": "registros.orcado",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 64
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 168,
+      "distintos": 64,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "E",
-      "coluna": "registros.orado_ajustado",
+      "nome": "registros.orado_ajustado",
+      "rotulo": "registros.orado_ajustado",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 31
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 168,
+      "distintos": 31,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "F",
-      "coluna": "registros.realizado",
+      "nome": "registros.realizado",
+      "rotulo": "registros.realizado",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 69
-    },
-    {
-      "col_letter": "G",
-      "coluna": "tema",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "H",
-      "coluna": "entidade",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "I",
-      "coluna": "tipo_documento",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "J",
-      "coluna": "ano",
-      "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "K",
-      "coluna": "uf",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "168 de 168",
-      "linhas_validas": 168,
-      "total_linhas": 168,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 168,
+      "distintos": 69,
+      "preenchimento": 1.0
     }
   ]
 }

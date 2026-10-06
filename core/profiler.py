@@ -1,19 +1,98 @@
 import ast
 import io
 import json
+import os
 import re
-from typing import Any, List, Optional, Dict
+import string
+from typing import Any, Dict, List, Optional
+
 import openpyxl
 import pandas as pd
 
 
-def is_text_column(serie: pd.Series) -> bool:
-    """Identifica colunas de texto em qualquer versão do pandas.
+# =========================================================
+# HELPER: DETECÇÃO DE TIPOS E DICIONÁRIO DE DADOS
+# =========================================================
 
-    Até o pandas 2.x texto vira dtype 'object'; a partir do 3.0 vira o dtype
-    'str' nativo. Testar só por 'object' faria as regras de qualidade abaixo
-    silenciarem em quem estiver numa versão mais nova.
-    """
+def inferir_tipo_coluna_rapido(serie: pd.Series) -> str:
+    """Detecta o tipo da coluna via amostragem e Regex vetorizado (Zero chamadas LLM)."""
+    amostra = serie.dropna().astype(str).head(100)
+    if amostra.empty:
+        return "VARCHAR"
+
+    # 1. Regex de CNPJ (Com pontuação ou 14 dígitos numéricos)
+    regex_cnpj = r"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$|^\d{14}$"
+    if amostra.str.match(regex_cnpj).mean() > 0.8:
+        return "CNPJ"
+
+    # 2. Regex de Data (ISO 'YYYY-MM-DD' ou BR 'DD/MM/YYYY')
+    regex_data = r"^\d{4}-\d{2}-\d{2}(\s\d{2}:\d{2}:\d{2})?$|^\d{1,2}/\d{1,2}/\d{4}$"
+    if amostra.str.match(regex_data).mean() > 0.8:
+        return "DATE"
+
+    # 3. Numéricos nativos do Pandas
+    if pd.api.types.is_numeric_dtype(serie):
+        if pd.api.types.is_integer_dtype(serie):
+            return "INTEGER"
+        return "DECIMAL"
+
+    return "VARCHAR"
+
+
+def get_col_letter(col_index: int) -> str:
+    """Converte índice (0, 1, 2) para letra de coluna (A, B, C... AA, AB)."""
+    letters = string.ascii_uppercase
+    if col_index < 26:
+        return letters[col_index]
+    return f"{letters[(col_index // 26) - 1]}{letters[col_index % 26]}"
+
+
+def gerar_json_dicionario_base(df: pd.DataFrame, dataset_name: str, output_dir: str = "outputs/schemas") -> dict:
+    """Gera a estrutura base do dicionário de dados inferindo tipos rapidamente."""
+    total_linhas = len(df)
+    columns_meta = []
+
+    for idx, col in enumerate(df.columns):
+        col_clean = str(col).replace("ï»¿", "").replace("\ufeff", "").lower().strip()
+        serie = df[col]
+        linhas_validas = int(serie.notna().sum())
+        pct = round((linhas_validas / total_linhas) * 100, 2) if total_linhas > 0 else 0.0
+
+        columns_meta.append({
+            "col_letter": get_col_letter(idx),
+            "coluna": col_clean,
+            "tipo": inferir_tipo_coluna_rapido(serie),
+            "preenchimento_pct": pct,
+            "linhas_com_valor_str": f"{linhas_validas} de {total_linhas}",
+            "linhas_validas": linhas_validas,
+            "total_linhas": total_linhas,
+            "valores_distintos": int(serie.nunique()),
+            "descricao": None,  # Será preenchido assincronamente pela LLM
+            "amostra_temp": serie.dropna().astype(str).head(3).tolist() # Contexto para a LLM
+        })
+
+    schema_json = {
+        "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+        "dataset_nome": dataset_name,
+        "total_rows": total_linhas,
+        "columns": columns_meta
+    }
+
+    # Salva o esqueleto JSON no disco para não onerar a memória do scraper
+    os.makedirs(output_dir, exist_ok=True)
+    caminho_arquivo = os.path.join(output_dir, f"{dataset_name}.json")
+    with open(caminho_arquivo, "w", encoding="utf-8") as f:
+        json.dump(schema_json, f, ensure_ascii=False, indent=2)
+
+    return schema_json
+
+
+# =========================================================
+# FUNÇÕES ORIGINAIS DO PROFILER
+# =========================================================
+
+def is_text_column(serie: pd.Series) -> bool:
+    """Identifica colunas de texto em qualquer versão do pandas."""
     return serie.dtype == "object" or pd.api.types.is_string_dtype(serie)
 
 
@@ -27,6 +106,14 @@ COLUNAS_IGNORAR_PADRAO = [
     "mensagens",
     "mensagens.page_size",
 ]
+
+
+def _format_row_numbers(row_indices: List[int], offset: int = 1, max_show: int = 10) -> str:
+    """Formata lista de índices de linha para números de linha do arquivo (1-based)."""
+    lines = [str(i + offset) for i in row_indices]
+    if len(lines) > max_show:
+        return f"Linhas: {', '.join(lines[:max_show])}... (total {len(lines)})"
+    return f"Linhas: {', '.join(lines)}"
 
 
 def flatten_nested_json_to_df(
@@ -93,9 +180,8 @@ def flatten_nested_json_to_df(
         if not complex_col_found:
             break
 
-    # 3. 💡 REMOÇÃO DE COLUNAS INDESEJADAS
+    # 3. REMOÇÃO DE COLUNAS INDESEJADAS
     if drop_cols:
-        # Remove por nome exato ou se o nome da coluna terminar com o termo (ex: "meta.pagina_total")
         cols_para_remover = [
             c
             for c in df.columns
@@ -105,17 +191,18 @@ def flatten_nested_json_to_df(
 
     return df
 
+
 def analyze_dataset_quality(
     file_bytes: bytes, file_type: str
 ) -> Dict[str, Any]:
-    """Realiza o perfilamento de dados ajustado para planilhas e APIs."""
+    """Realiza o perfilamento de dados indicando detalhadamente as linhas onde ocorrem inconformidades."""
     errors = []
     warnings = []
     df_valid = None
     is_json_api = file_type == "json" or "json" in file_type
 
     # ---------------------------------------------------------
-    # PARTE 1: Análise Visual com openpyxl (Apenas Excel)
+    # PARTE 1: Análise Visual com openpyxl (Apenas Excel .xlsx/.xls)
     # ---------------------------------------------------------
     if not is_json_api and (
         file_type in ["xlsx", "xls"] or "excel" in file_type
@@ -125,11 +212,13 @@ def analyze_dataset_quality(
             sheet = wb.active
 
             if len(sheet.merged_cells.ranges) > 0:
+                merged_list = [str(r) for r in list(sheet.merged_cells.ranges)[:5]]
                 errors.append(
-                    f"Células Mescladas: Encontradas {len(sheet.merged_cells.ranges)} ocorrências (ex: {list(sheet.merged_cells.ranges)[0]})."
+                    f"Células Mescladas: {len(sheet.merged_cells.ranges)} ocorrência(s) "
+                    f"(ex: {', '.join(merged_list)})"
                 )
 
-            celulas_coloridas = 0
+            celulas_coloridas = []
             for row in sheet.iter_rows(min_row=1, max_row=100, max_col=10):
                 for cell in row:
                     if (
@@ -137,11 +226,13 @@ def analyze_dataset_quality(
                         and cell.fill.start_color
                         and cell.fill.start_color.index != "00000000"
                     ):
-                        celulas_coloridas += 1
+                        celulas_coloridas.append(f"{cell.coordinate} (Linha {cell.row})")
 
-            if celulas_coloridas > 0:
+            if celulas_coloridas:
+                samples = celulas_coloridas[:5]
                 warnings.append(
-                    f"Uso de Cores: {celulas_coloridas} células com preenchimento visual detectadas."
+                    f"Uso de Cores: {len(celulas_coloridas)} célula(s) com preenchimento visual "
+                    f"(ex: {', '.join(samples)})"
                 )
 
         except Exception as e:
@@ -160,11 +251,8 @@ def analyze_dataset_quality(
         if is_json_api:
             raw_text = file_bytes.decode("utf-8")
             json_data = json.loads(raw_text)
-
-            # Aplica o desempacotador genérico multinível
             df_std = flatten_nested_json_to_df(json_data)
 
-            # Remove linhas sintéticas de TOTAIS da API
             if not df_std.empty:
                 for name_col in [
                     "NMItemTransp",
@@ -184,34 +272,72 @@ def analyze_dataset_quality(
 
             df_bruto = df_std.copy()
 
-        # --- B) TRATAMENTO PARA PLANILHAS EXCEL ---
+        # --- B) TRATAMENTO PARA PLANILHAS EXCEL (.xlsx, .xls) ---
         elif file_type in ["xlsx", "xls"] or "excel" in file_type:
             file_stream_raw = io.BytesIO(file_bytes)
             file_stream_std = io.BytesIO(file_bytes)
-            df_bruto = pd.read_excel(file_stream_raw, header=None)
-            df_std = pd.read_excel(file_stream_std, header=0)
+            df_bruto = pd.read_excel(file_stream_raw, header=None, dtype=str)
+            df_std = pd.read_excel(file_stream_std, header=0, dtype=str)
 
-        # --- C) TRATAMENTO PARA CSV ---
+        # --- C) TRATAMENTO EXCLUSIVO PARA ODS (.ods) ---
+        elif file_type == "ods":
+            file_stream_raw = io.BytesIO(file_bytes)
+            file_stream_std = io.BytesIO(file_bytes)
+            df_bruto = pd.read_excel(file_stream_raw, header=None, engine="odf", dtype=str)
+            df_std = pd.read_excel(file_stream_std, header=0, engine="odf", dtype=str)
+
+        # --- D) TRATAMENTO MULTI-ENTIDADE PARA CSV ---
         else:
             file_stream_raw = io.BytesIO(file_bytes)
             file_stream_std = io.BytesIO(file_bytes)
-            for enc in ["utf-8", "latin1", "iso-8859-1"]:
-                for sep in [";", ",", "\t"]:
+
+            encodings = ["utf-8-sig", "utf-8", "latin1", "cp1252", "iso-8859-1"]
+            separators = [";", ",", "\t"]
+
+            # 1. Tentativa por combinações explícitas de encoding e delimitador
+            for enc in encodings:
+                for sep in separators:
                     try:
                         file_stream_raw.seek(0)
-                        df_bruto = pd.read_csv(
-                            file_stream_raw, header=None, encoding=enc, sep=sep
+                        df_bruto_candidate = pd.read_csv(
+                            file_stream_raw, header=None, encoding=enc, sep=sep, dtype=str, on_bad_lines="skip"
                         )
                         file_stream_std.seek(0)
-                        df_std = pd.read_csv(
-                            file_stream_std, header=0, encoding=enc, sep=sep
+                        df_std_candidate = pd.read_csv(
+                            file_stream_std, header=0, encoding=enc, sep=sep, dtype=str, on_bad_lines="skip"
                         )
-                        if len(df_std.columns) > 1:
+                        if df_std_candidate is not None and len(df_std_candidate.columns) > 1:
+                            df_bruto = df_bruto_candidate
+                            df_std = df_std_candidate
                             break
                     except Exception:
                         continue
                 if df_std is not None and len(df_std.columns) > 1:
                     break
+
+            # 2. Fallback resiliente com autodetecção por Python Engine (para tabelas de 1 coluna ou separadores atípicos)
+            if df_std is None or df_std.empty:
+                for enc in encodings:
+                    try:
+                        file_stream_raw.seek(0)
+                        df_bruto = pd.read_csv(
+                            file_stream_raw, header=None, encoding=enc, sep=None, engine="python", dtype=str, on_bad_lines="skip"
+                        )
+                        file_stream_std.seek(0)
+                        df_std = pd.read_csv(
+                            file_stream_std, header=0, encoding=enc, sep=None, engine="python", dtype=str, on_bad_lines="skip"
+                        )
+                        if df_std is not None:
+                            break
+                    except Exception:
+                        continue
+
+            # 3. Higienização universal de cabeçalhos (Remove caracteres de BOM e espaços)
+            if df_std is not None and not df_std.empty:
+                df_std.columns = [
+                    str(c).replace("ï»¿", "").replace("\ufeff", "").strip()
+                    for c in df_std.columns
+                ]
 
         # ---------------------------------------------------------
         # PARTE 3: Validação Adaptativa de Qualidade
@@ -222,7 +348,7 @@ def analyze_dataset_quality(
             )
         else:
             colunas_unnamed = [
-                col
+                str(col)
                 for col in df_std.columns
                 if str(col).startswith("Unnamed")
             ]
@@ -231,20 +357,23 @@ def analyze_dataset_quality(
                     f"Nomes de Colunas: {len(colunas_unnamed)} coluna(s) sem nome definido (ex: {colunas_unnamed[0]})."
                 )
 
-            # Regras estéticas exclusivas para planilhas físicas (Excel/CSV)
+            # Regras estéticas para planilhas físicas (Excel/ODS/CSV)
             if not is_json_api:
-                linhas_vazias = df_bruto.isnull().all(axis=1).sum()
-                colunas_vazias = df_bruto.isnull().all(axis=0).sum()
+                # 1. Linhas e Colunas 100% vazias
+                idx_linhas_vazias = df_bruto[df_bruto.isnull().all(axis=1)].index.tolist()
+                idx_colunas_vazias = df_bruto.columns[df_bruto.isnull().all(axis=0)].tolist()
 
-                if linhas_vazias > 0:
+                if idx_linhas_vazias:
+                    formatted_rows = _format_row_numbers(idx_linhas_vazias, offset=1)
                     errors.append(
-                        f"Espaçamento Visual: {linhas_vazias} linha(s) totalmente em branco."
+                        f"Espaçamento Visual: {len(idx_linhas_vazias)} linha(s) totalmente em branco ({formatted_rows})."
                     )
-                if colunas_vazias > 0:
+                if idx_colunas_vazias:
                     errors.append(
-                        f"Espaçamento Visual: {colunas_vazias} coluna(s) totalmente em branco."
+                        f"Espaçamento Visual: {len(idx_colunas_vazias)} coluna(s) totalmente em branco (Colunas: {idx_colunas_vazias[:5]})."
                     )
 
+                # 2. Formato Pivotado Wide
                 colunas_numericas = [
                     col
                     for col in df_std.columns
@@ -256,48 +385,44 @@ def analyze_dataset_quality(
                         f"Formato Wide Pivotado: Colunas identificadas como anos/períodos ({colunas_numericas[:3]})."
                     )
 
-                tem_totais = False
-                tem_hierarquia = False
-
+                # 3. Checagem Refinada de Linhas de Totais e Hierarquia Visual
+                total_rows_df = len(df_std)
                 for col in df_std.columns:
                     if is_text_column(df_std[col]):
-                        valores_texto = df_std[col].dropna().astype(str)
-                        if valores_texto.str.contains(
-                            r"(?i)\b(?:total|subtotal)\b", regex=True
-                        ).any():
-                            tem_totais = True
-                        if valores_texto.str.contains(r"^\s{2,}").any():
-                            tem_hierarquia = True
+                        serie_str = df_std[col].dropna().astype(str)
 
-                if tem_totais:
-                    errors.append(
-                        "Linhas de Totais: Uso de 'Total' ou 'Subtotal' no meio dos registros."
-                    )
-                if tem_hierarquia:
-                    errors.append(
-                        "Hierarquia Visual: Textos iniciados com recuos/espaços em branco."
-                    )
-
-                for col in df_std.columns:
-                    if is_text_column(df_std[col]):
-                        amostra = df_std[col].dropna().astype(str)
-                        contaminados = amostra[
-                            amostra.str.match(
-                                r"^-?\d+(?:[\.,]\d+)?\s*[a-zA-Z\*\(\)]+"
-                            )
+                        # --- DETECÇÃO REFINADA DE LINHAS DE TOTAIS ---
+                        textos_curtos = serie_str[serie_str.str.len() < 35]
+                        match_totais = textos_curtos[
+                            textos_curtos.str.contains(r"(?i)^\s*(?:total|subtotal|totais)\b", regex=True)
                         ]
-                        if not contaminados.empty:
-                            errors.append(
-                                f"Poluição de Célula: Coluna '{col}' contém números misturados com texto/símbolos."
-                            )
+
+                        if not match_totais.empty:
+                            pct_ocorrencia = len(match_totais) / total_rows_df
+                            if pct_ocorrencia <= 0.05 and len(match_totais) <= 15:
+                                formatted_totais = _format_row_numbers(
+                                    match_totais.index.tolist(), offset=2
+                                )
+                                errors.append(
+                                    f"Linhas de Totais: Uso de 'Total/Subtotal' na coluna '{col}' ({formatted_totais})."
+                                )
+
+                        # --- HIERARQUIA VISUAL E POLUIÇÃO ---
+                        match_hierarquia = serie_str[serie_str.str.contains(r"^\s{2,}", regex=True)]
+                        if not match_hierarquia.empty:
+                            formatted_hier = _format_row_numbers(match_hierarquia.index.tolist(), offset=2)
+                            errors.append(f"Hierarquia Visual: Texto com recuo na coluna '{col}' ({formatted_hier}).")
+
+                        match_poluicao = serie_str[serie_str.str.match(r"^-?\d+(?:[\.,]\d+)?[a-zA-Z\*]+")]
+                        if not match_poluicao.empty:
+                            formatted_poluicao = _format_row_numbers(match_poluicao.index.tolist(), offset=2)
+                            errors.append(f"Poluição de Célula: Coluna '{col}' contém números misturados diretamente com texto ({formatted_poluicao}).")
 
             if not errors:
                 df_valid = df_std
 
     except Exception as e:
-        errors.append(
-            f"Erro de Processamento: Falha ao validar estrutura ({e})."
-        )
+        errors.append(f"Erro de Processamento: Falha ao validar estrutura ({e}).")
 
     is_structured = len(errors) == 0
 

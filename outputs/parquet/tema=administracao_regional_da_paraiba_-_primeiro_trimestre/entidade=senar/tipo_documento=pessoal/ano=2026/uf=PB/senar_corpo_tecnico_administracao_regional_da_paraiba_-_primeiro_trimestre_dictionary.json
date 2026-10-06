@@ -1,66 +1,16 @@
 {
-  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total_rows": 40,
-  "columns": [
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 40,
+  "colunas": [
     {
-      "col_letter": "A",
-      "coluna": "ï»¿\"membros do corpo tãcnico\"",
+      "nome": "ï»¿\"membros do corpo tãcnico\"",
+      "rotulo": "membros do corpo tãcnico",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "40 de 40",
-      "linhas_validas": 40,
-      "total_linhas": 40,
-      "valores_distintos": 40
-    },
-    {
-      "col_letter": "B",
-      "coluna": "tema",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "40 de 40",
-      "linhas_validas": 40,
-      "total_linhas": 40,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "C",
-      "coluna": "entidade",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "40 de 40",
-      "linhas_validas": 40,
-      "total_linhas": 40,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "D",
-      "coluna": "tipo_documento",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "40 de 40",
-      "linhas_validas": 40,
-      "total_linhas": 40,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "E",
-      "coluna": "ano",
-      "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "40 de 40",
-      "linhas_validas": 40,
-      "total_linhas": 40,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "F",
-      "coluna": "uf",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "40 de 40",
-      "linhas_validas": 40,
-      "total_linhas": 40,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 40,
+      "distintos": 40,
+      "preenchimento": 1.0
     }
   ]
 }

@@ -1,0 +1,66 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 3,
+  "colunas": [
+    {
+      "nome": "codigo",
+      "rotulo": "codigo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "especificacao",
+      "rotulo": "especificacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_inic",
+      "rotulo": "orc_prog_inic",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "C",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "anul_suplem",
+      "rotulo": "anul_suplem",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "D",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_ref",
+      "rotulo": "orc_prog_ref",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vlr_exec",
+      "rotulo": "vlr_exec",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    }
+  ]
+}

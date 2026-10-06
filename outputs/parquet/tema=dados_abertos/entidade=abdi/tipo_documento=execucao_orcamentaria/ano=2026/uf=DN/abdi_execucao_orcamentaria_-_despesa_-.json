@@ -1,0 +1,73 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_execucao_orcamentaria_-_despesa_-",
+  "total_rows": 24,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "codigo",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 95.83,
+      "linhas_com_valor_str": "23 de 24",
+      "linhas_validas": 23,
+      "total_linhas": 24,
+      "valores_distintos": 16,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "campo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "24 de 24",
+      "linhas_validas": 24,
+      "total_linhas": 24,
+      "valores_distintos": 10,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "orc_prog_inic",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "24 de 24",
+      "linhas_validas": 24,
+      "total_linhas": 24,
+      "valores_distintos": 24,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "anul_supl",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 75.0,
+      "linhas_com_valor_str": "18 de 24",
+      "linhas_validas": 18,
+      "total_linhas": 24,
+      "valores_distintos": 18,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "orc_prog_ref",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "24 de 24",
+      "linhas_validas": 24,
+      "total_linhas": 24,
+      "valores_distintos": 24,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "vlr_realiz",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 95.83,
+      "linhas_com_valor_str": "23 de 24",
+      "linhas_validas": 23,
+      "total_linhas": 24,
+      "valores_distintos": 21,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

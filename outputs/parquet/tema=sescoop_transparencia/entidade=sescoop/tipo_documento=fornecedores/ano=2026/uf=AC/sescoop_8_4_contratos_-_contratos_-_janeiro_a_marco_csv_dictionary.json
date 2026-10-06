@@ -1,0 +1,256 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 25,
+  "colunas": [
+    {
+      "nome": "ano_edital",
+      "rotulo": "ano_edital",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "A",
+      "preenchidas": 25,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "edital",
+      "rotulo": "edital",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 25,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contrato",
+      "rotulo": "contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 25,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "compartilhada",
+      "rotulo": "compartilhada",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "D",
+      "preenchidas": 25,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "dt_edital",
+      "rotulo": "dt_edital",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 25,
+      "distintos": 21,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "processo",
+      "rotulo": "processo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 25,
+      "distintos": 21,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "mod_licitacao",
+      "rotulo": "mod_licitacao",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "G",
+      "preenchidas": 25,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "reg_precos",
+      "rotulo": "reg_precos",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "H",
+      "preenchidas": 25,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nat_objeto",
+      "rotulo": "nat_objeto",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "I",
+      "preenchidas": 25,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "desc_objeto",
+      "rotulo": "desc_objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 25,
+      "distintos": 24,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cat_objeto",
+      "rotulo": "cat_objeto",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "K",
+      "preenchidas": 25,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "crit_julgamento",
+      "rotulo": "crit_julgamento",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "L",
+      "preenchidas": 25,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "dt_homologacao",
+      "rotulo": "dt_homologacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 25,
+      "distintos": 23,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome_contratada",
+      "rotulo": "nome_contratada",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "N",
+      "preenchidas": 25,
+      "distintos": 25,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cnpj",
+      "rotulo": "cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "O",
+      "preenchidas": 25,
+      "distintos": 25,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "dt_contrato",
+      "rotulo": "dt_contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "P",
+      "preenchidas": 25,
+      "distintos": 23,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vl_contrato",
+      "rotulo": "vl_contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "Q",
+      "preenchidas": 25,
+      "distintos": 24,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vl_pago",
+      "rotulo": "vl_pago",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "R",
+      "preenchidas": 25,
+      "distintos": 25,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vigencia",
+      "rotulo": "vigencia",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "S",
+      "preenchidas": 25,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "aditivo_preco",
+      "rotulo": "aditivo_preco",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "T",
+      "preenchidas": 25,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vl_aditivo_preco",
+      "rotulo": "vl_aditivo_preco",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "U",
+      "preenchidas": 5,
+      "distintos": 4,
+      "preenchimento": 0.2
+    },
+    {
+      "nome": "aditivo_prazo",
+      "rotulo": "aditivo_prazo",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "V",
+      "preenchidas": 25,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vl_aditivo_prazo",
+      "rotulo": "vl_aditivo_prazo",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "W",
+      "preenchidas": 6,
+      "distintos": 1,
+      "preenchimento": 0.24
+    },
+    {
+      "nome": "aditivo_objeto",
+      "rotulo": "aditivo_objeto",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "X",
+      "preenchidas": 25,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "obs",
+      "rotulo": "obs",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "Y",
+      "preenchidas": 6,
+      "distintos": 6,
+      "preenchimento": 0.24
+    }
+  ]
+}

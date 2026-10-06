@@ -1,0 +1,126 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 142,
+  "colunas": [
+    {
+      "nome": "tipo",
+      "rotulo": "tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 142,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "instrumento",
+      "rotulo": "instrumento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 142,
+      "distintos": 136,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "tipo de transferência",
+      "rotulo": "tipo de transferência",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 142,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome do beneficiário",
+      "rotulo": "nome do beneficiário",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 142,
+      "distintos": 125,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cnpj",
+      "rotulo": "cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 142,
+      "distintos": 125,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descrição do objeto",
+      "rotulo": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 142,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data do firmamento",
+      "rotulo": "data do firmamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 142,
+      "distintos": 43,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "qtde de parcelas total",
+      "rotulo": "qtde de parcelas total",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "H",
+      "preenchidas": 142,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "qtde parcelas transferida",
+      "rotulo": "qtde parcelas transferida",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "I",
+      "preenchidas": 142,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor pactuado",
+      "rotulo": "valor pactuado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 142,
+      "distintos": 136,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor transferido (r$)",
+      "rotulo": "valor transferido (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 142,
+      "distintos": 136,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "prestação de contas",
+      "rotulo": "prestação de contas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 142,
+      "distintos": 1,
+      "preenchimento": 1.0
+    }
+  ]
+}

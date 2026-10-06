@@ -1,176 +1,126 @@
 {
-  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total_rows": 10,
-  "columns": [
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 10,
+  "colunas": [
     {
-      "col_letter": "A",
-      "coluna": "datapublicacao",
+      "nome": "datapublicacao",
+      "rotulo": "datapublicacao",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "B",
-      "coluna": "periodo",
+      "nome": "periodo",
+      "rotulo": "periodo",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "C",
-      "coluna": "tipo",
+      "nome": "tipo",
+      "rotulo": "tipo",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "D",
-      "coluna": "fonte",
+      "nome": "fonte",
+      "rotulo": "fonte",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "E",
-      "coluna": "legenda",
+      "nome": "legenda",
+      "rotulo": "legenda",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "F",
-      "coluna": "contas.iditemtransp",
+      "nome": "contas.iditemtransp",
+      "rotulo": "contas.iditemtransp",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 10
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 10,
+      "distintos": 10,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "G",
-      "coluna": "contas.nivel",
+      "nome": "contas.nivel",
+      "rotulo": "contas.nivel",
       "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "BIGINT",
+      "letra": "G",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "H",
-      "coluna": "contas.nmitemtransp",
+      "nome": "contas.nmitemtransp",
+      "rotulo": "contas.nmitemtransp",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 10
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 10,
+      "distintos": 10,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "I",
-      "coluna": "contas.valorestimada",
+      "nome": "contas.valorestimada",
+      "rotulo": "contas.valorestimada",
       "tipo": "DOUBLE",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "DOUBLE",
+      "letra": "I",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "J",
-      "coluna": "contas.valorrealizada",
+      "nome": "contas.valorrealizada",
+      "rotulo": "contas.valorrealizada",
       "tipo": "DOUBLE",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "DOUBLE",
+      "letra": "J",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "K",
-      "coluna": "contas.execperc",
+      "nome": "contas.execperc",
+      "rotulo": "contas.execperc",
       "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "BIGINT",
+      "letra": "K",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "L",
-      "coluna": "contas.pesoperc",
+      "nome": "contas.pesoperc",
+      "rotulo": "contas.pesoperc",
       "tipo": "DOUBLE",
-      "preenchimento_pct": 90.0,
-      "linhas_com_valor_str": "9 de 10",
-      "linhas_validas": 9,
-      "total_linhas": 10,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "M",
-      "coluna": "tema",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "N",
-      "coluna": "entidade",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "O",
-      "coluna": "tipo_documento",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "P",
-      "coluna": "ano",
-      "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "Q",
-      "coluna": "uf",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "10 de 10",
-      "linhas_validas": 10,
-      "total_linhas": 10,
-      "valores_distintos": 1
+      "tipo_bruto": "DOUBLE",
+      "letra": "L",
+      "preenchidas": 9,
+      "distintos": 1,
+      "preenchimento": 0.9
     }
   ]
 }

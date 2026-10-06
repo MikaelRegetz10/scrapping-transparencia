@@ -1,116 +1,66 @@
 {
-  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total_rows": 437,
-  "columns": [
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 437,
+  "colunas": [
     {
-      "col_letter": "A",
-      "coluna": "registros.ano",
+      "nome": "registros.ano",
+      "rotulo": "registros.ano",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 3
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 437,
+      "distintos": 3,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "B",
-      "coluna": "registros.cdigo",
+      "nome": "registros.cdigo",
+      "rotulo": "registros.cdigo",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 264
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 437,
+      "distintos": 264,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "C",
-      "coluna": "registros.descrio do programa / atividade",
+      "nome": "registros.descrio do programa / atividade",
+      "rotulo": "registros.descrio do programa / atividade",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 175
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 437,
+      "distintos": 175,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "D",
-      "coluna": "registros.orado_inicial",
+      "nome": "registros.orado_inicial",
+      "rotulo": "registros.orado_inicial",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 366
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 437,
+      "distintos": 366,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "E",
-      "coluna": "registros.orado_ajustado",
+      "nome": "registros.orado_ajustado",
+      "rotulo": "registros.orado_ajustado",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 374
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 437,
+      "distintos": 374,
+      "preenchimento": 1.0
     },
     {
-      "col_letter": "F",
-      "coluna": "registros.realizado",
+      "nome": "registros.realizado",
+      "rotulo": "registros.realizado",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 358
-    },
-    {
-      "col_letter": "G",
-      "coluna": "tema",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "H",
-      "coluna": "entidade",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "I",
-      "coluna": "tipo_documento",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "J",
-      "coluna": "ano",
-      "tipo": "INTEGER",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 1
-    },
-    {
-      "col_letter": "K",
-      "coluna": "uf",
-      "tipo": "VARCHAR",
-      "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "437 de 437",
-      "linhas_validas": 437,
-      "total_linhas": 437,
-      "valores_distintos": 1
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 437,
+      "distintos": 358,
+      "preenchimento": 1.0
     }
   ]
 }

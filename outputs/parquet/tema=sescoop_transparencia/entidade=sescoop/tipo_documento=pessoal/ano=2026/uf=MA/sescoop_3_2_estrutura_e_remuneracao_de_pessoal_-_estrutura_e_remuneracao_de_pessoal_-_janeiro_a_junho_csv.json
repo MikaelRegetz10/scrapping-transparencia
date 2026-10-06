@@ -1,0 +1,73 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_3_2_estrutura_e_remuneracao_de_pessoal_-_estrutura_e_remuneracao_de_pessoal_-_janeiro_a_junho_csv",
+  "total_rows": 22,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "remuneracao_mensal",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "carga_horaria",
+      "tipo": "INTEGER",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "dt_desligamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.0,
+      "linhas_com_valor_str": "0 de 22",
+      "linhas_validas": 0,
+      "total_linhas": 22,
+      "valores_distintos": 0,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "obs",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 72.73,
+      "linhas_com_valor_str": "16 de 22",
+      "linhas_validas": 16,
+      "total_linhas": 22,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

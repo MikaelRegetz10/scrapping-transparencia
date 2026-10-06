@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_7_2_balancete_contabil_-_balancete_contabil_-_janeiro_a_marco_csv",
+  "total_rows": 281,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "serv. nac. de aprendizagem do cooperativismo no est. do rj;balancete contábil analítico",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "281 de 281",
+      "linhas_validas": 281,
+      "total_linhas": 281,
+      "valores_distintos": 280,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

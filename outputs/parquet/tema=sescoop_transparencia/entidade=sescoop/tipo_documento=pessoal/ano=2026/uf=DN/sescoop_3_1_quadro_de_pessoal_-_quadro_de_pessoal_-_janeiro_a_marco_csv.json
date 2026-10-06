@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_3_1_quadro_de_pessoal_-_quadro_de_pessoal_-_janeiro_a_marco_csv",
+  "total_rows": 161,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "nome",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "161 de 161",
+      "linhas_validas": 161,
+      "total_linhas": 161,
+      "valores_distintos": 161,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "161 de 161",
+      "linhas_validas": 161,
+      "total_linhas": 161,
+      "valores_distintos": 10,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "161 de 161",
+      "linhas_validas": 161,
+      "total_linhas": 161,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "dt_desligamento",
+      "tipo": "DATE",
+      "preenchimento_pct": 5.59,
+      "linhas_com_valor_str": "9 de 161",
+      "linhas_validas": 9,
+      "total_linhas": 161,
+      "valores_distintos": 6,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

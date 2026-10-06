@@ -1,0 +1,76 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 3,
+  "colunas": [
+    {
+      "nome": "cod_funcao",
+      "rotulo": "cod_funcao",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "A",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cod_subfuncao",
+      "rotulo": "cod_subfuncao",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "B",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "programa",
+      "rotulo": "programa",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_inic",
+      "rotulo": "orc_prog_inic",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "D",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "anul_supl.",
+      "rotulo": "anul_supl.",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "E",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc_prog_ref",
+      "rotulo": "orc_prog_ref",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "F",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vlr_realiz",
+      "rotulo": "vlr_realiz",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "G",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    }
+  ]
+}

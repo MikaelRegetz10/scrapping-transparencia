@@ -22,6 +22,19 @@ class SescApiScraper(BaseScraper):
         200: "Plano de Contas / Demonstrativo",
         201: "Execução Orçamentária",
         202: "Receita por Programa e Atividade",
+        174: "Balancetes",
+        203: "DC - Balanço Financeiro",
+        209: "DC - Demonstração de Fluxo de Caixa",
+        204: "DC - Balanço Orçamentário",
+        195: "DC - Balanço Patrimonial",
+        208: "DC - Demonstração das Mutações do Patrimônio Líquido",
+        196: "DC - Demonstração das Variações Patrimoniais",
+        214: "2026 - Todos os Contratos que houve pagamentos",
+        193: "2025 - Todos os Contratos que houve pagamentos",
+        211: "2024 - Todos os Contratos que houve pagamentos",
+        183: "Todos os Convênios que houve pagamentos - Por Exercício",
+        192: "Arrecadação Compulsória",
+        190: "Patrocínios"
     }
 
     UFS = [

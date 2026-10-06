@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_demonstracoes_contabeis_-_balanco_patrimonial_-_3o_trimestre",
+  "total_rows": 64,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "código",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "64 de 64",
+      "linhas_validas": 64,
+      "total_linhas": 64,
+      "valores_distintos": 52,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "64 de 64",
+      "linhas_validas": 64,
+      "total_linhas": 64,
+      "valores_distintos": 49,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "ano atual",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "64 de 64",
+      "linhas_validas": 64,
+      "total_linhas": 64,
+      "valores_distintos": 60,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "ano anterior",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "64 de 64",
+      "linhas_validas": 64,
+      "total_linhas": 64,
+      "valores_distintos": 61,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

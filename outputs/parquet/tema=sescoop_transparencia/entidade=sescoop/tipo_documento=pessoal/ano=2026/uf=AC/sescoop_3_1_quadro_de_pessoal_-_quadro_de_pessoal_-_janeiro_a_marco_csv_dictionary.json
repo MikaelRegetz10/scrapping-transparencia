@@ -1,0 +1,26 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 18,
+  "colunas": [
+    {
+      "nome": "nome",
+      "rotulo": "nome",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 18,
+      "distintos": 18,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cargo",
+      "rotulo": "cargo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 18,
+      "distintos": 9,
+      "preenchimento": 1.0
+    }
+  ]
+}

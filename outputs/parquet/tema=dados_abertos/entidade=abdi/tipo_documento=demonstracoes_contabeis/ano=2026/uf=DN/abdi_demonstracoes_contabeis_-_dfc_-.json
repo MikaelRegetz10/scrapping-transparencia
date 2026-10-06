@@ -1,0 +1,51 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_demonstracoes_contabeis_-_dfc_-",
+  "total_rows": 22,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "código",
+      "tipo": "DECIMAL",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 22,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 22,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "2024",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 22,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "2023",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "22 de 22",
+      "linhas_validas": 22,
+      "total_linhas": 22,
+      "valores_distintos": 22,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}
