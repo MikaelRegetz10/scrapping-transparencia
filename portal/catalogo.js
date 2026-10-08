@@ -11,7 +11,7 @@
 export const API_BASE = (
   new URLSearchParams(location.search).get("api") ||
   window.PORTAL_API_BASE ||
-  "http://localhost:8000"
+  window.location.origin
 ).replace(/\/$/, "");
 
 // --------------------------------------------------------------------------
