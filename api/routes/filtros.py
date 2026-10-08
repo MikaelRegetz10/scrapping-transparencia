@@ -1,7 +1,7 @@
 import logging
 import os
 from fastapi import APIRouter
-from api.database import colunas_do_esquema, get_db_connection
+from api.database import colunas_do_esquema, get_db_connection, leitura_do_acervo
 from api.schemas import FilterOptionsResponse
 
 logger = logging.getLogger("api.filtros")
@@ -27,7 +27,7 @@ def tipos_de_arquivo(parquet_base: str) -> list:
         linhas = con.execute(
             f"""
             SELECT DISTINCT LOWER(CAST(tipo_arquivo AS VARCHAR)) AS tipo
-            FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
+            FROM {leitura_do_acervo(parquet_glob)}
             WHERE tipo_arquivo IS NOT NULL
             ORDER BY tipo
             """

@@ -1,8 +1,7 @@
 # api/routes/estatisticas.py
 import logging
-import os
 from fastapi import APIRouter
-from api.database import get_db_connection
+from api.database import caminho_do_acervo, get_db_connection, leitura_do_acervo
 
 logger = logging.getLogger("api.estatisticas")
 
@@ -12,15 +11,13 @@ router = APIRouter(prefix="/api/v1/estatisticas", tags=["Estatísticas & KPIs"])
 @router.get("")
 def get_estatisticas(output_dir: str = "outputs"):
     """[RESTful] Retorna o recurso de métricas e estatísticas consolidadas."""
-    base_project_dir = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    )
-    parquet_base = os.path.join(base_project_dir, output_dir, "parquet")
-    parquet_glob = os.path.join(parquet_base, "**", "*.parquet").replace(
-        "\\", "/"
-    )
+    # O caminho e a expressão de leitura saem do `api.database`: é de lá que
+    # vem a conexão com o cache de metadados já quente, e um glob montado
+    # aqui à mão leria os mesmos arquivos por outro nome — o que, para o
+    # cache, são arquivos diferentes.
+    parquet_glob = caminho_do_acervo(output_dir)
 
-    if not os.path.exists(parquet_base):
+    if not parquet_glob:
         return {
             "total_registros": 0,
             "total_ufs": 0,
@@ -36,7 +33,7 @@ def get_estatisticas(output_dir: str = "outputs"):
                 COUNT(DISTINCT uf) as total_ufs,
                 COUNT(DISTINCT tipo_documento) as total_tipos_documento,
                 COUNT(DISTINCT tema) as total_temas
-            FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
+            FROM {leitura_do_acervo(parquet_glob)}
         """
         res = con.execute(query).fetchone()
         return {
