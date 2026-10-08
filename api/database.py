@@ -1,6 +1,7 @@
 # api/database.py
 import logging
 import os
+import threading
 from typing import Any, Dict, List, Optional, Tuple, Union
 import duckdb
 import pandas as pd
@@ -23,8 +24,67 @@ from core.dictionary_generator import (
 logger = logging.getLogger("api.database")
 
 
+# O cache de rodapé dos Parquet é o que paga a maior parte do custo de ler o
+# acervo: são milhares de arquivos pequenos, e abrir cada um para descobrir
+# seu esquema custa mais que ler as linhas que interessam. Esse cache mora no
+# banco, não na conexão — então um banco em memória novo por chamada, como
+# havia aqui, jogava fora a cada requisição o que a anterior tinha aprendido.
+_CACHE_DE_METADADOS = "SET parquet_metadata_cache=true"
+
+_banco = None
+_trava_do_banco = threading.Lock()
+
+
+def _liga_o_cache(con) -> None:
+    """Liga o cache de metadados, avisando se o DuckDB não o conhecer.
+
+    O nome da configuração é do DuckDB, não nosso: uma versão que o renomeie
+    faria o `SET` levantar, e aí a consulta cairia por causa de uma
+    otimização — o acervo ainda é legível sem ela, só mais devagar.
+    """
+    try:
+        con.execute(_CACHE_DE_METADADOS)
+    except Exception as e:
+        logger.warning(f"Cache de metadados do Parquet indisponível: {e}")
+
+
 def get_db_connection():
-    return duckdb.connect(database=":memory:")
+    """Uma conexão sobre o banco em memória do processo.
+
+    É um cursor, e não o banco em si, porque os endpoints síncronos do
+    FastAPI correm em threads diferentes: cada um precisa da sua sessão. O
+    que eles compartilham é o banco — e com ele o rodapé dos Parquet já
+    lido. Quem chama fecha a sua conexão como antes; o banco fica.
+
+    O `SET` repete a cada cursor porque a configuração é por conexão, ainda
+    que o cache que ela liga seja do banco.
+    """
+    global _banco
+
+    with _trava_do_banco:
+        if _banco is None:
+            _banco = duckdb.connect(database=":memory:")
+            _liga_o_cache(_banco)
+
+    con = _banco.cursor()
+    _liga_o_cache(con)
+    return con
+
+
+def leitura_do_acervo(parquet_glob: str) -> str:
+    """A expressão que lê o acervo inteiro como uma tabela só.
+
+    Mora numa função porque são seis consultas em três módulos lendo o mesmo
+    acervo, e as opções têm de ser as mesmas em todas: `hive_partitioning`
+    traz tema, entidade, tipo, ano e UF dos nomes de pasta, e
+    `union_by_name` casa pelo nome colunas que não estão na mesma posição em
+    todos os arquivos. Uma consulta que esquecesse uma das duas leria um
+    acervo diferente do que as outras leem.
+    """
+    return (
+        f"read_parquet('{_literal_sql(parquet_glob)}', "
+        "hive_partitioning=1, union_by_name=True)"
+    )
 
 
 def parse_multiselect(val: Optional[Union[str, List[Any]]]) -> List[str]:
@@ -55,6 +115,36 @@ COLUNAS_DE_BUSCA = (
 )
 
 
+# O esquema unificado custa de 0,3 a 0,5 s para montar — é o rodapé dos
+# milhares de Parquet do acervo sendo lido —, e toda consulta filtrada da API
+# passa por aqui. O cache guarda o resultado até que os arquivos mudem, pela
+# mesma assinatura do `lista_conjuntos`: contagem e data de modificação mais
+# recente, que uma coleta nova altera. Caminhar a árvore para conferir isso
+# custa uns 60 ms, uma fração do que custa a leitura que ele evita.
+_cache_esquema: Dict[str, Tuple[Any, set]] = {}
+
+
+def _assinatura_do_acervo(parquet_glob: str) -> Tuple[int, float]:
+    """Quantos Parquet há sob o glob e quando o mais recente mudou."""
+    raiz = parquet_glob.split("/**/", 1)[0]
+    total = 0
+    mais_recente = 0.0
+
+    for pasta, _, arquivos in os.walk(raiz):
+        for nome in arquivos:
+            if not nome.endswith(".parquet"):
+                continue
+            total += 1
+            try:
+                mais_recente = max(
+                    mais_recente, os.path.getmtime(os.path.join(pasta, nome))
+                )
+            except OSError:
+                continue
+
+    return total, mais_recente
+
+
 def colunas_do_esquema(con, parquet_glob: str) -> set:
     """Nomes de coluna do esquema unificado de todos os Parquet do acervo.
 
@@ -64,16 +154,27 @@ def colunas_do_esquema(con, parquet_glob: str) -> set:
     para a coluna existir — mas num acervo que só tenha conteúdo tabular ela
     não existe, e citá-la derrubaria a consulta inteira em vez de só ignorar o
     filtro.
+
+    O resultado fica em cache até o acervo mudar — ver `_cache_esquema`. A
+    falha não fica: um erro de leitura transitório não deve calar o aviso nem
+    congelar um esquema vazio.
     """
+    assinatura = _assinatura_do_acervo(parquet_glob)
+    em_cache = _cache_esquema.get(parquet_glob)
+    if em_cache is not None and em_cache[0] == assinatura:
+        return em_cache[1]
+
     try:
         describe = con.execute(
-            f"DESCRIBE SELECT * FROM read_parquet('{parquet_glob}', "
-            "hive_partitioning=1, union_by_name=True)"
+            f"DESCRIBE SELECT * FROM {leitura_do_acervo(parquet_glob)}"
         ).fetchall()
-        return {linha[0] for linha in describe}
     except Exception as e:
         logger.warning(f"Não foi possível ler o esquema dos Parquet: {e}")
         return set()
+
+    colunas = {linha[0] for linha in describe}
+    _cache_esquema[parquet_glob] = (assinatura, colunas)
+    return colunas
 
 
 # Colunas por que a contagem agrupada aceita agrupar. É allowlist porque o
@@ -145,7 +246,18 @@ def monta_filtros(
     # `entidade` é partição Hive e existe sempre; `tipo_arquivo`, `ativo` e
     # `estruturado` vêm das linhas de catálogo. Um filtro sobre coluna ausente é ignorado — ver
     # `colunas_do_esquema`.
-    esquema = colunas_do_esquema(con, parquet_glob)
+    #
+    # O esquema é lido só se algum filtro depender dele. A consulta que
+    # filtra apenas por partição Hive — o caso comum do portal — não precisa
+    # dele para nada, e lê-lo à toa era pagar a varredura do acervo duas
+    # vezes: uma para saber que colunas existem, outra para consultá-las.
+    esquema: Optional[set] = None
+
+    def esquema_do_acervo() -> set:
+        nonlocal esquema
+        if esquema is None:
+            esquema = colunas_do_esquema(con, parquet_glob)
+        return esquema
 
     for coluna, valor in (
         ("entidade", entidade),
@@ -154,7 +266,7 @@ def monta_filtros(
         ("estruturado", estruturado),
     ):
         valores = parse_multiselect(valor)
-        if not valores or coluna not in esquema:
+        if not valores or coluna not in esquema_do_acervo():
             continue
         placeholders = ", ".join(["?"] * len(valores))
         where_clauses.append(
@@ -165,7 +277,7 @@ def monta_filtros(
     # 💡 3. BUSCA TEXTUAL ABRANGENTE
     if search and search.strip():
         term = f"%{search.strip().lower()}%"
-        colunas = [c for c in COLUNAS_DE_BUSCA if c in esquema] or ["tema"]
+        colunas = [c for c in COLUNAS_DE_BUSCA if c in esquema_do_acervo()] or ["tema"]
         where_clauses.append(
             "("
             + " OR ".join(
@@ -176,6 +288,13 @@ def monta_filtros(
         params.extend([term] * len(colunas))
 
     return ("WHERE " + " AND ".join(where_clauses)) if where_clauses else "", params
+
+
+# O que conta como vazio depois do `strip`. É constante de módulo porque a
+# poda do `execute_parquet_query` usa o mesmo conjunto célula a célula: duas
+# listas do que é "vazio" divergiriam, e aí a mesma célula sairia do catálogo
+# e ficaria na exportação.
+VAZIOS = frozenset({"", "null", "None"})
 
 
 def esta_vazio(valor) -> bool:
@@ -197,7 +316,7 @@ def esta_vazio(valor) -> bool:
             return True
     except (TypeError, ValueError):
         return False
-    return str(valor).strip() in ["", "null", "None"]
+    return str(valor).strip() in VAZIOS
 
 
 def raiz_dos_parquet(base_dir: str) -> str:
@@ -260,7 +379,7 @@ def execute_parquet_counts(
         linhas = con.execute(
             f"""
             SELECT CAST({por} AS VARCHAR) AS valor, COUNT(*) AS total
-            FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
+            FROM {leitura_do_acervo(parquet_glob)}
             {where_str}
             GROUP BY 1
             HAVING CAST({por} AS VARCHAR) IS NOT NULL
@@ -321,11 +440,13 @@ def execute_parquet_query(
         params=params,
     )
 
+    fonte = leitura_do_acervo(parquet_glob)
+
     try:
         # 1. Total de linhas
         count_query = f"""
             SELECT COUNT(*) 
-            FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
+            FROM {fonte}
             {where_str}
         """
         total = con.execute(count_query, params).fetchone()[0]
@@ -336,28 +457,45 @@ def execute_parquet_query(
         # 2. Dados paginados
         data_query = f"""
             SELECT * 
-            FROM read_parquet('{parquet_glob}', hive_partitioning=1, union_by_name=True)
+            FROM {fonte}
             {where_str}
             LIMIT {limit} OFFSET {offset}
         """
         df = con.execute(data_query, params).df()
 
-        df = df.where(pd.notnull(df), None)
-        raw_records = df.to_dict(orient="records")
+        # 3. Poda dos campos vazios, coluna a coluna e não célula a célula.
+        #
+        # O esquema unificado tem quase quatrocentas colunas e a exportação
+        # leva cem mil linhas — são milhões de células, e quase todas vazias:
+        # uma linha de catálogo não tem o que dizer sobre as colunas que
+        # vieram das planilhas. O laço de antes limpava o nome da coluna e
+        # chamava `pd.isna` uma vez por célula, repetindo por linha um
+        # trabalho que é da coluna.
+        #
+        # Aqui o nome da coluna é limpo uma vez, o teste de nulo sai
+        # vetorizado e o de texto vazio corre só nas colunas de texto — são
+        # as únicas em que `str(valor)` pode dar "", "null" ou "None", que é
+        # o que `esta_vazio` procura depois do nulo. O `tolist` devolve os
+        # valores em tipo nativo do Python, como o `to_dict` devolvia.
+        cleaned_records: List[Dict[str, Any]] = [{} for _ in range(len(df))]
 
-        cleaned_records = []
-        for row in raw_records:
-            record_limpo = {}
-            for k, v in row.items():
-                if esta_vazio(v):
+        for coluna in df.columns:
+            if "rtf1" in str(coluna):
+                continue
+
+            key_clean = str(coluna).replace("ï»¿", "").replace('"', "").strip()
+            serie = df[coluna]
+            nulos = serie.isna().to_numpy()
+            valores = serie.tolist()
+            e_texto = serie.dtype == object
+
+            for indice, record_limpo in enumerate(cleaned_records):
+                if nulos[indice]:
                     continue
-                if "rtf1" in k:
+                valor = valores[indice]
+                if e_texto and str(valor).strip() in VAZIOS:
                     continue
-
-                key_clean = str(k).replace("ï»¿", "").replace('"', "").strip()
-                record_limpo[key_clean] = v
-
-            cleaned_records.append(record_limpo)
+                record_limpo[key_clean] = valor
 
         return cleaned_records, total
 
@@ -479,19 +617,31 @@ def _mede_conjuntos(con, raiz: str, conjuntos: List[Dict[str, Any]]) -> None:
     """Preenche linhas e colunas de cada conjunto, no lugar.
 
     As duas medidas saem do rodapé de metadados dos Parquet, não dos dados:
-    `parquet_file_metadata` e `parquet_schema` respondem pelo acervo inteiro
-    em cerca de um segundo, sem ler uma linha sequer. Contar com um
-    `COUNT(*)` por arquivo levaria minutos.
+    `parquet_file_metadata` e `parquet_schema` respondem por todos eles de
+    uma vez, sem ler uma linha sequer. Contar com um `COUNT(*)` por arquivo
+    levaria minutos.
+
+    A lista de arquivos vai explícita, em vez de um `**/*.parquet`. São duas
+    economias: expandir o glob custa mais que ler os rodapés — ele percorre a
+    árvore inteira a cada consulta, e são duas —, e quase metade do acervo é
+    catálogo, cujos arquivos o `_varre_conjuntos` já descartou e cujas
+    medidas seriam lidas para serem jogadas fora.
     """
-    glob = os.path.join(raiz, "**", "*.parquet").replace("\\", "/")
+    if not conjuntos:
+        return
+
     por_arquivo = {c["arquivo"]: c for c in conjuntos}
+    arquivos = ", ".join(
+        f"'{_literal_sql(os.path.join(raiz, c['arquivo']))}'" for c in conjuntos
+    )
+    fonte = f"[{arquivos}]"
 
     def relativo(caminho: str) -> str:
         return os.path.relpath(caminho, raiz).replace("\\", "/")
 
     try:
         for caminho, linhas in con.execute(
-            f"SELECT file_name, num_rows FROM parquet_file_metadata('{_literal_sql(glob)}')"
+            f"SELECT file_name, num_rows FROM parquet_file_metadata({fonte})"
         ).fetchall():
             conjunto = por_arquivo.get(relativo(caminho))
             if conjunto is not None:
@@ -503,7 +653,7 @@ def _mede_conjuntos(con, raiz: str, conjuntos: List[Dict[str, Any]]) -> None:
         for caminho, colunas in con.execute(
             f"""
             SELECT file_name, COUNT(*) AS colunas
-            FROM parquet_schema('{_literal_sql(glob)}')
+            FROM parquet_schema({fonte})
             WHERE type IS NOT NULL AND name NOT IN ({injetadas})
             GROUP BY file_name
             """
@@ -601,14 +751,16 @@ def le_conjunto(
         fonte = f"read_parquet('{_literal_sql(caminho)}')"
         selecao = ", ".join(_identificador_sql(nome) for nome in nomes)
 
-        where, params = "", []
+        predicado, params = "", []
         if search and search.strip():
             termo = f"%{search.strip().lower()}%"
-            where = "WHERE " + " OR ".join(
+            predicado = " OR ".join(
                 f"LOWER(CAST({_identificador_sql(nome)} AS VARCHAR)) LIKE ?"
                 for nome in nomes
             )
             params = [termo] * len(nomes)
+
+        where = f"WHERE {predicado}" if predicado else ""
 
         # Só ordena por coluna que este arquivo tem: o nome entra cru no SQL,
         # e ORDER BY não aceita parâmetro ligado.
@@ -617,12 +769,18 @@ def le_conjunto(
             sentido = "DESC" if str(direcao).lower() == "desc" else "ASC"
             ordem = f"ORDER BY {_identificador_sql(ordenar)} {sentido} NULLS LAST"
 
-        total = con.execute(f"SELECT COUNT(*) FROM {fonte}").fetchone()[0]
-        filtrado = (
-            con.execute(f"SELECT COUNT(*) FROM {fonte} {where}", params).fetchone()[0]
-            if where
-            else total
-        )
+        # O total e o filtrado saem da mesma passada: o `FILTER` conta as
+        # linhas que casam com a busca sem uma segunda leitura do arquivo.
+        # Sem busca não há o que contar — o `COUNT(*)` sozinho vem do rodapé
+        # do Parquet, sem ler linha nenhuma.
+        if predicado:
+            total, filtrado = con.execute(
+                f"SELECT COUNT(*), COUNT(*) FILTER (WHERE {predicado}) FROM {fonte}",
+                params,
+            ).fetchone()
+        else:
+            total = con.execute(f"SELECT COUNT(*) FROM {fonte}").fetchone()[0]
+            filtrado = total
 
         linhas = con.execute(
             f"""
