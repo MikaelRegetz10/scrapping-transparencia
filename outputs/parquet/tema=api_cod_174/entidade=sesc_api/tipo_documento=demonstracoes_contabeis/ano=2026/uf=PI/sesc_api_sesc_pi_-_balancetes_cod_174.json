@@ -1,0 +1,95 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_pi_-_balancetes_cod_174",
+  "total_rows": 1000,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "07.julho",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 16,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "2021",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "1",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 7,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "ativo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 68,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "180.490.493,35",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 873,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "99.681.086,12",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 873,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "99.212.273,12",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 623,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "180.959.306,35",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1000 de 1000",
+      "linhas_validas": 1000,
+      "total_linhas": 1000,
+      "valores_distintos": 862,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

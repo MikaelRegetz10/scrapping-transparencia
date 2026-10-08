@@ -1,0 +1,106 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_8_2_contratacoes_diretas_-_relacao_de_contratacoes_diretas_-_janeiro_a_junho_csv",
+  "total_rows": 86,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "modalidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "enquadramento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 8,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "nº processo administrativo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 83,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "resumo do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 79,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "fornecedor",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 75,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "cnpj/cpf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 66,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "valor contratado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 66,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "data de assinatura do termo",
+      "tipo": "DATE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "86 de 86",
+      "linhas_validas": 86,
+      "total_linhas": 86,
+      "valores_distintos": 42,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

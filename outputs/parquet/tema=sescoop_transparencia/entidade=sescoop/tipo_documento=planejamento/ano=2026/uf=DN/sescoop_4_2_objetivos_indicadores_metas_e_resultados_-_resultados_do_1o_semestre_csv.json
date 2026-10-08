@@ -1,0 +1,95 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_4_2_objetivos_indicadores_metas_e_resultados_-_resultados_do_1o_semestre_csv",
+  "total_rows": 8,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "id",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "função do objetivo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "objetivo estratégico",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 6,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição da meta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "indicador",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "meta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 8,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "resultado do 1º semestre",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "8 de 8",
+      "linhas_validas": 8,
+      "total_linhas": 8,
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "observação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 75.0,
+      "linhas_com_valor_str": "6 de 8",
+      "linhas_validas": 6,
+      "total_linhas": 8,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

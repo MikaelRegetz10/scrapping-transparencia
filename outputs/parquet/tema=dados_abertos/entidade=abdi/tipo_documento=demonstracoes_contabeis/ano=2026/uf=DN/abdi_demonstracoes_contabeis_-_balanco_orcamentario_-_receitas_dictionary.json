@@ -1,0 +1,76 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 15,
+  "colunas": [
+    {
+      "nome": "contas",
+      "rotulo": "contas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 15,
+      "distintos": 15,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descrição",
+      "rotulo": "descrição",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 15,
+      "distintos": 15,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orc-inicial",
+      "rotulo": "orc-inicial",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 12,
+      "distintos": 11,
+      "preenchimento": 0.8
+    },
+    {
+      "nome": "anulação suplementação",
+      "rotulo": "anulação suplementação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 11,
+      "distintos": 9,
+      "preenchimento": 0.7333
+    },
+    {
+      "nome": "orc reformulado",
+      "rotulo": "orc reformulado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 12,
+      "distintos": 12,
+      "preenchimento": 0.8
+    },
+    {
+      "nome": "executado",
+      "rotulo": "executado",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "F",
+      "preenchidas": 12,
+      "distintos": 12,
+      "preenchimento": 0.8
+    },
+    {
+      "nome": "saldo",
+      "rotulo": "saldo",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "G",
+      "preenchidas": 14,
+      "distintos": 10,
+      "preenchimento": 0.9333
+    }
+  ]
+}

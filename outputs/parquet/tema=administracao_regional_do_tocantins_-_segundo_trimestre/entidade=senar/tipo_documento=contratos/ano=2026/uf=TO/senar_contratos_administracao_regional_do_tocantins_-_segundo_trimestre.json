@@ -1,0 +1,183 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_contratos_administracao_regional_do_tocantins_-_segundo_trimestre",
+  "total_rows": 1461,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "contrato",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 1450,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "modalidade de licitação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 108,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "categoria do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 23,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 5,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "nome da contratada",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 516,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "cnpj",
+      "tipo": "CNPJ",
+      "preenchimento_pct": 99.79,
+      "linhas_com_valor_str": "1458 de 1461",
+      "linhas_validas": 1458,
+      "total_linhas": 1461,
+      "valores_distintos": 435,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "cpf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 0.21,
+      "linhas_com_valor_str": "3 de 1461",
+      "linhas_validas": 3,
+      "total_linhas": 1461,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "J",
+      "coluna": "data de contrato",
+      "tipo": "DATE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 278,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "K",
+      "coluna": "valor do contrato (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 178,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "L",
+      "coluna": "valor pago (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 447,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "M",
+      "coluna": "vigência (meses)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 15,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "N",
+      "coluna": "valor aditivo preço (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 30,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "O",
+      "coluna": "valor aditivo prazo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "1461 de 1461",
+      "linhas_validas": 1461,
+      "total_linhas": 1461,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "P",
+      "coluna": "obs",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 93.98,
+      "linhas_com_valor_str": "1373 de 1461",
+      "linhas_validas": 1373,
+      "total_linhas": 1461,
+      "valores_distintos": 43,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

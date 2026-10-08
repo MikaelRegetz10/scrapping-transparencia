@@ -1,0 +1,86 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 154,
+  "colunas": [
+    {
+      "nome": "periodo",
+      "rotulo": "periodo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 154,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "textoaprovacao",
+      "rotulo": "textoaprovacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 154,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "tipo",
+      "rotulo": "tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 154,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.idcontacontabil",
+      "rotulo": "contas.idcontacontabil",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 154,
+      "distintos": 153,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.idcontacontabilsuperior",
+      "rotulo": "contas.idcontacontabilsuperior",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 2,
+      "distintos": 1,
+      "preenchimento": 0.013
+    },
+    {
+      "nome": "contas.nmcontacontabil",
+      "rotulo": "contas.nmcontacontabil",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 154,
+      "distintos": 142,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.despesareceita",
+      "rotulo": "contas.despesareceita",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 152,
+      "distintos": 2,
+      "preenchimento": 0.987
+    },
+    {
+      "nome": "contas.orcado",
+      "rotulo": "contas.orcado",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "H",
+      "preenchidas": 154,
+      "distintos": 152,
+      "preenchimento": 1.0
+    }
+  ]
+}

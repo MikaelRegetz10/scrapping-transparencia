@@ -1,0 +1,95 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_rj_-_dc_-_balanco_orcamentario_cod_204",
+  "total_rows": 123,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "registros.ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "registros.tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "registros.grupo de contas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 105,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "registros.previsao inicial",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 75,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "registros.previsao atualizadas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 85,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "registros.receitas realizadas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 39,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "registros.despesas liquidas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 50,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "registros.saldo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "123 de 123",
+      "linhas_validas": 123,
+      "total_linhas": 123,
+      "valores_distintos": 90,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 32,
+  "colunas": [
+    {
+      "nome": "cod_conta",
+      "rotulo": "cod_conta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 32,
+      "distintos": 32,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "desc_conta",
+      "rotulo": "desc_conta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 32,
+      "distintos": 32,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "orcado",
+      "rotulo": "orcado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 32,
+      "distintos": 29,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "retificado",
+      "rotulo": "retificado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 32,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "suplementado",
+      "rotulo": "suplementado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 32,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "transposto",
+      "rotulo": "transposto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 32,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "realizado",
+      "rotulo": "realizado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 32,
+      "distintos": 27,
+      "preenchimento": 1.0
+    }
+  ]
+}

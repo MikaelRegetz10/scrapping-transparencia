@@ -1,0 +1,96 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 12,
+  "colunas": [
+    {
+      "nome": "datapublicacao",
+      "rotulo": "datapublicacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 12,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "licitacoes.periodo",
+      "rotulo": "licitacoes.periodo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 12,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "licitacoes.tipo",
+      "rotulo": "licitacoes.tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 12,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "licitacoes.total",
+      "rotulo": "licitacoes.total",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "D",
+      "preenchidas": 12,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "licitacoes.perctotalgeral",
+      "rotulo": "licitacoes.perctotalgeral",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "E",
+      "preenchidas": 12,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "licitacoes.composicao.regulamento",
+      "rotulo": "licitacoes.composicao.regulamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 11,
+      "distintos": 2,
+      "preenchimento": 0.9167
+    },
+    {
+      "nome": "licitacoes.composicao.modalidade_forma",
+      "rotulo": "licitacoes.composicao.modalidade_forma",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 11,
+      "distintos": 11,
+      "preenchimento": 0.9167
+    },
+    {
+      "nome": "licitacoes.composicao.despesarealizada",
+      "rotulo": "licitacoes.composicao.despesarealizada",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "H",
+      "preenchidas": 11,
+      "distintos": 10,
+      "preenchimento": 0.9167
+    },
+    {
+      "nome": "licitacoes.composicao.percentual",
+      "rotulo": "licitacoes.composicao.percentual",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "I",
+      "preenchidas": 11,
+      "distintos": 10,
+      "preenchimento": 0.9167
+    }
+  ]
+}

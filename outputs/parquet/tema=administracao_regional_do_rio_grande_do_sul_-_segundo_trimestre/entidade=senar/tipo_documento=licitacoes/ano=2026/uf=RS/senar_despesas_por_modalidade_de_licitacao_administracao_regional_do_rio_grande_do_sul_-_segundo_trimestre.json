@@ -1,0 +1,29 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_despesas_por_modalidade_de_licitacao_administracao_regional_do_rio_grande_do_sul_-_segundo_trimestre",
+  "total_rows": 11,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "despesas por modalidade de licitação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 11,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "realizado (r$) abr - jun",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "11 de 11",
+      "linhas_validas": 11,
+      "total_linhas": 11,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

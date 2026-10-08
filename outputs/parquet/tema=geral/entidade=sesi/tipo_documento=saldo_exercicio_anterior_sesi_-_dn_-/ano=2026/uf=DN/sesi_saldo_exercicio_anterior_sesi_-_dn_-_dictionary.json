@@ -1,0 +1,126 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 10,
+  "colunas": [
+    {
+      "nome": "datapublicacao",
+      "rotulo": "datapublicacao",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "periodo",
+      "rotulo": "periodo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "tipo",
+      "rotulo": "tipo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "fonte",
+      "rotulo": "fonte",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "legenda",
+      "rotulo": "legenda",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.iditemtransp",
+      "rotulo": "contas.iditemtransp",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 10,
+      "distintos": 10,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.nivel",
+      "rotulo": "contas.nivel",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "G",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.nmitemtransp",
+      "rotulo": "contas.nmitemtransp",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 10,
+      "distintos": 10,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.valorestimada",
+      "rotulo": "contas.valorestimada",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "I",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.valorrealizada",
+      "rotulo": "contas.valorrealizada",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "J",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.execperc",
+      "rotulo": "contas.execperc",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "K",
+      "preenchidas": 10,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "contas.pesoperc",
+      "rotulo": "contas.pesoperc",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "L",
+      "preenchidas": 9,
+      "distintos": 1,
+      "preenchimento": 0.9
+    }
+  ]
+}

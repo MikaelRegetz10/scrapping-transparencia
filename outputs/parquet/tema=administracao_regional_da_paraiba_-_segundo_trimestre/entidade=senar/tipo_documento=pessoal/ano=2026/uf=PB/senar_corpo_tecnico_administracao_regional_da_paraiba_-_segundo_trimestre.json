@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_corpo_tecnico_administracao_regional_da_paraiba_-_segundo_trimestre",
+  "total_rows": 41,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "membros do corpo técnico",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "41 de 41",
+      "linhas_validas": 41,
+      "total_linhas": 41,
+      "valores_distintos": 41,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

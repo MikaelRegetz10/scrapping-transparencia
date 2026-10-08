@@ -1,0 +1,26 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 991,
+  "colunas": [
+    {
+      "nome": "exercicio_periodo",
+      "rotulo": "exercicio_periodo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 991,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor",
+      "rotulo": "valor",
+      "tipo": "DOUBLE",
+      "tipo_bruto": "DOUBLE",
+      "letra": "B",
+      "preenchidas": 991,
+      "distintos": 6,
+      "preenchimento": 1.0
+    }
+  ]
+}

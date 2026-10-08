@@ -1,0 +1,73 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_execucao_orcamentaria_-_acoes_-",
+  "total_rows": 12,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "mes",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "rec_contrib",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "rec_patrim",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "transf_correntes",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "rec_ capital",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 1,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "rec_diversas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "12 de 12",
+      "linhas_validas": 12,
+      "total_linhas": 12,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

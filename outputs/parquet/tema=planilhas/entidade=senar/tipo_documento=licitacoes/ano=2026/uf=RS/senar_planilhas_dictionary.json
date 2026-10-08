@@ -1,0 +1,166 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 3,
+  "colunas": [
+    {
+      "nome": "id",
+      "rotulo": "id",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "A",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "fonte",
+      "rotulo": "fonte",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "secao_rota",
+      "rotulo": "secao_rota",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "titulo",
+      "rotulo": "titulo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "publicado_em",
+      "rotulo": "publicado_em",
+      "tipo": "INTEGER",
+      "tipo_bruto": "INTEGER",
+      "letra": "E",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    },
+    {
+      "nome": "contexto",
+      "rotulo": "contexto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "tipo_arquivo",
+      "rotulo": "tipo_arquivo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome_arquivo",
+      "rotulo": "nome_arquivo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "url_download",
+      "rotulo": "url_download",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 3,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "status_http",
+      "rotulo": "status_http",
+      "tipo": "INTEGER",
+      "tipo_bruto": "BIGINT",
+      "letra": "J",
+      "preenchidas": 2,
+      "distintos": 1,
+      "preenchimento": 0.6667
+    },
+    {
+      "nome": "ativo",
+      "rotulo": "ativo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "content_type",
+      "rotulo": "content_type",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "estruturado",
+      "rotulo": "estruturado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "erros_qualidade",
+      "rotulo": "erros_qualidade",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "N",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "avisos_qualidade",
+      "rotulo": "avisos_qualidade",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "O",
+      "preenchidas": 3,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "verificado_em",
+      "rotulo": "verificado_em",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "P",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 1.0
+    }
+  ]
+}

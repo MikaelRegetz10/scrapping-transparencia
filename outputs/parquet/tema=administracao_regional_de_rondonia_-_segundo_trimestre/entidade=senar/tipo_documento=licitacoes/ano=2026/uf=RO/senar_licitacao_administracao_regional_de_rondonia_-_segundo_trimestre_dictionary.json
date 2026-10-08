@@ -1,0 +1,116 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 199,
+  "colunas": [
+    {
+      "nome": "modalidade",
+      "rotulo": "modalidade",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 199,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "número/ano",
+      "rotulo": "número/ano",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 199,
+      "distintos": 198,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "processo",
+      "rotulo": "processo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 199,
+      "distintos": 199,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descrição do objeto",
+      "rotulo": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 199,
+      "distintos": 15,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "natureza do objeto",
+      "rotulo": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 199,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data da abertura das propostas",
+      "rotulo": "data da abertura das propostas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 199,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "critério de julgamento",
+      "rotulo": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 199,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data de homologação",
+      "rotulo": "data de homologação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 194,
+      "distintos": 26,
+      "preenchimento": 0.9749
+    },
+    {
+      "nome": "resultado do certame",
+      "rotulo": "resultado do certame",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 199,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "identificação dos licitantes|valores das propostas",
+      "rotulo": "identificação dos licitantes|valores das propostas",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 193,
+      "distintos": 193,
+      "preenchimento": 0.9698
+    },
+    {
+      "nome": "situação da licitação",
+      "rotulo": "situação da licitação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 199,
+      "distintos": 3,
+      "preenchimento": 1.0
+    }
+  ]
+}

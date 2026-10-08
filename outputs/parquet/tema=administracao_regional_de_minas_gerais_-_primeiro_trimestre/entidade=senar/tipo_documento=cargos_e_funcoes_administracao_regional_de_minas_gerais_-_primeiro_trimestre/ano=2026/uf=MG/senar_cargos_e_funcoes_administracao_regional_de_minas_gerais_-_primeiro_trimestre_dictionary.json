@@ -1,0 +1,56 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 13,
+  "colunas": [
+    {
+      "nome": "cargo",
+      "rotulo": "cargo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 13,
+      "distintos": 7,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nível",
+      "rotulo": "nível",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 13,
+      "distintos": 13,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nº empregados",
+      "rotulo": "nº empregados",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 13,
+      "distintos": 9,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor inicial (r$)",
+      "rotulo": "valor inicial (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 13,
+      "distintos": 13,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor final (r$)",
+      "rotulo": "valor final (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 13,
+      "distintos": 13,
+      "preenchimento": 1.0
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total": 68,
+  "total": 70,
   "colunas": [
     {
       "nome": "tipo",
@@ -8,8 +8,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "A",
-      "preenchidas": 68,
-      "distintos": 46,
+      "preenchidas": 70,
+      "distintos": 47,
       "preenchimento": 1.0
     },
     {
@@ -18,8 +18,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "B",
-      "preenchidas": 68,
-      "distintos": 63,
+      "preenchidas": 70,
+      "distintos": 65,
       "preenchimento": 1.0
     },
     {
@@ -28,8 +28,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "C",
-      "preenchidas": 68,
-      "distintos": 68,
+      "preenchidas": 70,
+      "distintos": 70,
       "preenchimento": 1.0
     },
     {
@@ -38,7 +38,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "D",
-      "preenchidas": 68,
+      "preenchidas": 70,
       "distintos": 3,
       "preenchimento": 1.0
     },
@@ -50,7 +50,7 @@
       "letra": "E",
       "preenchidas": 65,
       "distintos": 59,
-      "preenchimento": 0.9559
+      "preenchimento": 0.9286
     }
   ]
 }

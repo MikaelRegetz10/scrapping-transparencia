@@ -1,0 +1,16 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 25,
+  "colunas": [
+    {
+      "nome": "membros do corpo técnico",
+      "rotulo": "membros do corpo técnico",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 25,
+      "distintos": 25,
+      "preenchimento": 1.0
+    }
+  ]
+}

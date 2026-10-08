@@ -48,9 +48,9 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "E",
-      "preenchidas": 61,
-      "distintos": 60,
-      "preenchimento": 0.8243
+      "preenchidas": 62,
+      "distintos": 61,
+      "preenchimento": 0.8378
     }
   ]
 }

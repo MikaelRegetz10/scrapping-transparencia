@@ -1,0 +1,66 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 108,
+  "colunas": [
+    {
+      "nome": "registros.ano",
+      "rotulo": "registros.ano",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 108,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.cod_conta",
+      "rotulo": "registros.cod_conta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 108,
+      "distintos": 36,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.desc_conta",
+      "rotulo": "registros.desc_conta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 108,
+      "distintos": 29,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.orcado",
+      "rotulo": "registros.orcado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 108,
+      "distintos": 67,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.orado_ajustado",
+      "rotulo": "registros.orado_ajustado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 108,
+      "distintos": 66,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.realizado",
+      "rotulo": "registros.realizado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 108,
+      "distintos": 62,
+      "preenchimento": 1.0
+    }
+  ]
+}

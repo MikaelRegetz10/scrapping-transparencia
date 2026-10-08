@@ -1,0 +1,73 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_rr_-_despesas_por_categoria_cod_199",
+  "total_rows": 88,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "registros.ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "88 de 88",
+      "linhas_validas": 88,
+      "total_linhas": 88,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "registros.cod_conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "88 de 88",
+      "linhas_validas": 88,
+      "total_linhas": 88,
+      "valores_distintos": 31,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "registros.desc_conta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "88 de 88",
+      "linhas_validas": 88,
+      "total_linhas": 88,
+      "valores_distintos": 28,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "registros.orcado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "88 de 88",
+      "linhas_validas": 88,
+      "total_linhas": 88,
+      "valores_distintos": 65,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "registros.orado_ajustado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "88 de 88",
+      "linhas_validas": 88,
+      "total_linhas": 88,
+      "valores_distintos": 48,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "registros.realizado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "88 de 88",
+      "linhas_validas": 88,
+      "total_linhas": 88,
+      "valores_distintos": 71,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

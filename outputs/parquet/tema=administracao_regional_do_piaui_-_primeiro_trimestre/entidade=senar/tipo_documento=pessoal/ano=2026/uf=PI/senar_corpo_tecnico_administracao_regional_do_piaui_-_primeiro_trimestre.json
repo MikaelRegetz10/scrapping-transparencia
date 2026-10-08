@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_corpo_tecnico_administracao_regional_do_piaui_-_primeiro_trimestre",
+  "total_rows": 28,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "membros do corpo técnico",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "28 de 28",
+      "linhas_validas": 28,
+      "total_linhas": 28,
+      "valores_distintos": 28,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

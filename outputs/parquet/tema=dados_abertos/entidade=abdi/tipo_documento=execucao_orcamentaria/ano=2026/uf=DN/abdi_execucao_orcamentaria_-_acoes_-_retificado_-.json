@@ -1,0 +1,106 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "abdi_execucao_orcamentaria_-_acoes_-_retificado_-",
+  "total_rows": 30,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "codigo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 13,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "acao",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "fonte",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 6,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "orç_prog_inic",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 27,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "anul_supl",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 16,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "orç_prog_final",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 27,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "indicador",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 18,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "meta",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "30 de 30",
+      "linhas_validas": 30,
+      "total_linhas": 30,
+      "valores_distintos": 12,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "vlr_exec",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 96.67,
+      "linhas_com_valor_str": "29 de 30",
+      "linhas_validas": 29,
+      "total_linhas": 30,
+      "valores_distintos": 22,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total": 255,
+  "total": 254,
   "colunas": [
     {
       "nome": "tipo",
@@ -8,8 +8,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "A",
-      "preenchidas": 255,
-      "distintos": 255,
+      "preenchidas": 254,
+      "distintos": 254,
       "preenchimento": 1.0
     },
     {
@@ -18,8 +18,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "B",
-      "preenchidas": 255,
-      "distintos": 253,
+      "preenchidas": 254,
+      "distintos": 252,
       "preenchimento": 1.0
     },
     {
@@ -28,8 +28,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "C",
-      "preenchidas": 255,
-      "distintos": 226,
+      "preenchidas": 254,
+      "distintos": 225,
       "preenchimento": 1.0
     },
     {
@@ -38,7 +38,7 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "D",
-      "preenchidas": 255,
+      "preenchidas": 254,
       "distintos": 4,
       "preenchimento": 1.0
     },
@@ -48,9 +48,9 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "E",
-      "preenchidas": 204,
-      "distintos": 188,
-      "preenchimento": 0.8
+      "preenchidas": 203,
+      "distintos": 187,
+      "preenchimento": 0.7992
     }
   ]
 }

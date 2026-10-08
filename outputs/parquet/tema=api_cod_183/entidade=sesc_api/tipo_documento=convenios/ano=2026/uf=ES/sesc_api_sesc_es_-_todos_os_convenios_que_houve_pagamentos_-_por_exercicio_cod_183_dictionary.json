@@ -1,0 +1,86 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 8,
+  "colunas": [
+    {
+      "nome": "registros.exercicio",
+      "rotulo": "registros.exercicio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 8,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.numero_convenio",
+      "rotulo": "registros.numero_convenio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 8,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.objeto",
+      "rotulo": "registros.objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 8,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.favorecido",
+      "rotulo": "registros.favorecido",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 8,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.cnpj_cpf",
+      "rotulo": "registros.cnpj_cpf",
+      "tipo": "INTEGER",
+      "tipo_bruto": "INTEGER",
+      "letra": "E",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    },
+    {
+      "nome": "registros.valor_da_contrapartida",
+      "rotulo": "registros.valor_da_contrapartida",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 8,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "registros.data_da_firmatura",
+      "rotulo": "registros.data_da_firmatura",
+      "tipo": "INTEGER",
+      "tipo_bruto": "INTEGER",
+      "letra": "G",
+      "preenchidas": 0,
+      "distintos": 0,
+      "preenchimento": 0.0
+    },
+    {
+      "nome": "registros.valor_do_pagamento_no_exercicio",
+      "rotulo": "registros.valor_do_pagamento_no_exercicio",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 8,
+      "distintos": 1,
+      "preenchimento": 1.0
+    }
+  ]
+}

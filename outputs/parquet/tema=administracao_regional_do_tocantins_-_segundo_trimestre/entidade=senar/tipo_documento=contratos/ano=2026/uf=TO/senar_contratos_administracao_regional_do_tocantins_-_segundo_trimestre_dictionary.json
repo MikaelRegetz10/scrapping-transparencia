@@ -1,0 +1,166 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 1461,
+  "colunas": [
+    {
+      "nome": "contrato",
+      "rotulo": "contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 1461,
+      "distintos": 1450,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "modalidade de licitação",
+      "rotulo": "modalidade de licitação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 1461,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "natureza do objeto",
+      "rotulo": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 1461,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descrição do objeto",
+      "rotulo": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 1461,
+      "distintos": 108,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "categoria do objeto",
+      "rotulo": "categoria do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 1461,
+      "distintos": 23,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "critério de julgamento",
+      "rotulo": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 1461,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome da contratada",
+      "rotulo": "nome da contratada",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 1461,
+      "distintos": 516,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cnpj",
+      "rotulo": "cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 1458,
+      "distintos": 435,
+      "preenchimento": 0.9979
+    },
+    {
+      "nome": "cpf",
+      "rotulo": "cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 3,
+      "distintos": 1,
+      "preenchimento": 0.0021
+    },
+    {
+      "nome": "data de contrato",
+      "rotulo": "data de contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 1461,
+      "distintos": 278,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor do contrato (r$)",
+      "rotulo": "valor do contrato (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 1461,
+      "distintos": 178,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor pago (r$)",
+      "rotulo": "valor pago (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 1461,
+      "distintos": 447,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vigência (meses)",
+      "rotulo": "vigência (meses)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 1461,
+      "distintos": 15,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor aditivo preço (r$)",
+      "rotulo": "valor aditivo preço (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "N",
+      "preenchidas": 1461,
+      "distintos": 30,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor aditivo prazo",
+      "rotulo": "valor aditivo prazo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "O",
+      "preenchidas": 1461,
+      "distintos": 9,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "obs",
+      "rotulo": "obs",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "P",
+      "preenchidas": 1373,
+      "distintos": 43,
+      "preenchimento": 0.9398
+    }
+  ]
+}

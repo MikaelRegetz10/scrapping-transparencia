@@ -1,0 +1,62 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sescoop_3_2_estrutura_e_remuneracao_de_pessoal_-_estrutura_e_remuneracao_de_pessoal_-_janeiro_a_junho_csv",
+  "total_rows": 32,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "cargo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "32 de 32",
+      "linhas_validas": 32,
+      "total_linhas": 32,
+      "valores_distintos": 8,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "uf",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "32 de 32",
+      "linhas_validas": 32,
+      "total_linhas": 32,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "remuneracao_mensal",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "32 de 32",
+      "linhas_validas": 32,
+      "total_linhas": 32,
+      "valores_distintos": 9,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "carga_horaria",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "32 de 32",
+      "linhas_validas": 32,
+      "total_linhas": 32,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "obs",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 46.88,
+      "linhas_com_valor_str": "15 de 32",
+      "linhas_validas": 15,
+      "total_linhas": 32,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

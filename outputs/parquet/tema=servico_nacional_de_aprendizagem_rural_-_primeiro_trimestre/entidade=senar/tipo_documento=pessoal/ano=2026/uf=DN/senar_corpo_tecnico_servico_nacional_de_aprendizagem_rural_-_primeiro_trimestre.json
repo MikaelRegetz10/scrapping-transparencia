@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_corpo_tecnico_servico_nacional_de_aprendizagem_rural_-_primeiro_trimestre",
+  "total_rows": 111,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "membros do corpo técnico",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "111 de 111",
+      "linhas_validas": 111,
+      "total_linhas": 111,
+      "valores_distintos": 111,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

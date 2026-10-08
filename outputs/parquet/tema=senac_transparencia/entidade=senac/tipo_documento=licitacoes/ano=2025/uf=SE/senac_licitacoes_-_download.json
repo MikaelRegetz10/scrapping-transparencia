@@ -1,17 +1,17 @@
 {
   "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
   "dataset_nome": "senac_licitacoes_-_download",
-  "total_rows": 125,
+  "total_rows": 126,
   "columns": [
     {
       "col_letter": "A",
       "coluna": "tipo",
       "tipo": "VARCHAR",
       "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "125 de 125",
-      "linhas_validas": 125,
-      "total_linhas": 125,
-      "valores_distintos": 125,
+      "linhas_com_valor_str": "126 de 126",
+      "linhas_validas": 126,
+      "total_linhas": 126,
+      "valores_distintos": 126,
       "descricao": "Descrição indisponível."
     },
     {
@@ -19,10 +19,10 @@
       "coluna": "número",
       "tipo": "VARCHAR",
       "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "125 de 125",
-      "linhas_validas": 125,
-      "total_linhas": 125,
-      "valores_distintos": 125,
+      "linhas_com_valor_str": "126 de 126",
+      "linhas_validas": 126,
+      "total_linhas": 126,
+      "valores_distintos": 126,
       "descricao": "Descrição indisponível."
     },
     {
@@ -30,10 +30,10 @@
       "coluna": "natureza/objeto",
       "tipo": "VARCHAR",
       "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "125 de 125",
-      "linhas_validas": 125,
-      "total_linhas": 125,
-      "valores_distintos": 123,
+      "linhas_com_valor_str": "126 de 126",
+      "linhas_validas": 126,
+      "total_linhas": 126,
+      "valores_distintos": 124,
       "descricao": "Descrição indisponível."
     },
     {
@@ -41,9 +41,9 @@
       "coluna": "abertura/horário",
       "tipo": "VARCHAR",
       "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "125 de 125",
-      "linhas_validas": 125,
-      "total_linhas": 125,
+      "linhas_com_valor_str": "126 de 126",
+      "linhas_validas": 126,
+      "total_linhas": 126,
       "valores_distintos": 4,
       "descricao": "Descrição indisponível."
     },
@@ -52,9 +52,9 @@
       "coluna": "situação",
       "tipo": "VARCHAR",
       "preenchimento_pct": 0.0,
-      "linhas_com_valor_str": "0 de 125",
+      "linhas_com_valor_str": "0 de 126",
       "linhas_validas": 0,
-      "total_linhas": 125,
+      "total_linhas": 126,
       "valores_distintos": 0,
       "descricao": "Descrição indisponível."
     },
@@ -63,10 +63,10 @@
       "coluna": "criterio de julgamento",
       "tipo": "VARCHAR",
       "preenchimento_pct": 100.0,
-      "linhas_com_valor_str": "125 de 125",
-      "linhas_validas": 125,
-      "total_linhas": 125,
-      "valores_distintos": 111,
+      "linhas_com_valor_str": "126 de 126",
+      "linhas_validas": 126,
+      "total_linhas": 126,
+      "valores_distintos": 112,
       "descricao": "Descrição indisponível."
     },
     {
@@ -74,9 +74,9 @@
       "coluna": "datahomologação/cancelamento",
       "tipo": "VARCHAR",
       "preenchimento_pct": 0.0,
-      "linhas_com_valor_str": "0 de 125",
+      "linhas_com_valor_str": "0 de 126",
       "linhas_validas": 0,
-      "total_linhas": 125,
+      "total_linhas": 126,
       "valores_distintos": 0,
       "descricao": "Descrição indisponível."
     },
@@ -85,9 +85,9 @@
       "coluna": "participantes",
       "tipo": "VARCHAR",
       "preenchimento_pct": 0.0,
-      "linhas_com_valor_str": "0 de 125",
+      "linhas_com_valor_str": "0 de 126",
       "linhas_validas": 0,
-      "total_linhas": 125,
+      "total_linhas": 126,
       "valores_distintos": 0,
       "descricao": "Descrição indisponível."
     }

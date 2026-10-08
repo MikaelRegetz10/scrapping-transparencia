@@ -1,0 +1,126 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 11,
+  "colunas": [
+    {
+      "nome": "cpf",
+      "rotulo": "cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 11,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome",
+      "rotulo": "nome",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 11,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cargo",
+      "rotulo": "cargo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 11,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "motivo da viagem",
+      "rotulo": "motivo da viagem",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 11,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "justificativa da viagem",
+      "rotulo": "justificativa da viagem",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 11,
+      "distintos": 9,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "origem",
+      "rotulo": "origem",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 11,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "destino",
+      "rotulo": "destino",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 11,
+      "distintos": 6,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data de ida",
+      "rotulo": "data de ida",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 11,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data de volta",
+      "rotulo": "data de volta",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 11,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor diária",
+      "rotulo": "valor diária",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 11,
+      "distintos": 7,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor passagem aérea",
+      "rotulo": "valor passagem aérea",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 4,
+      "distintos": 4,
+      "preenchimento": 0.3636
+    },
+    {
+      "nome": "valor total da viagem",
+      "rotulo": "valor total da viagem",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 11,
+      "distintos": 7,
+      "preenchimento": 1.0
+    }
+  ]
+}

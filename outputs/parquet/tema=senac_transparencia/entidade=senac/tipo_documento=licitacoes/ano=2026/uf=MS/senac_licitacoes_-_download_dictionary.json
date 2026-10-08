@@ -1,6 +1,6 @@
 {
   "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
-  "total": 161,
+  "total": 162,
   "colunas": [
     {
       "nome": "tipo",
@@ -8,8 +8,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "A",
-      "preenchidas": 161,
-      "distintos": 117,
+      "preenchidas": 162,
+      "distintos": 118,
       "preenchimento": 1.0
     },
     {
@@ -18,8 +18,8 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "B",
-      "preenchidas": 161,
-      "distintos": 130,
+      "preenchidas": 162,
+      "distintos": 131,
       "preenchimento": 1.0
     },
     {
@@ -28,9 +28,9 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "C",
-      "preenchidas": 131,
-      "distintos": 120,
-      "preenchimento": 0.8137
+      "preenchidas": 132,
+      "distintos": 121,
+      "preenchimento": 0.8148
     },
     {
       "nome": "abertura/horário",
@@ -38,9 +38,9 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "D",
-      "preenchidas": 146,
+      "preenchidas": 147,
       "distintos": 17,
-      "preenchimento": 0.9068
+      "preenchimento": 0.9074
     },
     {
       "nome": "criterio de julgamento",
@@ -48,9 +48,9 @@
       "tipo": "VARCHAR",
       "tipo_bruto": "VARCHAR",
       "letra": "E",
-      "preenchidas": 111,
-      "distintos": 94,
-      "preenchimento": 0.6894
+      "preenchidas": 112,
+      "distintos": 95,
+      "preenchimento": 0.6914
     }
   ]
 }

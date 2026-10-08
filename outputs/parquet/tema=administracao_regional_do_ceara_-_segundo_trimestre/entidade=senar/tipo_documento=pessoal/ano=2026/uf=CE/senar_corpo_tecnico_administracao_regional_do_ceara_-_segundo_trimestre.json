@@ -1,0 +1,18 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_corpo_tecnico_administracao_regional_do_ceara_-_segundo_trimestre",
+  "total_rows": 45,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "membros do corpo técnico",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "45 de 45",
+      "linhas_validas": 45,
+      "total_linhas": 45,
+      "valores_distintos": 45,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

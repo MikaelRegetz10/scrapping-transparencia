@@ -1,0 +1,73 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "sesc_api_sesc_pi_-_plano_de_contas_demonstrativo_cod_200",
+  "total_rows": 444,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "registros.ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "444 de 444",
+      "linhas_validas": 444,
+      "total_linhas": 444,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "registros.cdigo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "444 de 444",
+      "linhas_validas": 444,
+      "total_linhas": 444,
+      "valores_distintos": 273,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "registros.descrio do programa / atividade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "444 de 444",
+      "linhas_validas": 444,
+      "total_linhas": 444,
+      "valores_distintos": 171,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "registros.orado_inicial",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "444 de 444",
+      "linhas_validas": 444,
+      "total_linhas": 444,
+      "valores_distintos": 380,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "registros.orado_ajustado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "444 de 444",
+      "linhas_validas": 444,
+      "total_linhas": 444,
+      "valores_distintos": 382,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "registros.realizado",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "444 de 444",
+      "linhas_validas": 444,
+      "total_linhas": 444,
+      "valores_distintos": 351,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

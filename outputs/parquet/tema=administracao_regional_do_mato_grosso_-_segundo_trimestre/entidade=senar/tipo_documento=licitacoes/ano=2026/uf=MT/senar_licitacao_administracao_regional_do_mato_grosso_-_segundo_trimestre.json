@@ -1,0 +1,128 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_licitacao_administracao_regional_do_mato_grosso_-_segundo_trimestre",
+  "total_rows": 100,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "modalidade",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "número/ano",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 92,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "processo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 100,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 100,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "data da abertura das propostas",
+      "tipo": "DATE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 67,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "data de homologação",
+      "tipo": "DATE",
+      "preenchimento_pct": 67.0,
+      "linhas_com_valor_str": "67 de 100",
+      "linhas_validas": 67,
+      "total_linhas": 100,
+      "valores_distintos": 41,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "resultado do certame",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "J",
+      "coluna": "identificação dos licitantes|valores das propostas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 65.0,
+      "linhas_com_valor_str": "65 de 100",
+      "linhas_validas": 65,
+      "total_linhas": 100,
+      "valores_distintos": 65,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "K",
+      "coluna": "situação da licitação",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "100 de 100",
+      "linhas_validas": 100,
+      "total_linhas": 100,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 154,
+  "colunas": [
+    {
+      "nome": "contrato",
+      "rotulo": "contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 154,
+      "distintos": 154,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "modalidade de licitação",
+      "rotulo": "modalidade de licitação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 154,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "natureza do objeto",
+      "rotulo": "natureza do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 154,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "descrição do objeto",
+      "rotulo": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 154,
+      "distintos": 36,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "categoria do objeto",
+      "rotulo": "categoria do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 154,
+      "distintos": 12,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "critério de julgamento",
+      "rotulo": "critério de julgamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 154,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nome da contratada",
+      "rotulo": "nome da contratada",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 154,
+      "distintos": 130,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cnpj",
+      "rotulo": "cnpj",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 153,
+      "distintos": 129,
+      "preenchimento": 0.9935
+    },
+    {
+      "nome": "cpf",
+      "rotulo": "cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 1,
+      "distintos": 1,
+      "preenchimento": 0.0065
+    },
+    {
+      "nome": "data de contrato",
+      "rotulo": "data de contrato",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 154,
+      "distintos": 59,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor do contrato (r$)",
+      "rotulo": "valor do contrato (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 154,
+      "distintos": 47,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor pago (r$)",
+      "rotulo": "valor pago (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 154,
+      "distintos": 123,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "vigência (meses)",
+      "rotulo": "vigência (meses)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 154,
+      "distintos": 10,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor aditivo preço (r$)",
+      "rotulo": "valor aditivo preço (r$)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "N",
+      "preenchidas": 154,
+      "distintos": 16,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor aditivo prazo",
+      "rotulo": "valor aditivo prazo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "O",
+      "preenchidas": 154,
+      "distintos": 6,
+      "preenchimento": 1.0
+    }
+  ]
+}

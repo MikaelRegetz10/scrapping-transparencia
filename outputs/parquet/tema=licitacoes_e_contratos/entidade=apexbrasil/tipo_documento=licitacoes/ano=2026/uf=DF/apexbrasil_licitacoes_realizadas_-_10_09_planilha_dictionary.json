@@ -1,0 +1,136 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 289,
+  "colunas": [
+    {
+      "nome": "Nº da Licitação",
+      "rotulo": "Nº da Licitação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 289,
+      "distintos": 235,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Objeto (detalhado)",
+      "rotulo": "Objeto (detalhado)",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 289,
+      "distintos": 286,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Nº de Itens",
+      "rotulo": "Nº de Itens",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 287,
+      "distintos": 38,
+      "preenchimento": 0.9931
+    },
+    {
+      "nome": "Forma da contratação",
+      "rotulo": "Forma da contratação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 289,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Critério de Julgamento",
+      "rotulo": "Critério de Julgamento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 289,
+      "distintos": 14,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Modalidade de Licitação",
+      "rotulo": "Modalidade de Licitação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 289,
+      "distintos": 4,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Data da abertura",
+      "rotulo": "Data da abertura",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 289,
+      "distintos": 263,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Hora da abertura",
+      "rotulo": "Hora da abertura",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 289,
+      "distintos": 5,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Local da abertura",
+      "rotulo": "Local da abertura",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "I",
+      "preenchidas": 289,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Cidade da abertura",
+      "rotulo": "Cidade da abertura",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "J",
+      "preenchidas": 289,
+      "distintos": 1,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Data de homologação",
+      "rotulo": "Data de homologação",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "K",
+      "preenchidas": 22,
+      "distintos": 21,
+      "preenchimento": 0.0761
+    },
+    {
+      "nome": "Contato no órgão",
+      "rotulo": "Contato no órgão",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "L",
+      "preenchidas": 289,
+      "distintos": 3,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "Status",
+      "rotulo": "Status",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "M",
+      "preenchidas": 289,
+      "distintos": 4,
+      "preenchimento": 1.0
+    }
+  ]
+}

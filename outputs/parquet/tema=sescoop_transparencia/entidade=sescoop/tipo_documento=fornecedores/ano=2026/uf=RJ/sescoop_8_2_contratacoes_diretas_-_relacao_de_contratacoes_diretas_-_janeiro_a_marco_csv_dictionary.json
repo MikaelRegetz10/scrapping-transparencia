@@ -1,0 +1,86 @@
+{
+  "ressalva": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "total": 58,
+  "colunas": [
+    {
+      "nome": "modalidade",
+      "rotulo": "modalidade",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "A",
+      "preenchidas": 58,
+      "distintos": 2,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "enquadramento",
+      "rotulo": "enquadramento",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "B",
+      "preenchidas": 58,
+      "distintos": 8,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "nº processo administrativo",
+      "rotulo": "nº processo administrativo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "C",
+      "preenchidas": 58,
+      "distintos": 54,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "resumo do objeto",
+      "rotulo": "resumo do objeto",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "D",
+      "preenchidas": 58,
+      "distintos": 53,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "fornecedor",
+      "rotulo": "fornecedor",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "E",
+      "preenchidas": 58,
+      "distintos": 23,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "cnpj/cpf",
+      "rotulo": "cnpj/cpf",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "F",
+      "preenchidas": 58,
+      "distintos": 22,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "valor contratado",
+      "rotulo": "valor contratado",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "G",
+      "preenchidas": 58,
+      "distintos": 53,
+      "preenchimento": 1.0
+    },
+    {
+      "nome": "data de assinatura do termo",
+      "rotulo": "data de assinatura do termo",
+      "tipo": "VARCHAR",
+      "tipo_bruto": "VARCHAR",
+      "letra": "H",
+      "preenchidas": 58,
+      "distintos": 29,
+      "preenchimento": 1.0
+    }
+  ]
+}

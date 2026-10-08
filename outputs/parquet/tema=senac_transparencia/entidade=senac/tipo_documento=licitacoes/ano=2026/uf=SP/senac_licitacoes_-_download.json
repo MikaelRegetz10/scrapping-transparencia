@@ -62,11 +62,11 @@
       "col_letter": "F",
       "coluna": "criterio de julgamento",
       "tipo": "VARCHAR",
-      "preenchimento_pct": 81.27,
-      "linhas_com_valor_str": "308 de 379",
-      "linhas_validas": 308,
+      "preenchimento_pct": 81.53,
+      "linhas_com_valor_str": "309 de 379",
+      "linhas_validas": 309,
       "total_linhas": 379,
-      "valores_distintos": 283,
+      "valores_distintos": 284,
       "descricao": "Descrição indisponível."
     },
     {

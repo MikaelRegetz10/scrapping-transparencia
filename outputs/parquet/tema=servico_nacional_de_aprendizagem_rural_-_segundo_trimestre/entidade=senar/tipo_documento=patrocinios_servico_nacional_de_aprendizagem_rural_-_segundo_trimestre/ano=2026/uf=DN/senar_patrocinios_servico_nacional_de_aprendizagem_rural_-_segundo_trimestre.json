@@ -1,0 +1,106 @@
+{
+  "disclaimer": "As entidades não publicam dicionário de dados junto com os arquivos. O que está aqui foi medido no próprio conjunto: nada disto é descrição oficial da coluna.",
+  "dataset_nome": "senar_patrocinios_servico_nacional_de_aprendizagem_rural_-_segundo_trimestre",
+  "total_rows": 47,
+  "columns": [
+    {
+      "col_letter": "A",
+      "coluna": "tipo",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "B",
+      "coluna": "instrumento",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 4,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "C",
+      "coluna": "tipo de transferência",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 2,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "D",
+      "coluna": "nome do beneficiário",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 35,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "E",
+      "coluna": "cnpj",
+      "tipo": "CNPJ",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 35,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "F",
+      "coluna": "descrição do objeto",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 47,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "G",
+      "coluna": "data do firmamento",
+      "tipo": "DATE",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 45,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "H",
+      "coluna": "valor transferido (r$)",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 23,
+      "descricao": "Descrição indisponível."
+    },
+    {
+      "col_letter": "I",
+      "coluna": "prestação de contas",
+      "tipo": "VARCHAR",
+      "preenchimento_pct": 100.0,
+      "linhas_com_valor_str": "47 de 47",
+      "linhas_validas": 47,
+      "total_linhas": 47,
+      "valores_distintos": 3,
+      "descricao": "Descrição indisponível."
+    }
+  ]
+}
