@@ -1,8 +1,45 @@
 # Scraping de Portais de Transparência
 
+[![Online](https://img.shields.io/badge/online-fly.dev-8A2BE2?logo=fly.io&logoColor=white)](https://scrapping-transparencia.fly.dev/planilhas.html)
+[![Deploy](https://github.com/MikaelRegetz10/scrapping-transparencia/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/MikaelRegetz10/scrapping-transparencia/actions/workflows/fly-deploy.yml)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+
 Coleta links de dados abertos dos portais de transparência do Sistema Indústria
-(ABDI, SESI, SENAI), verifica se cada link está no ar e gera uma planilha Excel
-com o diagnóstico de qualidade dos dados encontrados.
+e entidades parceiras (ABDI, SESI, SENAI, SENAC, SENAR, SESC, SESCOOP, ApexBrasil),
+verifica se cada link está no ar, audita a qualidade dos dados e publica tudo
+num portal navegável, com API RESTful.
+
+## 🌐 Projeto no ar
+
+O portal e a API já estão publicados no [Fly.io](https://fly.io) (região GRU):
+
+| O quê | Endereço |
+|---|---|
+| **Portal — planilhas** | <https://scrapping-transparencia.fly.dev/planilhas.html> |
+| Portal — documentos (PDFs) | <https://scrapping-transparencia.fly.dev/documentos.html> |
+| Visualizador de planilhas | <https://scrapping-transparencia.fly.dev/visualizador.html> |
+| Dicionário de colunas | <https://scrapping-transparencia.fly.dev/dicionario.html> |
+| Documentação interativa da API (Swagger) | <https://scrapping-transparencia.fly.dev/docs> |
+| Healthcheck | <https://scrapping-transparencia.fly.dev/health> |
+
+> A máquina é desligada quando ociosa (`auto_stop_machines`); o primeiro acesso
+> depois de um tempo parado pode levar alguns segundos para responder.
+
+Cada push na `main` dispara o deploy automático
+(`.github/workflows/fly-deploy.yml`). Uma única aplicação serve a API em
+`/api/v1/*` e o front-end estático na raiz.
+
+## O que o projeto faz
+
+1. **Coleta** — um scraper por portal (`scrapers/`), sem automação de navegador
+   sempre que possível.
+2. **Auditoria** — valida cada link (`core/validator.py`) e avalia se o dataset
+   é estruturado (`core/profiler.py`).
+3. **Acervo** — grava catálogos e datasets em Parquet (`outputs/`), além das
+   planilhas Excel de diagnóstico.
+4. **API** — FastAPI consulta o acervo (`api/`): filtros, documentos,
+   estatísticas, conjuntos de dados, exportação.
+5. **Portal** — front-end estático (`portal/`) que consome a API.
 
 ## Requisitos
 
@@ -49,7 +86,7 @@ Se o PowerShell bloquear a ativação, libere para a sessão atual:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 ```
 
-## Como rodar
+## Como rodar a coleta
 
 Com o ambiente ativado:
 
@@ -60,6 +97,16 @@ python main.py
 Escolha quais portais varrer editando a lista `scrapers_to_run` em `main.py`.
 O resultado vai para `outputs/<portal>_relatorio_qualidade.xlsx`, sempre na raiz
 do projeto, independente do diretório de onde o script foi disparado.
+
+## Rodando a API e o portal localmente
+
+```bash
+uvicorn api.main_api:app --reload --port 8000
+```
+
+Com isso o portal já abre em <http://localhost:8000/> (a API serve a pasta
+`portal/`). Detalhes do front-end em [`portal/README.md`](portal/README.md).
+Também há um `Dockerfile` usado no deploy.
 
 ## Configuração da IDE
 
